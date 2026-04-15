@@ -1,0 +1,11 @@
+streamlit>=1.32
+folium>=0.16
+streamlit-folium>=0.20
+pandas>=2.1
+numpy>=1.26
+shapely>=2.0
+requests>=2.31
+plotly>=5.20
+pyarrow>=15      # DOSM also publishes parquet; keeps that path available.
+# Optional — only if you want to use the GeoPandas spatial-join path:
+# geopandas>=0.14
