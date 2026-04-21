@@ -11,6 +11,7 @@ real CSV / data.gov.my datasets in `data_pipeline.py`.
 from __future__ import annotations
 import json
 from pathlib import Path
+from typing import Optional
 
 import folium
 from folium.plugins import MarkerCluster
@@ -27,8 +28,11 @@ from mock_data import (
 )
 from data_pipeline import (
     spatial_join_pharmacies_to_districts,
+    stamp_polygon_props,
     compute_district_metrics,
+    compute_polygon_metrics,
     enrich_geojson_with_metrics,
+    enrich_geojson_with_polygon_metrics,
     load_pharmacies_from_csv,
     load_population_from_api,
     load_district_geojson,
@@ -36,6 +40,11 @@ from data_pipeline import (
     fetch_pharmacies_from_osm,
     load_population_district_dosm,
     load_malaysia_districts_geojson,
+    load_malaysia_mukim_geojson,
+    load_kkm_zones_geojson,
+    build_voronoi_catchments,
+    zone_for_state,
+    KKM_ZONES,
     normalize_district_names,
     normalize_geojson_names,
 )
@@ -43,6 +52,7 @@ from local_sources import (
     parse_kmz,
     merge_pharmacy_sources,
     compute_worldpop_per_district,
+    compute_worldpop_per_polygons,
 )
 
 # --------------------------------------------------------------------------------------
@@ -85,87 +95,196 @@ DATA_SOURCE_LIVE = "Live (OSM + DOSM)"
 DATA_SOURCE_MOCK = "Mock (demo data)"
 DATA_SOURCE_CUSTOM = "Custom CSV + GeoJSON"
 
+# Aggregation granularity for the choropleth. District is the default.
+GEO_DISTRICT = "District (Daerah) — 159"
+GEO_MUKIM = "Mukim (Sub-district) — 1,859"
+GEO_ZONE = "KKM Zone — 5"
+GEO_CATCHMENT = "Pharmacy Catchment (Voronoi)"
+
 # Paths for the Local pipeline — committed processed artifacts so the deploy
 # does not need access to the 17 GB WorldPop TIF or the raw NPRA PDF.
 LOCAL_KMZ_PATH = "data/source/Project Pharma.kmz"
 LOCAL_NPRA_GEOCODED_CSV = "data/pharmacies_npra_geocoded.csv"
 LOCAL_WORLDPOP_PER_DISTRICT = "data/worldpop_per_district.csv"
+LOCAL_WORLDPOP_PER_MUKIM = "data/worldpop_per_mukim.csv"
+LOCAL_WORLDPOP_PER_ZONE = "data/worldpop_per_zone.csv"
 LOCAL_WORLDPOP_RAW_CSV = "/Users/evoverebitda/Downloads/mys_general_2020.csv"  # only needed for refresh
 
 
-@st.cache_data(show_spinner="Loading data...")
-def load_all(data_source: str,
-             pharmacy_csv: str | None = None,
-             geojson_path: str | None = None):
-    """Returns (pharmacies_df, population_df, districts_geojson).
-
-    `data_source` routes to one of four pipelines:
-      * Local — KMZ placemarks + NPRA-geocoded PDF + WorldPop per-district.
-      * Live — OpenStreetMap Overpass + DOSM population + geoBoundaries ADM2.
-      * Mock — bundled sample data (no network).
-      * Custom — user-supplied NPRA CSV + district GeoJSON, DOSM population via API.
-    """
+@st.cache_data(show_spinner="Loading pharmacies...")
+def load_pharmacies(data_source: str,
+                    pharmacy_csv: str | None = None) -> pd.DataFrame:
+    """Just the pharmacy DataFrame for the chosen data source. Geography-agnostic."""
     if data_source == DATA_SOURCE_MOCK:
-        pharmacies = generate_mock_pharmacies()
-        population = get_districts_df()[["district", "state", "population", "strata"]]
-        geojson = generate_mock_geojson()
-        return pharmacies, population, geojson
-
-    # All three real-data modes reuse the geoBoundaries ADM2 polygons.
-    geojson = load_malaysia_districts_geojson()
-
+        return generate_mock_pharmacies()
     if data_source == DATA_SOURCE_LOCAL:
-        # Pharmacies: KMZ ∪ NPRA-geocoded (dedup on name+rounded-coords).
         sources = []
-        kmz_path = Path(LOCAL_KMZ_PATH)
-        if kmz_path.exists():
-            sources.append(parse_kmz(kmz_path))
-        npra_path = Path(LOCAL_NPRA_GEOCODED_CSV)
-        if npra_path.exists():
-            npra = pd.read_csv(npra_path)
+        if Path(LOCAL_KMZ_PATH).exists():
+            sources.append(parse_kmz(LOCAL_KMZ_PATH))
+        if Path(LOCAL_NPRA_GEOCODED_CSV).exists():
+            npra = pd.read_csv(LOCAL_NPRA_GEOCODED_CSV)
             npra["source"] = npra.get("source", "NPRA").fillna("NPRA")
             npra["brand"] = npra.get("brand", "NPRA").fillna("NPRA")
             sources.append(npra)
         if not sources:
             st.error(
-                "No local pharmacy sources found. Place 'Project Pharma.kmz' in "
-                f"{LOCAL_KMZ_PATH} and/or run `python geocode_npra.py` to produce "
-                f"{LOCAL_NPRA_GEOCODED_CSV}."
+                f"No local pharmacy sources found — place KMZ at {LOCAL_KMZ_PATH} "
+                f"and/or run `python geocode_npra.py` to produce {LOCAL_NPRA_GEOCODED_CSV}."
             )
             st.stop()
-        pharmacies = merge_pharmacy_sources(*sources)
+        return merge_pharmacy_sources(*sources)
+    if data_source == DATA_SOURCE_LIVE:
+        return fetch_pharmacies_from_osm()
+    return load_pharmacies_from_csv(pharmacy_csv)
 
-        # Population: WorldPop aggregated per ADM2 (cached CSV; falls back to raw).
-        pop_cache = Path(LOCAL_WORLDPOP_PER_DISTRICT)
-        if pop_cache.exists():
-            population = pd.read_csv(pop_cache)
+
+@st.cache_data(show_spinner="Loading population & boundaries...")
+def load_geography(
+    data_source: str,
+    geography: str,
+    pharmacies_for_catchment: Optional[pd.DataFrame] = None,
+    custom_geojson_path: str | None = None,
+):
+    """Return the geography-specific (geojson, population_df, join_keys, label_key).
+
+    `label_key` is the primary display column (e.g. "district", "mukim", "zone",
+    "pharmacy").
+    """
+    # ADM2 district is the base layer for everything — we use it as the "always"
+    # context for state/district filtering of pharmacies regardless of choropleth
+    # granularity.
+    base_geojson = normalize_geojson_names(load_malaysia_districts_geojson())
+
+    if data_source == DATA_SOURCE_MOCK:
+        # Mock stays district-only — the tutorial / offline path.
+        pop = get_districts_df()[["district", "state", "population", "strata"]]
+        return {
+            "geojson": generate_mock_geojson(),
+            "population": pop,
+            "join_keys": ["district", "state"],
+            "label_key": "district",
+            "base_geojson": generate_mock_geojson(),
+        }
+
+    if geography == GEO_DISTRICT:
+        geojson = base_geojson
+        if data_source == DATA_SOURCE_LOCAL and Path(LOCAL_WORLDPOP_PER_DISTRICT).exists():
+            pop = pd.read_csv(LOCAL_WORLDPOP_PER_DISTRICT)
+        elif data_source == DATA_SOURCE_CUSTOM and custom_geojson_path:
+            geojson = normalize_geojson_names(load_district_geojson(custom_geojson_path))
+            pop = load_population_from_api()
         else:
-            population = compute_worldpop_per_district(
+            pop = load_population_district_dosm()
+        return {
+            "geojson": geojson,
+            "population": normalize_district_names(pop),
+            "join_keys": ["district", "state"],
+            "label_key": "district",
+            "base_geojson": base_geojson,
+        }
+
+    if geography == GEO_MUKIM:
+        geojson = normalize_geojson_names(load_malaysia_mukim_geojson())
+        if Path(LOCAL_WORLDPOP_PER_MUKIM).exists():
+            pop = pd.read_csv(LOCAL_WORLDPOP_PER_MUKIM)
+        else:
+            pop = compute_worldpop_per_polygons(
                 csv_path=LOCAL_WORLDPOP_RAW_CSV,
-                districts_geojson=geojson,
-                cache_path=LOCAL_WORLDPOP_PER_DISTRICT,
+                polygons_geojson=geojson,
+                cache_path=LOCAL_WORLDPOP_PER_MUKIM,
+                id_properties=["mukim", "district", "state"],
             )
-    elif data_source == DATA_SOURCE_LIVE:
-        pharmacies = fetch_pharmacies_from_osm()
-        population = load_population_district_dosm()
-    else:  # Custom
-        pharmacies = load_pharmacies_from_csv(pharmacy_csv)
-        population = load_population_from_api()
-        geojson = load_district_geojson(geojson_path)
+        pop = normalize_district_names(pop)
+        return {
+            "geojson": geojson,
+            "population": pop,
+            "join_keys": ["mukim", "district", "state"],
+            "label_key": "mukim",
+            "base_geojson": base_geojson,
+        }
 
-    # Canonicalize spellings on BOTH sides of the merge so districts don't
-    # drop to NaN because one source says "Pulau Pinang" and the other "Penang".
-    population = normalize_district_names(population)
-    geojson = normalize_geojson_names(geojson)
-    return pharmacies, population, geojson
+    if geography == GEO_ZONE:
+        geojson = load_kkm_zones_geojson()
+        if Path(LOCAL_WORLDPOP_PER_ZONE).exists():
+            pop = pd.read_csv(LOCAL_WORLDPOP_PER_ZONE)
+        else:
+            pop = compute_worldpop_per_polygons(
+                csv_path=LOCAL_WORLDPOP_RAW_CSV,
+                polygons_geojson=geojson,
+                cache_path=LOCAL_WORLDPOP_PER_ZONE,
+                id_properties=["zone"],
+            )
+        return {
+            "geojson": geojson,
+            "population": pop,
+            "join_keys": ["zone"],
+            "label_key": "zone",
+            "base_geojson": base_geojson,
+        }
+
+    # GEO_CATCHMENT — needs pharmacies to build the Voronoi.
+    if pharmacies_for_catchment is None or len(pharmacies_for_catchment) < 3:
+        st.error("Catchment geography needs at least 3 pharmacies.")
+        st.stop()
+    voronoi = build_voronoi_catchments(
+        pharmacies_for_catchment[["pharmacy_id", "name", "brand",
+                                  "latitude", "longitude"]].dropna(
+            subset=["latitude", "longitude"]),
+        boundary_geojson=base_geojson,
+    )
+    # Compute population per catchment from raw WorldPop if the raw CSV is
+    # available; otherwise skip (catchment mode needs the raw raster).
+    cache_name = f"data/worldpop_per_catchment_{len(voronoi['features'])}.csv"
+    if Path(LOCAL_WORLDPOP_RAW_CSV).exists():
+        pop = compute_worldpop_per_polygons(
+            csv_path=LOCAL_WORLDPOP_RAW_CSV,
+            polygons_geojson=voronoi,
+            cache_path=cache_name,
+            id_properties=["catchment_id", "pharmacy", "brand"],
+        )
+    else:
+        # No raw raster — can still render the polygons with 0 population.
+        pop = pd.DataFrame({
+            "catchment_id": [f["properties"]["catchment_id"] for f in voronoi["features"]],
+            "pharmacy": [f["properties"]["pharmacy"] for f in voronoi["features"]],
+            "brand": [f["properties"]["brand"] for f in voronoi["features"]],
+            "population": 0,
+        })
+    return {
+        "geojson": voronoi,
+        "population": pop,
+        "join_keys": ["catchment_id"],
+        "label_key": "pharmacy",
+        "base_geojson": base_geojson,
+    }
 
 
-@st.cache_data(show_spinner="Computing district metrics...")
-def build_metrics(pharmacies: pd.DataFrame, population: pd.DataFrame, geojson: dict):
-    pharmacies_joined = spatial_join_pharmacies_to_districts(pharmacies, geojson)
-    metrics = compute_district_metrics(pharmacies_joined, population)
-    enriched_geojson = enrich_geojson_with_metrics(geojson, metrics)
-    return pharmacies_joined, metrics, enriched_geojson
+@st.cache_data(show_spinner="Computing metrics...")
+def build_metrics(pharmacies: pd.DataFrame, geo_ctx: dict):
+    """Spatial-join pharmacies onto the chosen geography, compute metrics,
+    enrich the GeoJSON so tooltips read the metrics directly."""
+    # Always stamp base district/state for pharmacy filtering, regardless of
+    # choropleth granularity.
+    with_base = stamp_polygon_props(
+        pharmacies, geo_ctx["base_geojson"], ["district", "state"]
+    )
+    # Then stamp with the choropleth geography's keys (may overlap with base
+    # keys — stamp_polygon_props handles the _raw collision by renaming).
+    extra_keys = [k for k in geo_ctx["join_keys"] if k not in ("district", "state")]
+    if extra_keys:
+        with_all = stamp_polygon_props(
+            with_base, geo_ctx["geojson"], extra_keys
+        )
+    else:
+        with_all = with_base
+
+    metrics = compute_polygon_metrics(
+        with_all, geo_ctx["population"], on=geo_ctx["join_keys"]
+    )
+    enriched = enrich_geojson_with_polygon_metrics(
+        geo_ctx["geojson"], metrics, on=geo_ctx["join_keys"]
+    )
+    return with_all, metrics, enriched
 
 
 # --------------------------------------------------------------------------------------
@@ -201,19 +320,40 @@ if data_source == DATA_SOURCE_CUSTOM:
     pharmacy_csv = st.sidebar.text_input("Pharmacy CSV path", "data/pharmacies.csv")
     geojson_path = st.sidebar.text_input("District GeoJSON path/URL", "data/districts.geojson")
 
-pharmacies, population, geojson = load_all(data_source, pharmacy_csv, geojson_path)
-pharmacies_joined, metrics, enriched_geojson = build_metrics(pharmacies, population, geojson)
+# Geography (choropleth granularity) — independent of data source.
+geography = st.sidebar.selectbox(
+    "Geography (choropleth granularity)",
+    [GEO_DISTRICT, GEO_MUKIM, GEO_ZONE, GEO_CATCHMENT],
+    index=0,
+    help=(
+        "District: 159 Malaysian daerah (ADM2).  "
+        "Mukim: 1,859 sub-districts (ADM3) — shows intra-district variation.  "
+        "Zone: 5 KKM pharmacy zones.  "
+        "Catchment: Voronoi polygon per pharmacy — each cell is the area "
+        "closer to that pharmacy than to any other."
+    ),
+)
+
+pharmacies = load_pharmacies(data_source, pharmacy_csv)
+geo_ctx = load_geography(
+    data_source, geography,
+    pharmacies_for_catchment=pharmacies if geography == GEO_CATCHMENT else None,
+    custom_geojson_path=geojson_path,
+)
+pharmacies_joined, metrics, enriched_geojson = build_metrics(pharmacies, geo_ctx)
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("🔎 Filters")
 
-# State filter
-all_states = sorted(metrics["state"].dropna().unique())
+# State filter — always available because we stamp state via ADM2 regardless
+# of the chosen geography.
+all_states = sorted(pharmacies_joined["state"].dropna().unique())
 selected_states = st.sidebar.multiselect("State (Negeri)", all_states, default=all_states)
 
-# District filter — cascades from states
+# District filter — cascades from states. Always available for the same reason.
 districts_in_states = sorted(
-    metrics.loc[metrics["state"].isin(selected_states), "district"].dropna().unique()
+    pharmacies_joined.loc[pharmacies_joined["state"].isin(selected_states),
+                          "district"].dropna().unique()
 )
 selected_districts = st.sidebar.multiselect(
     "District (Daerah)", districts_in_states, default=districts_in_states
@@ -236,12 +376,15 @@ selected_brands = (
     if brand_options else None
 )
 
-# Choropleth metric chooser
+# Choropleth metric chooser. Higher-is-better metrics get a green scale;
+# higher-is-worse (ratio) gets a red scale.
 metric_choice = st.sidebar.radio(
     "Choropleth metric",
-    ["pop_per_pharmacy", "pharmacies_per_100k", "population"],
+    ["pop_per_pharmacy", "pharmacies_per_1000", "pharmacies_per_100k", "population"],
+    index=1,  # default to the user-requested "per 1,000"
     format_func=lambda x: {
         "pop_per_pharmacy": "Population per Pharmacy (lower = better access)",
+        "pharmacies_per_1000": "Pharmacies per 1,000 residents (higher = better)",
         "pharmacies_per_100k": "Pharmacies per 100k people",
         "population": "Total Population",
     }[x],
@@ -260,10 +403,17 @@ basemap_name = st.sidebar.selectbox(
 # --------------------------------------------------------------------------------------
 # Apply filters
 # --------------------------------------------------------------------------------------
-mask = metrics["state"].isin(selected_states) & metrics["district"].isin(selected_districts)
-if selected_strata:
-    mask &= metrics["strata"].isin(selected_strata)
-metrics_f = metrics[mask].copy()
+# State / district filters apply to pharmacies in every geography (both
+# columns are always stamped). For the choropleth metrics, only apply those
+# columns if the current geography actually exposes them.
+metric_mask = pd.Series(True, index=metrics.index)
+if "state" in metrics.columns:
+    metric_mask &= metrics["state"].isin(selected_states)
+if "district" in metrics.columns:
+    metric_mask &= metrics["district"].isin(selected_districts)
+if selected_strata and "strata" in metrics.columns:
+    metric_mask &= metrics["strata"].isin(selected_strata)
+metrics_f = metrics[metric_mask].copy()
 
 p_mask = pharmacies_joined["state"].isin(selected_states) & \
          pharmacies_joined["district"].isin(selected_districts)
@@ -273,13 +423,15 @@ if selected_brands and "brand" in pharmacies_joined.columns:
     p_mask &= pharmacies_joined["brand"].isin(selected_brands)
 pharmacies_f = pharmacies_joined[p_mask].copy()
 
-# Filter the GeoJSON features as well so the choropleth respects filters
-allowed_districts = set(metrics_f["district"])
+# Filter the GeoJSON features using whichever key identifies the current
+# geography (district / mukim / zone / catchment_id).
+label_key = geo_ctx["label_key"]
+allowed_districts = set(metrics_f[label_key].dropna()) if label_key in metrics_f.columns else set(metrics_f["district"].dropna())
 filtered_geojson = {
     "type": "FeatureCollection",
     "features": [
         f for f in enriched_geojson["features"]
-        if f["properties"].get("district") in allowed_districts
+        if f["properties"].get(label_key) in allowed_districts
     ],
 }
 
@@ -295,12 +447,12 @@ total_phar = int(metrics_f["pharmacy_count"].sum())
 overall_ratio = total_pop / total_phar if total_phar else float("nan")
 underserved = int((metrics_f["pop_per_pharmacy"] > 10_000).sum())
 
-c1.metric("Districts in view", f"{len(metrics_f):,}")
+c1.metric(f"{geography.split(' — ')[0]} in view", f"{len(metrics_f):,}")
 c2.metric("Total population", f"{total_pop:,}")
 c3.metric("Total pharmacies", f"{total_phar:,}")
 c4.metric("Overall ratio",
           "N/A" if pd.isna(overall_ratio) else f"1 : {int(overall_ratio):,}",
-          delta=f"{underserved} districts >10k:1", delta_color="inverse")
+          delta=f"{underserved} polygons >10k:1", delta_color="inverse")
 
 # --------------------------------------------------------------------------------------
 # Map
@@ -325,13 +477,16 @@ else:
         control=True,
     ).add_to(m)
 
-# Choropleth layer
+# Choropleth layer — key by the active geography's label column, not hard-coded to district.
+# Use green-is-good for "per-1000/100k" metrics (higher = better access)
+# and red-is-bad for the "pop_per_pharmacy" ratio (higher = worse access).
+_fill_color = "YlOrRd" if metric_choice == "pop_per_pharmacy" else "YlGnBu"
 folium.Choropleth(
     geo_data=filtered_geojson,
     data=metrics_f,
-    columns=["district", metric_choice],
-    key_on="feature.properties.district",
-    fill_color="YlOrRd" if metric_choice == "pop_per_pharmacy" else "YlGnBu",
+    columns=[label_key, metric_choice],
+    key_on=f"feature.properties.{label_key}",
+    fill_color=_fill_color,
     fill_opacity=0.7,
     line_opacity=0.3,
     nan_fill_color="lightgray",
@@ -343,17 +498,33 @@ folium.Choropleth(
     name="Choropleth",
 ).add_to(m)
 
-# Transparent overlay carrying the rich tooltip (Choropleth's own tooltip is limited)
+# Transparent overlay carrying the rich tooltip (Choropleth's own tooltip is
+# limited). Build the tooltip fields dynamically so each geography only shows
+# properties that actually exist on its features.
+_candidate_fields = [label_key]
+if "district" not in _candidate_fields and "district" in geo_ctx["join_keys"]:
+    _candidate_fields.append("district")
+if "state" not in _candidate_fields and "state" in geo_ctx["join_keys"]:
+    _candidate_fields.append("state")
+_candidate_fields += ["population", "pharmacy_count", "pop_per_pharmacy", "pharmacies_per_1000"]
+_field_aliases = {
+    "mukim": "Mukim:", "district": "District:", "state": "State:",
+    "zone": "Zone:", "catchment_id": "Catchment:", "pharmacy": "Pharmacy:",
+    "population": "Population:", "pharmacy_count": "Pharmacies:",
+    "pop_per_pharmacy": "Pop per Pharmacy:",
+    "pharmacies_per_1000": "Pharmacies / 1,000:",
+}
+# Only keep fields that exist in the first feature's properties.
+_sample_props = filtered_geojson["features"][0]["properties"] if filtered_geojson["features"] else {}
+_tooltip_fields = [f for f in _candidate_fields if f in _sample_props]
 folium.GeoJson(
     filtered_geojson,
-    name="District info",
+    name=f"{geography.split(' — ')[0]} info",
     style_function=lambda _: {"fillOpacity": 0, "color": "transparent", "weight": 0},
     highlight_function=lambda _: {"weight": 2, "color": "#333", "fillOpacity": 0.1},
     tooltip=folium.GeoJsonTooltip(
-        fields=["district", "state", "population", "pharmacy_count",
-                "pop_per_pharmacy", "pharmacies_per_100k"],
-        aliases=["District:", "State:", "Population:", "Pharmacies:",
-                 "Pop per Pharmacy:", "Per 100k:"],
+        fields=_tooltip_fields,
+        aliases=[_field_aliases.get(f, f) for f in _tooltip_fields],
         localize=True, sticky=True,
         style=("background-color: white; color: #222; "
                "font-family: arial; font-size: 12px; padding: 6px;"),
@@ -397,21 +568,24 @@ st_folium(m, height=620, use_container_width=True, returned_objects=[])
 # --------------------------------------------------------------------------------------
 left, right = st.columns([3, 2])
 
+_geo_label = geography.split(" — ")[0]
 with left:
-    st.subheader("📊 Districts by Population per Pharmacy (worst access on top)")
+    st.subheader(f"📊 {_geo_label}: worst-access on top (Population per Pharmacy)")
     chart_df = (metrics_f.dropna(subset=["pop_per_pharmacy"])
                          .sort_values("pop_per_pharmacy", ascending=False)
                          .head(20))
+    _color_col = "state" if "state" in chart_df.columns else ("zone" if "zone" in chart_df.columns else None)
     fig = px.bar(
-        chart_df, x="pop_per_pharmacy", y="district", color="state",
+        chart_df, x="pop_per_pharmacy", y=label_key,
+        color=_color_col,
         orientation="h", height=520,
-        labels={"pop_per_pharmacy": "Population per Pharmacy", "district": ""},
+        labels={"pop_per_pharmacy": "Population per Pharmacy", label_key: ""},
     )
     fig.update_layout(yaxis={"categoryorder": "total ascending"}, margin=dict(l=10, r=10, t=10, b=10))
     st.plotly_chart(fig, use_container_width=True)
 
 with right:
-    st.subheader("📋 District metrics")
+    st.subheader(f"📋 {_geo_label} metrics")
     st.dataframe(
         metrics_f.sort_values("pop_per_pharmacy", ascending=False)
                  .reset_index(drop=True)
@@ -420,6 +594,7 @@ with right:
                      "pharmacy_count": "{:,.0f}",
                      "pop_per_pharmacy": "{:,.0f}",
                      "pharmacies_per_100k": "{:.2f}",
+                     "pharmacies_per_1000": "{:.3f}",
                  }),
         use_container_width=True, height=520,
     )

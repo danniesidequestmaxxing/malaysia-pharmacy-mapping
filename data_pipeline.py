@@ -291,6 +291,186 @@ def _fetch_geoboundaries(iso3: str, level: str, timeout: int = 60) -> Dict:
     return gj.json()
 
 
+def load_malaysia_mukim_geojson(
+    cache_path: str | Path = "data/mukim_my_adm3.geojson",
+    ttl_hours: float = 24 * 30,
+    force_refresh: bool = False,
+) -> Dict:
+    """Fetch Malaysia ADM3 (Mukim) boundaries from geoBoundaries.
+
+    1,859 mukim across Malaysia — 12× the ADM2 district granularity.
+    Each output feature has properties `{mukim, district, state}` where:
+      * `mukim`    = geoBoundaries `shapeName` (sub-district name)
+      * `district` = parent ADM2 name, stamped via centroid-in-ADM2 lookup
+      * `state`    = parent ADM1 name, stamped via centroid-in-ADM1 lookup
+    """
+    cache_path = Path(cache_path)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if _cache_is_fresh(cache_path, ttl_hours) and not force_refresh:
+        return json.loads(cache_path.read_text(encoding="utf-8"))
+
+    adm3 = _fetch_geoboundaries("MYS", "ADM3")
+    adm2 = _fetch_geoboundaries("MYS", "ADM2")
+    adm1 = _fetch_geoboundaries("MYS", "ADM1")
+
+    state_polys = [shape(f["geometry"]) for f in adm1["features"]]
+    state_names = [f["properties"].get("shapeName") for f in adm1["features"]]
+    state_tree = STRtree(state_polys)
+
+    district_polys = [shape(f["geometry"]) for f in adm2["features"]]
+    district_names = [f["properties"].get("shapeName") for f in adm2["features"]]
+    district_tree = STRtree(district_polys)
+
+    def _parent(geom, tree, polys, names) -> Optional[str]:
+        pt = geom.representative_point()
+        for idx in tree.query(pt):
+            if polys[idx].contains(pt):
+                return names[idx]
+        best_idx, best_area = None, 0.0
+        for idx in tree.query(geom):
+            inter = polys[idx].intersection(geom).area
+            if inter > best_area:
+                best_area, best_idx = inter, idx
+        return names[best_idx] if best_idx is not None else None
+
+    out_features = []
+    for feat in adm3["features"]:
+        geom = shape(feat["geometry"])
+        out_features.append({
+            "type": "Feature",
+            "geometry": feat["geometry"],
+            "properties": {
+                "mukim":    feat["properties"].get("shapeName"),
+                "district": _parent(geom, district_tree, district_polys, district_names),
+                "state":    _parent(geom, state_tree, state_polys, state_names),
+            },
+        })
+
+    out = {"type": "FeatureCollection", "features": out_features}
+    cache_path.write_text(json.dumps(out), encoding="utf-8")
+    return out
+
+
+# KKM / Pharmacy Board Malaysia coarse pharmacy zones. States are grouped
+# by the same regional buckets MOH uses for public-pharmacy logistics.
+KKM_ZONES: Dict[str, List[str]] = {
+    "Zon Utara":           ["Perlis", "Kedah", "Pulau Pinang", "Perak"],
+    "Zon Tengah":          ["Selangor", "Kuala Lumpur", "Putrajaya", "Negeri Sembilan"],
+    "Zon Selatan":         ["Melaka", "Johor"],
+    "Zon Timur":           ["Kelantan", "Terengganu", "Pahang"],
+    "Zon Sabah/Sarawak":   ["Sabah", "Sarawak", "Labuan"],
+}
+
+
+def zone_for_state(state: str) -> Optional[str]:
+    """Return the KKM pharmacy zone for a state, or None if unmapped."""
+    if not isinstance(state, str):
+        return None
+    for zone, states in KKM_ZONES.items():
+        if state in states:
+            return zone
+    return None
+
+
+def build_kkm_zones_geojson(adm1_geojson: Dict) -> Dict:
+    """Union each zone's member-state polygons into a single multi-polygon.
+
+    We don't call geoBoundaries for zones (KKM doesn't publish a zone layer)
+    — we derive them by grouping ADM1 state polygons with the KKM_ZONES map.
+    State names are normalized through `_canonical_state` so that "Penang"
+    and "Pulau Pinang" (geoBoundaries vs DOSM/KKM) map to the same bucket.
+    """
+    from shapely.ops import unary_union
+    state_geoms = {
+        _canonical_state(f["properties"].get("shapeName")): shape(f["geometry"])
+        for f in adm1_geojson["features"]
+    }
+    features = []
+    for zone, states in KKM_ZONES.items():
+        geoms = [state_geoms[s] for s in states if s in state_geoms]
+        if not geoms:
+            continue
+        merged = unary_union(geoms)
+        features.append({
+            "type": "Feature",
+            "geometry": merged.__geo_interface__,
+            "properties": {"zone": zone, "state_count": len(geoms)},
+        })
+    return {"type": "FeatureCollection", "features": features}
+
+
+def load_kkm_zones_geojson(
+    cache_path: str | Path = "data/kkm_zones.geojson",
+    force_refresh: bool = False,
+) -> Dict:
+    """Build (or load from cache) the KKM-zone GeoJSON."""
+    cache_path = Path(cache_path)
+    if cache_path.exists() and not force_refresh:
+        return json.loads(cache_path.read_text(encoding="utf-8"))
+    adm1 = _fetch_geoboundaries("MYS", "ADM1")
+    gj = build_kkm_zones_geojson(adm1)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(json.dumps(gj), encoding="utf-8")
+    return gj
+
+
+def build_voronoi_catchments(
+    pharmacies: pd.DataFrame,
+    boundary_geojson: Dict,
+    lat_col: str = "latitude",
+    lon_col: str = "longitude",
+) -> Dict:
+    """Build a Voronoi polygon per pharmacy, clipped to a boundary.
+
+    Each cell = "the area closer to this pharmacy than to any other" — a clean
+    analytic interpretation of a pharmacy's catchment zone. The boundary (the
+    union of all ADM1 states, usually) prevents cells from extending into the
+    sea.
+    """
+    from shapely.geometry import MultiPoint
+    from shapely.ops import voronoi_diagram, unary_union
+
+    coords = pharmacies[[lon_col, lat_col]].dropna().to_numpy()
+    if len(coords) < 3:
+        raise ValueError("Need at least 3 points to build a Voronoi diagram.")
+
+    pts = MultiPoint(coords)
+    # Extract the boundary polygon (union of all boundary features).
+    boundary = unary_union([shape(f["geometry"]) for f in boundary_geojson["features"]])
+
+    diagram = voronoi_diagram(pts, envelope=boundary, edges=False)
+    cells = list(diagram.geoms)
+
+    # Match each Voronoi cell back to its generating pharmacy by point-in-cell.
+    # With a large Voronoi we'd use a spatial index; 1-2k pharmacies is fine.
+    pharm_rows = pharmacies.reset_index(drop=True)
+    features = []
+    for cell in cells:
+        clipped = cell.intersection(boundary)
+        if clipped.is_empty:
+            continue
+        # Find the pharmacy whose point lies inside this cell.
+        name, pid, brand = "Unknown", "", "Other"
+        for _, row in pharm_rows.iterrows():
+            p = Point(row[lon_col], row[lat_col])
+            if cell.contains(p):
+                name = row.get("name") or name
+                pid = row.get("pharmacy_id") or ""
+                brand = row.get("brand") or "Other"
+                break
+        features.append({
+            "type": "Feature",
+            "geometry": clipped.__geo_interface__,
+            "properties": {
+                "catchment_id": pid or f"VC{len(features):05d}",
+                "pharmacy":     name,
+                "brand":        brand,
+            },
+        })
+    return {"type": "FeatureCollection", "features": features}
+
+
 def load_malaysia_districts_geojson(
     cache_path: str | Path = "data/districts_my_adm2.geojson",
     ttl_hours: float = 24 * 30,  # boundaries change rarely — cache for a month
@@ -476,6 +656,65 @@ def normalize_geojson_names(
 # 2. Spatial join — assign each pharmacy to the district polygon it sits in
 # --------------------------------------------------------------------------------------
 
+def stamp_polygon_props(
+    points_df: pd.DataFrame,
+    polygons_geojson: Dict,
+    prop_keys: List[str],
+    lat_col: str = "latitude",
+    lon_col: str = "longitude",
+    prefix: str = "",
+) -> pd.DataFrame:
+    """Point-in-polygon stamp — generic replacement for the district-specific
+    join. For every row, find the polygon that contains (lon, lat) and copy
+    the named property keys into new columns on the output DataFrame.
+
+    If a column of the same name already exists on the input, it's preserved
+    as `<name>_raw` so downstream joins don't silently overwrite source data.
+    """
+    polys: List = []
+    props: List[Dict] = []
+    for feat in polygons_geojson["features"]:
+        polys.append(shape(feat["geometry"]))
+        props.append(feat.get("properties", {}))
+    tree = STRtree(polys)
+
+    out = points_df.copy()
+    # Preserve any existing columns that would collide.
+    for k in prop_keys:
+        col = f"{prefix}{k}"
+        if col in out.columns:
+            out = out.rename(columns={col: f"{col}_raw"})
+
+    # Bulk query where possible.
+    lons = out[lon_col].to_numpy()
+    lats = out[lat_col].to_numpy()
+    n = len(out)
+    pts = np.empty(n, dtype=object)
+    for i in range(n):
+        pts[i] = Point(lons[i], lats[i])
+
+    # `within` is the predicate for "input point within tree polygon".
+    try:
+        input_idx, tree_idx = tree.query(pts, predicate="within")
+        # Each point matches at most one polygon — build a point→polygon map.
+        match_map = np.full(n, -1, dtype=np.int64)
+        match_map[input_idx] = tree_idx
+    except Exception:
+        match_map = np.full(n, -1, dtype=np.int64)
+        for i in range(n):
+            for idx in tree.query(pts[i]):
+                if polys[idx].contains(pts[i]):
+                    match_map[i] = idx
+                    break
+
+    for key in prop_keys:
+        out[f"{prefix}{key}"] = [
+            props[match_map[i]].get(key) if match_map[i] >= 0 else None
+            for i in range(n)
+        ]
+    return out
+
+
 def spatial_join_pharmacies_to_districts(
     pharmacies: pd.DataFrame,
     districts_geojson: Dict,
@@ -552,7 +791,68 @@ def compute_district_metrics(
         np.nan,
     )
     merged["pharmacies_per_100k"] = merged["pharmacy_count"] / merged["population"] * 100_000
+    merged["pharmacies_per_1000"] = merged["pharmacy_count"] / merged["population"] * 1_000
     return merged
+
+
+def compute_polygon_metrics(
+    pharmacies_with_keys: pd.DataFrame,
+    population_df: pd.DataFrame,
+    on: List[str],
+) -> pd.DataFrame:
+    """Generic metric builder — works for district, mukim, zone, catchment.
+
+    `on` is the list of columns that identify a polygon (e.g. ["district","state"]
+    or ["mukim","district","state"] or ["zone"] or ["catchment_id"]).
+
+    Output columns: *on, population, pharmacy_count, pop_per_pharmacy,
+    pharmacies_per_100k, pharmacies_per_1000.
+    """
+    counts = (
+        pharmacies_with_keys
+        .dropna(subset=on)
+        .groupby(on, dropna=False)
+        .size()
+        .reset_index(name="pharmacy_count")
+    )
+    merged = population_df.merge(counts, on=on, how="left")
+    merged["pharmacy_count"] = merged["pharmacy_count"].fillna(0).astype(int)
+    merged["pop_per_pharmacy"] = np.where(
+        merged["pharmacy_count"] > 0,
+        merged["population"] / merged["pharmacy_count"],
+        np.nan,
+    )
+    pop = merged["population"].replace(0, np.nan)
+    merged["pharmacies_per_100k"] = merged["pharmacy_count"] / pop * 100_000
+    merged["pharmacies_per_1000"] = merged["pharmacy_count"] / pop * 1_000
+    return merged
+
+
+def enrich_geojson_with_polygon_metrics(
+    geojson: Dict,
+    metrics_df: pd.DataFrame,
+    on: List[str],
+) -> Dict:
+    """Generic enrichment for mukim/zone/catchment layers.
+
+    Joins each feature to `metrics_df` by a tuple of property keys, injecting
+    the metric columns into `feature.properties` so Folium tooltips read them.
+    """
+    lookup = metrics_df.set_index(on).to_dict(orient="index") if on else {}
+    out = json.loads(json.dumps(geojson))
+    for feat in out["features"]:
+        props = feat.setdefault("properties", {})
+        key = tuple(props.get(k) for k in on) if len(on) > 1 else props.get(on[0])
+        m = lookup.get(key, {}) if lookup else {}
+        props["population"] = int(m.get("population", 0) or 0)
+        props["pharmacy_count"] = int(m.get("pharmacy_count", 0) or 0)
+        ratio = m.get("pop_per_pharmacy")
+        props["pop_per_pharmacy"] = (
+            f"1 : {int(ratio):,}" if pd.notna(ratio) else "N/A"
+        )
+        props["pharmacies_per_100k"] = round(float(m.get("pharmacies_per_100k", 0) or 0), 2)
+        props["pharmacies_per_1000"] = round(float(m.get("pharmacies_per_1000", 0) or 0), 3)
+    return out
 
 
 def enrich_geojson_with_metrics(

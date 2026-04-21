@@ -25,6 +25,10 @@ data/source/*
 !data/districts_my_adm2.geojson
 !data/geocode_cache.json
 !data/geocode_cache_google.json
+!data/worldpop_per_mukim.csv
+!data/worldpop_per_zone.csv
+!data/mukim_my_adm3.geojson
+!data/kkm_zones.geojson
 
 # OS / editor
 .DS_Store

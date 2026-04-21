@@ -563,59 +563,57 @@ def merge_pharmacy_sources(
 # 5. WorldPop → per-district aggregation
 # --------------------------------------------------------------------------------------
 
-def compute_worldpop_per_district(
+def compute_worldpop_per_polygons(
     csv_path: str | Path,
-    districts_geojson: Dict,
-    cache_path: str | Path = "data/worldpop_per_district.csv",
-    chunksize: int = 500_000,
+    polygons_geojson: Dict,
+    cache_path: str | Path,
+    id_properties: Optional[List[str]] = None,
+    chunksize: int = 1_000_000,
     force_refresh: bool = False,
     verbose: bool = True,
 ) -> pd.DataFrame:
-    """Aggregate a WorldPop raster CSV (lon,lat,value) to ADM2 districts.
+    """Aggregate a WorldPop raster CSV (lon,lat,value) to any polygon set.
 
-    We process the CSV in chunks to keep memory low (11M+ rows), build an
-    STRtree over the district polygons once, and sum cell values per district.
+    Generic version — originally written for ADM2 districts, now also used
+    for ADM3 mukim and any arbitrary polygon set (e.g. Voronoi catchments).
 
-    Output columns: district, state, population (int).
+    `id_properties` is the list of property keys from each feature to copy
+    into the output DataFrame.  Defaults to whatever keys the first feature
+    has (minus geometry internals).
     """
     cache_path = Path(cache_path)
     if cache_path.exists() and not force_refresh:
         if verbose:
-            print(f"  using cached WorldPop aggregation: {cache_path}")
+            print(f"  using cached aggregation: {cache_path}")
         return pd.read_csv(cache_path)
 
-    # Build spatial index over district polygons.
-    polys = [shape(f["geometry"]) for f in districts_geojson["features"]]
-    props = [f["properties"] for f in districts_geojson["features"]]
+    features = polygons_geojson["features"]
+    if id_properties is None:
+        id_properties = list(features[0].get("properties", {}).keys())
+
+    polys = [shape(f["geometry"]) for f in features]
+    props = [f["properties"] for f in features]
     tree = STRtree(polys)
 
-    # Per-district running totals, keyed by feature index.
     totals = np.zeros(len(polys), dtype=np.float64)
     unmatched = 0
-
     total_rows = 0
     t0 = time.time()
     for chunk in pd.read_csv(csv_path, chunksize=chunksize):
         lons = chunk["longitude"].to_numpy()
         lats = chunk["latitude"].to_numpy()
-        vals = chunk.iloc[:, 2].to_numpy()  # the WorldPop value column
+        vals = chunk.iloc[:, 2].to_numpy()
 
-        # Vectorized bulk query: STRtree.query accepts an array of geometries
-        # in Shapely 2. The correct predicate for "point inside polygon" is
-        # `within` (the input point is within the tree polygon).
         try:
             pts = np.empty(len(chunk), dtype=object)
             for i in range(len(chunk)):
                 pts[i] = Point(lons[i], lats[i])
             input_idx, tree_idx = tree.query(pts, predicate="within")
-            # Vectorized accumulation — np.add.at handles duplicate indices if
-            # any point happens to land on a polygon boundary.
             np.add.at(totals, tree_idx, vals[input_idx])
             matched = np.zeros(len(chunk), dtype=bool)
             matched[input_idx] = True
             unmatched += int((~matched).sum())
         except Exception:
-            # Older shapely — scalar fallback.
             for lon, lat, v in zip(lons, lats, vals):
                 pt = Point(lon, lat)
                 found = False
@@ -631,14 +629,34 @@ def compute_worldpop_per_district(
         if verbose:
             print(f"  processed {total_rows:,} rows  ({time.time() - t0:.1f}s)")
 
-    out = pd.DataFrame({
-        "district": [p.get("district") for p in props],
-        "state":    [p.get("state") for p in props],
-        "population": totals.round().astype(int),
-    })
+    out = pd.DataFrame({key: [p.get(key) for p in props] for key in id_properties})
+    out["population"] = totals.round().astype(int)
     if verbose:
-        print(f"  done. {unmatched:,} cells outside all polygons "
-              f"(likely sea / coastal jitter). Total pop: {int(out['population'].sum()):,}")
+        print(f"  done. {unmatched:,} cells outside all polygons. "
+              f"Total pop: {int(out['population'].sum()):,}")
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(cache_path, index=False)
     return out
+
+
+def compute_worldpop_per_district(
+    csv_path: str | Path,
+    districts_geojson: Dict,
+    cache_path: str | Path = "data/worldpop_per_district.csv",
+    chunksize: int = 500_000,
+    force_refresh: bool = False,
+    verbose: bool = True,
+) -> pd.DataFrame:
+    """Back-compat shim — delegates to compute_worldpop_per_polygons.
+
+    Output columns: district, state, population (int).
+    """
+    return compute_worldpop_per_polygons(
+        csv_path=csv_path,
+        polygons_geojson=districts_geojson,
+        cache_path=cache_path,
+        id_properties=["district", "state"],
+        chunksize=chunksize,
+        force_refresh=force_refresh,
+        verbose=verbose,
+    )
