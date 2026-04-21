@@ -57,6 +57,25 @@ st.set_page_config(
 MALAYSIA_CENTER = [4.2105, 109.4053]
 DEFAULT_ZOOM = 6
 
+# Basemap providers. The Google entries use Google's public tile infrastructure
+# (the same `mt{0-3}.google.com/vt/` endpoints their own Maps site serves).
+# Strict reading of Google Maps ToS only licenses these URLs for use inside
+# Google's own products — use the Carto/OSM fallbacks for anything public.
+# For a ToS-compliant Google deploy, switch to the Map Tiles API (session
+# token flow); that's a larger rework, see the plan notes in the repo.
+MAP_TILE_PROVIDERS: dict = {
+    "Google Maps — Roadmap":   {"url": "https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+                                "attr": "© Google", "max_zoom": 20, "subdomains": "0123"},
+    "Google Maps — Satellite": {"url": "https://mt{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+                                "attr": "© Google", "max_zoom": 20, "subdomains": "0123"},
+    "Google Maps — Hybrid":    {"url": "https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+                                "attr": "© Google", "max_zoom": 20, "subdomains": "0123"},
+    "Google Maps — Terrain":   {"url": "https://mt{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}",
+                                "attr": "© Google", "max_zoom": 20, "subdomains": "0123"},
+    "CartoDB Positron":        {"builtin": "cartodbpositron"},
+    "OpenStreetMap":           {"builtin": "openstreetmap"},
+}
+
 
 # --------------------------------------------------------------------------------------
 # Cached loaders
@@ -228,6 +247,16 @@ metric_choice = st.sidebar.radio(
     }[x],
 )
 
+# Basemap (tile layer) chooser — Google Maps by default; see MAP_TILE_PROVIDERS.
+basemap_name = st.sidebar.selectbox(
+    "Basemap",
+    list(MAP_TILE_PROVIDERS),
+    index=0,
+    help=("Google tiles come from Google's public tile servers — great look, "
+          "but outside strict ToS for non-Google products. Switch to CartoDB "
+          "Positron for a compliant, license-clean basemap."),
+)
+
 # --------------------------------------------------------------------------------------
 # Apply filters
 # --------------------------------------------------------------------------------------
@@ -278,8 +307,23 @@ c4.metric("Overall ratio",
 # --------------------------------------------------------------------------------------
 st.subheader("🗺️ Map view")
 
-m = folium.Map(location=MALAYSIA_CENTER, zoom_start=DEFAULT_ZOOM,
-               tiles="cartodbpositron", control_scale=True)
+# Initialize the map with the basemap chosen in the sidebar.
+_provider = MAP_TILE_PROVIDERS[basemap_name]
+if "builtin" in _provider:
+    m = folium.Map(location=MALAYSIA_CENTER, zoom_start=DEFAULT_ZOOM,
+                   tiles=_provider["builtin"], control_scale=True)
+else:
+    m = folium.Map(location=MALAYSIA_CENTER, zoom_start=DEFAULT_ZOOM,
+                   tiles=None, control_scale=True)
+    folium.TileLayer(
+        tiles=_provider["url"],
+        attr=_provider["attr"],
+        name=basemap_name,
+        subdomains=_provider["subdomains"],
+        max_zoom=_provider["max_zoom"],
+        overlay=False,
+        control=True,
+    ).add_to(m)
 
 # Choropleth layer
 folium.Choropleth(

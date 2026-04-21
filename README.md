@@ -83,6 +83,19 @@ compute_worldpop_per_district(
   which is accurate to ~500m — fine for district-level aggregation, not for
   pin-point navigation.  Use the Google provider (above) for pin-point accuracy.
 
+## Basemap tiles (Google Maps)
+
+The sidebar's **Basemap** selector switches between Google Maps (Roadmap /
+Satellite / Hybrid / Terrain), CartoDB Positron, and OpenStreetMap. The
+Google entries hit Google's public `mt{0-3}.google.com/vt/lyrs=…` tile
+endpoint — the same URLs the Google Maps site itself serves from. Strictly
+speaking, Google's Maps ToS only licenses those tiles for use inside Google's
+own products; they're widely used in open-source geospatial dashboards but
+are not ToS-clean for a public commercial deploy. Pick **CartoDB Positron**
+(OSM-derived, CC-BY) for a license-clean alternative. A fully-compliant
+Google deploy would move to the Map Tiles API (session-token REST flow), a
+larger rework out of scope here.
+
 ## Security notes
 
 * `.env` is **git-ignored** — your `GOOGLE_MAPS_API_KEY` never enters the repo.
