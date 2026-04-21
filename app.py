@@ -492,29 +492,38 @@ def _choropleth_bins(metric: str, series: pd.Series) -> list | None:
     variation.  Folium's default is 7 quantile bins, which breaks badly on
     skewed distributions: at mukim level most polygons are 0 and a few are
     outliers, so the default legend ends up 0→15 while real values live in
-    0.05→0.5.  These breakpoints are anchored to KKM/WHO pharmacy-access
-    planning norms (Malaysia target is ~1 retail pharmacy per 3-5k people =
-    0.2-0.33 per 1,000)."""
+    0.05→0.5.
+
+    The breakpoints below are anchored to KKM/WHO pharmacy-access norms
+    (Malaysia target is ~1 retail pharmacy per 3-5k people = 0.2-0.33 per
+    1,000). The last bin is always stretched to cover the actual max so
+    Folium's strict range check accepts every value — outliers get pooled
+    into the top bin instead of blowing up the scale on the way there."""
     s = series.dropna()
     if s.empty:
         return None
-    lo, hi = float(s.min()), float(s.max())
+    hi = float(s.max())
+
+    def _cap(base: list, top_policy: float, round_to: int = 2) -> list:
+        """Extend `base` to cover `hi` if needed, keeping the policy band intact."""
+        if hi <= top_policy:
+            return base  # all values inside the policy-anchored range
+        return base + [round(float(np.ceil(hi)), round_to)]
+
     if metric == "pop_per_pharmacy":
-        # Ratio — higher is worse.  Cap the tail at the observed max so the
-        # scale ends exactly where data ends (avoids wasted whitespace).
-        return sorted({0, 3000, 5000, 10000, 20000, 50000, max(50001, round(hi))})
+        # Ratio — higher is worse.  Policy band 0-50k, round outlier to 1k.
+        base = [0, 3000, 5000, 10000, 20000, 50000]
+        return _cap(base, 50000, round_to=0) if hi <= 50000 else base + [int(np.ceil(hi / 1000) * 1000)]
     if metric == "pharmacies_per_1000":
-        # Saturation ~0.2 per 1,000.  Tail cap at 1.0 or 99th %ile, whichever
-        # is larger, to keep a rare 10-per-1000 outlier from flattening the scale.
-        top = max(1.0, float(s.quantile(0.99)))
-        return sorted({0.0, 0.05, 0.1, 0.2, 0.3, 0.5, round(top, 2)})
+        # Saturation ≈ 1.0 per 1,000. Outliers (tiny-pop mukim) go in the top bin.
+        base = [0.0, 0.05, 0.1, 0.2, 0.3, 0.5, 1.0]
+        return _cap(base, 1.0, round_to=1)
     if metric == "pharmacies_per_100k":
-        top = max(100.0, float(s.quantile(0.99)))
-        return sorted({0.0, 5.0, 10.0, 20.0, 30.0, 50.0, round(top, 1)})
+        base = [0.0, 5.0, 10.0, 20.0, 30.0, 50.0, 100.0]
+        return _cap(base, 100.0, round_to=0)
     if metric == "population":
-        # Quantile bins are fine for raw population distributions.
         qs = list(s.quantile([0.0, 0.2, 0.4, 0.6, 0.8, 0.95]).round().astype(int))
-        return sorted(set(qs + [round(hi)]))
+        return sorted(set(qs + [int(np.ceil(hi))]))
     return None
 
 
