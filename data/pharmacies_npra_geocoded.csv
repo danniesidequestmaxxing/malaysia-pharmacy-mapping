@@ -1,0 +1,595 @@
+pharmacy_id,name,address,phone,state,source,latitude,longitude,geocode_source,brand
+NPRAf2147328d0,Nutrilife Pharmacy Sdn Bhd (Georgetown Pharmacy),"No.9, Jalan Raja Syed Alwi, 01000 Kangar, Perlis",04-9705628,Perlis,NPRA,6.4362385,100.1950594,full,NPRA
+NPRA77228dcbaf,Poly Pharmacy Sdn Bhd,"No. 915, Jalan Sultan Badlishah, 05000 Alor Setar, Kedah",04-7311310,Kedah,NPRA,6.123982199999999,100.3709808,full,NPRA
+NPRA0b2d99d640,Farmasi Kota Jaya -Alor Setar,"No. 64, Pusat Perniagaan Kota Jaya, Jalan Kota Sarang Semut, 06800, Alor Setar, Kedah",04-7693002,Kedah,NPRA,5.97555,100.39942,full,NPRA
+NPRA38f175c476,Sinar Farmasi (Farmasi Sinar),"No.5-A, Bangunan Al-Ikhwan, Pusat Perniagaan Putra, Kelang Lama Kulim 09000 Kulim, Kedah",04-4918100,Kedah,NPRA,5.3906589,100.564016,full,NPRA
+NPRA3f29f34232,Mega Kulim Pharmacy Sdn. Bhd -Bangunan Pknk,"14A, Bangunan Pknk, Jalan Tunku Abidah, 09000 Kulim Kedah",04-4907993,Kedah,NPRA,5.368492,100.5541692,full,NPRA
+NPRAbf2f5e85ad,Mega Kulim Pharmacy Sdn. Bhd. -Jalan Tunku Putra,"165 & 166, Jalan Tunku Putra, 09000 Kulim Kedah",04-4903118,Kedah,NPRA,5.3714919,100.555334,full,NPRA
+NPRA2a89e4b1b1,Mega Kulim Pharmacy Sdn. Bhd. -Jalan Ibrahim,"No.20, Jalan Ibrahim, 08000 Sungai Petani, Kedah",04-4254027,Kedah,NPRA,5.642012200000001,100.4890845,full,NPRA
+NPRA2526944d42,Mega Kulim Pharmacy Sdn. Bhd. -Taman Semarak,"13 & 14, Jalan Selasih, Taman Semarak, 09000 Kulim Kedah",04-4912168,Kedah,NPRA,5.377509,100.539236,full,NPRA
+NPRAbff174939f,Mega Kulim Pharmacy Sdn. Bhd. -Taman Semarak,"13 & 14, Jalan Selasih, Taman Semarak, 09000 Kulim Kedah",04-4912168,Kedah,NPRA,5.377509,100.539236,full,NPRA
+NPRA597cbcd1cc,Mega Kulim Pharmacy Sdn. Bhd. -Taman Semarak,"13 & 14, Jalan Selasih, Taman Semarak, 09000 Kulim Kedah",04-4912169,Kedah,NPRA,5.377509,100.539236,full,NPRA
+NPRAf8f836f60a,Realcare Pharmacy (K) Sdn Bhd -Pekan Simpang Kuala,"151&152, Jalan Psk 3, Pekan Simpang Kuala, 05400 Alor Setar, Kedah",04-7716628,Kedah,NPRA,6.099682899999999,100.3656898,full,NPRA
+NPRA8aa5f2dbd0,Wb Health And Beauty Sdn Bhd (T/A Wellbeing Pharmacy) -Aman Central 1,"Lot G03A&G05, Aman Central 1, Lebuhraya Darul Aman, 05100 Alor Setar, Kedah",04-7308880,Kedah,NPRA,6.1248637,100.3667935,full,NPRA
+NPRAc4a60ee798,Smartsons Pharmacy Sdn Bhd,"323-C, Jln Kuala Ketil,Pekan Lama, 08000 Sg Petani, Kedah",04-4226889,Kedah,NPRA,5.6375711,100.4956951,full,NPRA
+NPRA5067c901db,Psk Wb Sdn Bhd -Pekan Simpang Kuala,"No 219A, Jalan Psk 6, Pekan Simpang Kuala,05400 Alor Setar, Kedah",,Kedah,NPRA,6.1004492,100.3660047,full,NPRA
+NPRA619af993a2,Northern Healthcare,"4, Jln Kuda Kepang 1/1A, Taman Ria Jaya, 08000 Sg. Petani, Kedah",04-4428969,Kedah,NPRA,5.6477302,100.518115,full,NPRA
+NPRAbbafbe6e0a,Health Path Sdn Bhd -Alor Setar,"2,Jalan Kompleks Perniagaan Jelatek, Jln Langgar, 05460 Alor Setar, Kedah",04-7312586,Kedah,NPRA,6.1326902,100.3900135,full,NPRA
+NPRAfeed6dc54c,Farmasi Econ (S.P) Sdn Bhd - Sungai Petani,"6, Jln Pengkalan, 08000 Sungai Petani, Kedah",04-4211115,Kedah,NPRA,5.641579200000001,100.4877071,full,NPRA
+NPRAcc3af6ce6f,Farmasi Tigas Alliance- Berjaya Pharmacy Retail Sdn Bhd,"Lot No. 11 & 12, Tingkat Bawah, Kompleks Amanjaya, Persiaran Cempaka, Bandar Amanjaya, 08000 Sungai Petani, Kedah",04-4400178,Kedah,NPRA,5.6727394,100.5095052,full,NPRA
+NPRA956ac92b66,As Pharmacy -Mukim Mergong,"23 Tingkat Bawah, Pusat Dagangan Tuanku Haminah,Mukim Mergong, 05150 Alor Setar, Kedah",04-7338836,Kedah,NPRA,6.135186,100.3425771,full,NPRA
+NPRAb3a3e31b43,Suria Pharmacare Sdn Bhd (Farmasi Suria),"Lot 9, Kompleks Perniagaan Guar Utama, Jalan Guar Utama,08000 Guar Chempedak, Kedah",,Kedah,NPRA,5.8595487,100.4557704,full,NPRA
+NPRAb613982388,Otto Pharma Sdn Bhd -Alor Setar,"2506 A, Jalan Pekan Pumpong, 05250 Alor Setar, Kedah",04-7622204,Kedah,NPRA,6.152013999999999,100.3692325,full,NPRA
+NPRA7e369ea055,Farmasi Pj,"No 15, Lorong Serai Setia 1/1, Taman Serai Setia, 09400 Padang Serai, Kedah.",04-4851868,Kedah,NPRA,5.5145721,100.5508739,full,NPRA
+NPRAdaed33dc6d,Royale Pharma Pharmacy(Pharmaniaga Pristine Sdn Bhd),"No.2 Lorong Blm 1/2, Bandar Laguna Merbok, 08000 Sungai Petani, Kedah",03-33429999 377,Kedah,NPRA,5.679744899999999,100.4938301,full,NPRA
+NPRA088f1bc243,Wb Health And Beauty Sdn Bhd(Wellbeing Health.Beauty),"8E, Gf & Mezzanine Floor, Samila Business Centre, Aman Walk Lebuhraya Darulaman 05100 Alor Setar Kedah",,Kedah,NPRA,6.123254699999999,100.3663541,full,NPRA
+NPRAc449540962,Suria Pharmacare Sdn Bhd,"No 03, Susuran Arowana 2, Taman Kelisa, Kerpan,Ayer Hitam, 06150 Kubang Pasu, Kedah",04-7940607,Kedah,NPRA,6.2568496,100.2297168,full,NPRA
+NPRAc32a557eda,Farmasi Suria,"No 2A (Tingkat Bawah), Susur Allamanda 2,Pusat Perniagaan Allamanda, 08200 Sik Kedah",04-4615451,Kedah,NPRA,5.815523,100.740051,full,NPRA
+NPRA3d8a5105c4,Mega Kulim Pharmacy Sdn Bhd (Mega Kulim Pharmacy),"144 Jalan Lagenda 5, Lagenda Heights 08000 Sungai Petani Kedah",04-4252168,Kedah,NPRA,5.6589969,100.5007195,full,NPRA
+NPRA6cb366be79,One Stop Wellcare Pharmacy,"91, Tingkat Bawah, Jalan Lagenda 1, Lagenda Heights, 08000 Sungai Petani, Kedah",04-4213697,Kedah,NPRA,5.6620256,100.5029369,full,NPRA
+NPRAd9a34d2a60,Health Town Pharmacy Sdn Bhd (Georgetown Pharmacy),"198-Gf, 199-Gf & 199-1F, Jalan Lagenda 7, Lagenda Height, 08000, Sungai Petani, Kedah",04-4242628,Kedah,NPRA,5.6631067,100.5028944,full,NPRA
+NPRA20a818c0e9,Health Town Pharmacy Sdn Bhd (Georgetown Pharmacy),"198-Gf, 199-Gf & 199-1F, Jalan Lagenda 7, Lagenda Height, 08000, Sungai Petani, Kedah",04-4242628,Kedah,NPRA,5.6631067,100.5028944,full,NPRA
+NPRA0da818282a,City Wellness Pharmacy Sdn Bhd -Island Glades,"1-G Ground Floor, Lorong Delima 5, Island Glades, 11700 Pulau Pinang",04-6564098,Pulau Pinang,NPRA,5.3826077,100.3045294,full,NPRA
+NPRAecad23cf71,Guardian Health And Beauty Sdn.Bhd (Ghb),"Lot Lg-88, Queensbay Mall, Persiaran Bayan Indah, 11900 Bayan Lepas, Pulau Pinang",04-6466508,Pulau Pinang,NPRA,5.333133999999999,100.3069786,full,NPRA
+NPRA89bf47f2e8,Lotus Pharmacy & Organic - Butterworth,"16, Ground Floor, Lorong Tanjung Aman 2, Taman Tanjung Aman, 12300 Butterworth, Pulau Pinang",04-3338566 / 019- 4180032,Pulau Pinang,NPRA,5.4280741,100.3866905,full,NPRA
+NPRA436f6508d6,Lotus Pharmacy -Bukit Mertajam,"1, Lorong Sepakat 1, Taman Bandar Raya, 14000 Bukit Mertajam, Pulau Pinang",04-5387566,Pulau Pinang,NPRA,5.34981,100.4790379,full,NPRA
+NPRAfc9d0f177a,Lovy Pharmacy Sdn Bhd - Jalan New Ferry,"5002, Jalan New Ferry, 12100, Butterworth Pulau Pinang",04-3326821,Pulau Pinang,NPRA,5.3988732,100.3728681,full,NPRA
+NPRAafb208d8d8,Wellings Pharmacy Sdn Bhd -Belissa Row,"368-1-12, Belissa Row, Jalan Burma, 10350 Pulau Pinang",04-2282628,Pulau Pinang,NPRA,5.432818399999999,100.3096195,full,NPRA
+NPRA04766cceca,Wellings Pharmacy Sdn Bhd -Belissa Row,"368-1-12, Belissa Row, Jalan Burma, 10350 Pulau Pinang",04-2282628,Pulau Pinang,NPRA,5.432818399999999,100.3096195,full,NPRA
+NPRA49f443e352,Wellings Pharmacy Sdn Bhd -Belissa Row,"368-1-12, Belissa Row, Jalan Burma, 10350 Pulau Pinang",04-2282628,Pulau Pinang,NPRA,5.432818399999999,100.3096195,full,NPRA
+NPRA98439b92b7,Jion Pharmacy -Macalister Road,"165-G-1, Macalister Road, 10400, Georgetown, Pulau Pinang",04-2280871,Pulau Pinang,NPRA,5.4188852,100.318199,full,NPRA
+NPRA138769bed0,Indopharma Sdn. Bhd (Medisafe Pharmacy) - Midlands Park Centre,"488B-G-38&39, Midlands Park Centre, Jalan Burma, 10350 Pulau Pinang",04-2282882,Pulau Pinang,NPRA,5.432907,100.306412,full,NPRA
+NPRAcb289f88ca,Topcare Pharmacy Sdn Bhd - Taman Duku,"702, Jalan Juru, Taman Duku, 14100, Bukit Mertajam, Pulau Pinang",04-5070893,Pulau Pinang,NPRA,5.316430800000001,100.4449475,full,NPRA
+NPRA3e5eb6f38f,I Pharmacy (Lotus Pharmacy & Organic) -Georgetown,"332-F, Jalan Perak, 11600 Georgetown, Pulau Pinang",04-2829677,Pulau Pinang,NPRA,5.398973,100.3147369,full,NPRA
+NPRAa583ff18da,Lotus Pharmacy -Jalan Paya Terubong,"1228-U, Jalan Paya Terubong, 11060 Air Itam, Pulau Pinang",04-5387566,Pulau Pinang,NPRA,5.3932097,100.2766197,full,NPRA
+NPRA20c8e2e433,Siang Pharmacy Sdn.Bhd - Sungai Bakap,"1378 & 1379, Jalan Sungai Bakap, Taman Sungai Bakap Permai,14200 Sungai Bakap, Pulau Pinang",04-5833000,Pulau Pinang,NPRA,5.232567299999999,100.4915019,full,NPRA
+NPRAc6a593f980,Siang Pharmacy Sdn.Bhd - Nibong Tebal,"1339, Jalan Atas, 14300 Nibong Tebal, Pulau Pinang",04-5833000,Pulau Pinang,NPRA,5.1688034,100.478139,full,NPRA
+NPRA5c4278d2f1,Siang Pharmacy Sdn.Bhd - Bukit Mertajam,"3082, Jalan Rozhan, Taman Rozhan, 14000 Bukit Mertajam, Pulau Pinang",04-583300,Pulau Pinang,NPRA,5.3256292,100.4775424,full,NPRA
+NPRA87c08a4ca9,Blooming Health Pharmacy Sdn Bhd -All Seasons Place,"6G-1-9, All Seasons Place, Lebuhraya Thean Teik, 11500 Georgetown, Pulau Pinang",04-8263313,Pulau Pinang,NPRA,5.3961368,100.2906221,full,NPRA
+NPRAd5e48af49e,Georgetown Pharmacy - Menara Asas,"598-Gf-08, Menara Asas, Jalan Tanjung Bungah, 11200 Pulau Pinang",04-8907899,Pulau Pinang,NPRA,5.4649698,100.2841575,full,NPRA
+NPRA8b537dec6c,Farmasi City Care Sdn Bhd (Farmasi Medipro -Taman Usahaniaga),"No.7-G, Lorong Usahaniaga 4, Taman Usahaniaga, 14000 Bukit Mertajam, Pulau Pinang",04-5300588,Pulau Pinang,NPRA,5.3618061,100.4667605,full,NPRA
+NPRA478c43ac38,Farmasi Sri Nibong Sdn.Bhd. -Jalan Aziz Ibrahim,"72, Jalan Aziz Ibrahim, 11900 Bayan Lepas, Pulau Pinang",04-6442863,Pulau Pinang,NPRA,5.338864,100.304644,full,NPRA
+NPRAaa8b0fb1fe,Eco Pharmacy -Jalan Raja Uda,"6870, Ground Floor, Jalan Raja Uda, 12300 Butterworth, Pulau Pinang",04-3331678,Pulau Pinang,NPRA,5.4244549,100.3823156,full,NPRA
+NPRA562d3baff9,Farmasi My Chemist (Jec) Sdn Bhd -Pusat Bandar Seberang Jaya,"30, Jalan Todak 2, Pusat Bandar Seberang Jaya, 13700 Perai, Pulau Pinang",04-3983699,Pulau Pinang,NPRA,5.3970942,100.398872,full,NPRA
+NPRA0e5fd377d8,Alpro Alliance (Penang) Sdn Bhd -Summerton,"110-01-01 & 110-02-01, Persiaran Bayan Indah, Summerton, 11900 Bayan Lepas, Pulau Pinang",04-6681193,Pulau Pinang,NPRA,5.338526100000001,100.3086922,full,NPRA
+NPRA1865709fa9,Sunshine Pharmacy Sdn Bhd -Taman Lucky,"6480, Jalan Raja Uda, Taman Lucky, 13400 Butterworth, Pulau Pinang",04-3334211,Pulau Pinang,NPRA,5.4357904,100.3859959,full,NPRA
+NPRA0389680876,Glad Hope Pharmacy Sdn Bhd -Jalan Utama,"31, Jalan Utama, 10460 Georgetown, Pulau Pinang",04-2265950,Pulau Pinang,NPRA,5.4146508,100.3109723,full,NPRA
+NPRAfcebad33f9,Gr2 Pharmacy Sdn Bhd (Green River Pharmacy),"43-1, Lintang Batu Maung,11960 Barat Daya, Pulau Pinang",04-6266101,Pulau Pinang,NPRA,5.2878634,100.2814854,full,NPRA
+NPRA71a75af0be,Han'S Pharmacy Sdn Bhd - Jalan Usahawan 2,"16-G, Jalan Usahawan 2, 13200, Kepala Batas, Pulau Pinang",04-5751567,Pulau Pinang,NPRA,5.5150776,100.4307367,full,NPRA
+NPRA28900d210d,Biopharma Link Pharmacy Sdn Bhd,"488B-G-15 & G16, Midlands Park Centre,Jalan Burma, 10350 Georgetown, Pulau Pinang",04-2267759,Pulau Pinang,NPRA,5.432907,100.306412,full,NPRA
+NPRAd070401294,Husni Pharmacy -Kubang Semang,"No.114, Mukim 20 Penanti, Kubang Semang,14400 Bukit Mertajam, Pulau Pinang",04-5225978,Pulau Pinang,NPRA,5.4046274,100.4633272,full,NPRA
+NPRA3cad10a4e4,Rheco Pharmacy Sdn Bhd - Jalan Relau,"No. 11, Jalan Relau, 11900 Bayan Lepas, Pulau Pinang",04-6436987,Pulau Pinang,NPRA,5.3381436,100.2726009,full,NPRA
+NPRA941720b709,Vcare Pharmacy -Jalan Ong Yi How,"6926, Jalan Ong Yi How, 13400 Butterworth, Pulau Pinang.",04-3325779,Pulau Pinang,NPRA,5.43546,100.3882859,full,NPRA
+NPRA120397fb7a,Good Neighbour Pharmacy - Jalan New Ferry,"5006, Jalan New Ferry,12100 Butterworth, Pulau Pinang",04-3240118,Pulau Pinang,NPRA,5.3992987,100.373355,full,NPRA
+NPRAe80a49e0e6,Pure Pharmacy Sdn Bhd - Jalan Jelutong,"298 Ground Floor, Jalan Jelutong,11600 Georgetown, Pulau Pinang",04-2822753,Pulau Pinang,NPRA,5.3963418,100.3182566,full,NPRA
+NPRAaeb9effac7,"Bb Pharmaceutical -Taman Sri Tunas, Bayan Lepas","96-Gf, Jalan Mayang Pasir, Taman Sri Tunas,11950 Bayan Lepas, Pulau Pinang",04-6445022,Pulau Pinang,NPRA,5.312190999999999,100.281602,full,NPRA
+NPRA8437aef19f,Biocare Pharmacy,"1657-G, Jalan Teluk Air Tawar,Taman Air Tawar Indah, 13050 Butterworth,Pulau Pinang",04-3512998,Pulau Pinang,NPRA,5.492088,100.383873,full,NPRA
+NPRAa4aeb5a56b,Meds And Vits Pharmacy - Jalan Paku Lima,"No. 552, Jalan Paku Lima, 13000 Butterworth, Pulau Pinang",04-3331496,Pulau Pinang,NPRA,5.4433073,100.3822603,full,NPRA
+NPRA28d77cc49a,Farmasi Bayan Sdn Bhd - Bayan Lepas,"484-B, Jalan Bayan Lepas, 11900 Bayan Lepas,Pulau Pinang",04-6424672,Pulau Pinang,NPRA,5.2950111,100.2602148,full,NPRA
+NPRA382460ef8c,Farmasi My-Chemist (Kg. Baru) Sdn Bhd -Taman Tampoi,"2828, Tingkat Bawah, Jalan Kampung Baru,Taman Tampoi, 14000 Bukit Mertajam,Pulau Pinang",04-5305195,Pulau Pinang,NPRA,5.3519925,100.4733952,full,NPRA
+NPRAd92844bda4,Vecare Pharmacy (Sg. Dua) Sdn Bhd -Sungai Dua,"No.14, Jalan Murni 1, Taman Desa Murni,13800 Sungai Dua, Pulau Pinang",04-3561318,Pulau Pinang,NPRA,5.4388251,100.4305949,full,NPRA
+NPRAb19f432a66,Farmasi My-Chemist Sdn.Bhd -Jalan Bagan Ajam,"No.7102, Jalan Bagan Ajam,13000 Butterworth, Pulau Pinang",04-3311278,Pulau Pinang,NPRA,5.435858,100.380567,full,NPRA
+NPRA4c2bbe9343,Farmasi Apollo -Jalan Ong Yi How,"6929, Jalan Ong Yi How, 13400 Butterworth, Pulau Pinang",04-3333077,Pulau Pinang,NPRA,5.4354458,100.3884932,full,NPRA
+NPRAea664e8a6d,Nature-Care Pharmacy Sdn Bhd,"19, Lorong Mahsuri 7, 11950 Bayan Lepas,Pulau Pinang",04-6447378,Pulau Pinang,NPRA,5.329998199999999,100.2916691,full,NPRA
+NPRAbdc3305e2e,"Chuan Pharmacy - Taman Bagan, Butterworth","44, Jalan Bagan Satu, Taman Bagan,13400 Butterworth, Pulau Pinang",04-3334937,Pulau Pinang,NPRA,5.410296799999999,100.3843755,full,NPRA
+NPRA352c0d9a54,Rheco Pharmacy Sdn Bhd - Jalan Paya Terubong,"606E, Jalan Paya Terubong, 11500 Air Itam, Pulau Pinang",04-8284442,Pulau Pinang,NPRA,5.4020377,100.2784854,full,NPRA
+NPRAcf7dbc971b,Rheco Pharmacy Sdn Bhd - Jalan Paya Terubong,"606E, Jalan Paya Terubong, 11500 Air Itam, Pulau Pinang",04-8284442,Pulau Pinang,NPRA,5.4020377,100.2784854,full,NPRA
+NPRA45a4f2fb87,Pure Pharmacy Sdn Bhd - Jalan Tan Sri Teh Ewe Lim,"139-P, Jalan Tan Sri Teh Ewe Lim,11600 Georgetown, Pulau Pinang",04-6574596,Pulau Pinang,NPRA,5.392381299999999,100.3071183,full,NPRA
+NPRA67b49cb731,Farmasi Sri Nibong (Pekaka) Sdn Bhd -Sungai Dua,"14, Jalan Pekaka Satu, Sungai Dua, 11700 Glugor, Pulau Pinang",04-6595826,Pulau Pinang,NPRA,5.349722,100.2956251,full,NPRA
+NPRA9877eaa204,Extra Care Pharmacy Sdn Bhd,"139-R, Jalan Tan Sri Teh Ewe Lim,11600 Georgetown, Pulau Pinang",04-6565234,Pulau Pinang,NPRA,5.392381299999999,100.3071183,full,NPRA
+NPRA06761eaeb0,Indopharma Sdn Bhd (Medisafe Pharmacy),"177-G-2, Jalan Macalister, 10400 Georgetown,Pulau Pinang",04-2282882,Pulau Pinang,NPRA,5.418953999999999,100.317842,full,NPRA
+NPRA54716b34af,Chaileng Park Pharmacy S/B,"35, Medan Kurau 1, Taman Chai Leng, Perai, 13700 Seberang Perai Tengah, Pulau Pinang",04-3841241,Pulau Pinang,NPRA,5.3857719,100.391031,full,NPRA
+NPRAbe266a37f6,Bj Pharmacy Sdn Bhd - Bayan Lepas,"12J-G Jalan Rumbia,11900 Bayan Lepas, Pulau Pinang",04-6424895,Pulau Pinang,NPRA,5.3332272,100.2903941,full,NPRA
+NPRA9e516da740,City Healthcare Pharmacy (Farlim) Sdn Bhd -Lintang Angsana,"32A, Lintang Angsana, Bandar Baru Farlim,11500 Air Itam, Pulau Pinang",04-8292018,Pulau Pinang,NPRA,5.3886699,100.2824753,full,NPRA
+NPRA2b97059021,Gr2 Pharmacy Sdn Bhd (Green River Pharmacy),"No. 4, Ground Floor, China Street,10200 Georgetown, Pulau Pinang",04-2619208,Pulau Pinang,NPRA,5.417604,100.3400603,full,NPRA
+NPRA4e8ea5f655,Desmaju Sdn Bhd -Bukit Mertajam,"74, Jalan Perniagaan, Pusat Perniagaan Alma,14000 Bukit Mertajam, Pulau Pinang",04-5522718,Pulau Pinang,NPRA,5.3340749,100.4804559,full,NPRA
+NPRAbf939fa349,Farmasi Ubatku Sdn Bhd - Queensbay Mall,"Lg-16, Queensbay Mall,100, Persiaran Bayan Indah, 11900 Bayan Lepas, Pulau Pinang",04-6466228,Pulau Pinang,NPRA,5.333133999999999,100.3069786,full,NPRA
+NPRA7f8751fd41,Pure Pharmacy Sdn Bhd - Jalan Penang,"88, Jalan Penang, 10000 Georgetown,Pulau Pinang",04-2262209,Pulau Pinang,NPRA,5.420408999999999,100.332668,full,NPRA
+NPRA70a831f16e,Wellings Pharmacy Sdn Bhd -Marble Arch,"7E3 & 7F1, Marble Arch, Jalan Pasar,Pulau Tikus, 10350 Georgetown,Pulau Pinang",04-2273628,Pulau Pinang,NPRA,5.4301973,100.3122666,full,NPRA
+NPRAae7fc431c7,The Pill House Pharmacy Sdn Bhd -Jalan Dato Ismail Hashim,"306-D-1, Jalan Dato Ismail Hashim,11900 Bayan Lepas, Pulau Pinang",,Pulau Pinang,NPRA,5.319286,100.2697054,full,NPRA
+NPRA113da306fa,Jion Elite Sdn Bhd -Elit Avenue,"1-1-23 Elit Avenue, Jalan Mayang Pasir 3,11950 Bayan Lepas, Pulau Pinang",04-6383365,Pulau Pinang,NPRA,5.3222874,100.2831026,full,NPRA
+NPRA1b5898268b,Healthworld Pharmacy Sdn Bhd -Sg Dua,"No.10, (Ground Floor), Jln Pekaka Satu, 11700 Sg Dua,Pulau Pinang",04-6566775,Pulau Pinang,NPRA,5.3509296,100.2942172,full,NPRA
+NPRA954df50706,Guardian Health And Beauty Sdn. Bhd (Ghb) - Plaza Gurney,"170-B1-39 Plaza Gurney, Persiaran Gurney, 10250 Georgetown, Pulau Pinang",04-2265016,Pulau Pinang,NPRA,5.4380431,100.3100232,full,NPRA
+NPRA3837261662,Wellings Pill House (Tg) Pharmacy -Tesco Tg.Pinang S/B [Georgetown Pharmacy],"F-16, First Floor, Tesco Tg.Pinang, Jalan Tg. Tokong, 10470 Pulau Pinang",04-8993668,Pulau Pinang,NPRA,5.4594,100.30772,full,NPRA
+NPRA5041f9f309,Stay Fit Pharmacy Sdn Bhd - Perak Road,"326-R Perak Road, 11600 Georgetown, Pulau Pinang",04-2833068,Pulau Pinang,NPRA,5.400008499999999,100.3147218,full,NPRA
+NPRA6fe6816c01,Farmasi City Care Sdn Bhd(Farmasi Medipro) - Taman Lembah Permai,"No. 60, Jalan Lembah Permai 4,Taman Lembah Permai, 14000 Bukit Mertajam, Pulau Pinang",04-5300588,Pulau Pinang,NPRA,5.3492167,100.4569718,full,NPRA
+NPRAc2df26408d,Mega Kulim Pharmacy Sdn Bhd,"3332, Jalan Perniagaan, Pusat Perniagaan Alma, 14000 Bukit Mertajam, Pulau Pinang",,Pulau Pinang,NPRA,5.3339212,100.4814433,full,NPRA
+NPRA4a4f6e55b6,Farmasi Simpang Ampat - Kawasan Perniagaan Simpang Ampat,"48, Jalan Keruing, Kawasan Perniagaan Simpang Ampat, Simpang Ampat, 14100 Pulau Pinang",04-5885205,Pulau Pinang,NPRA,5.2800766,100.4771768,full,NPRA
+NPRAe5ec4916e6,Siang Pharmacy Sdn Bhd (Siang Pharmacy),"41 & 43, Jalan Tembikai, Taman Mutiara, 14000 Bukit Mertajam, Pulau Pinang",04-5833000,Pulau Pinang,NPRA,5.363386999999999,100.444938,full,NPRA
+NPRA9e985356c5,Farmasi Sri Nibong Sdn Bhd (Georgetown Pharmacy),"52, Jalan Mahsuri, Bayan Baru,11950 Barat Daya, Pulau Pinang",04-6432703,Pulau Pinang,NPRA,5.3271354,100.2873693,full,NPRA
+NPRAabe4285e96,Panacea Pharmacy,"2-D, Lorong Selamat, 10400 Georgetown, Pulau Pinang",04-2278168,Pulau Pinang,NPRA,5.419459,100.3263829,full,NPRA
+NPRA2e6998db87,Farmasi My-Chemist (Bm) Sdn Bhd -Taman Bukit Minyak,"No. 8, Tingkat Bukit Minyak 9,Taman Bukit Minyak, 14000 Bukit Mertajam, Pulau Pinang",04-5081429,Pulau Pinang,NPRA,5.328803,100.446775,full,NPRA
+NPRA650b6fd349,Mega Kulim Pharmacy Sdn. Bhd,"16, Lebuh Kurau 3, Taman Chai Leng 13700 Perai, Pulau Pinang",,Pulau Pinang,NPRA,5.3855334,100.3924979,full,NPRA
+NPRAdc2639cc2b,Farmasi Mercury,"9 Jalan Todak 6, Pusat Komersial Sunway Perdana, 13700, Perai, Pulau Pinang",04-6881578,Pulau Pinang,NPRA,5.398267499999999,100.4001249,full,NPRA
+NPRAa812c10119,Green Trees Pharmacy Sdn Bhd(Georgetown Pharmacy),"104,Jalan Besar,11000, Balik Pulau,Pulau Pinang",04-8863682/016- 4194628,Pulau Pinang,NPRA,5.333227,100.217155,full,NPRA
+NPRA35f3e73135,Siang Pharmacy Sdn Bhd(Siang Pharmacy),"2&2A, Jalan Usahawan 4, Pusat Perniagaan Kepala Batas,13200, Kepala Batas,Pulau Pinang.",04-5789000,Pulau Pinang,NPRA,5.515824900000001,100.4318545,full,NPRA
+NPRA854cfcc14c,Caring Pharmacy Sdn Bhd - Ipoh Parade,"Lot G38, Ground Floor, Ipoh Parade, No 105, Jalan Sultan Abdul Jalil, Greentown, 30450 Ipoh, Perak",05-2558928,Perak,NPRA,4.5975136,101.0911675,full,NPRA
+NPRA6152154aab,Farmasi Lee Ms -Teluk Intan,"12, Taman Ros, Jalan Sultan Abdullah, 36000 Teluk Intan, Perak",05-6212577,Perak,NPRA,4.0048426,101.0166389,full,NPRA
+NPRA5fad9f5186,Farmasi Lee Ms -Teluk Intan,"12, Taman Ros, Jalan Sultan Abdullah, 36000 Teluk Intan, Perak",05-6212577,Perak,NPRA,4.0048426,101.0166389,full,NPRA
+NPRAd0140701dd,Icare Pharmacy -Taiping,"No.18, Lorong Tupai, 34000 Taiping, Perak",05-8071298,Perak,NPRA,4.8480218,100.7434898,full,NPRA
+NPRAd237e56d96,Icare Pharmacy -Kamunting,"356 & 358 Jalan Kamunting, 34600 Kamunting Perak",05-8079298,Perak,NPRA,4.8788956,100.7290386,full,NPRA
+NPRA88b6183ad4,Farmasi Isihat Sdn Bhd,"144 Jalan Ppmp 9, Pusat Perniagaan Manjung Point 1, Seri Manjung 32040 Manjung, Perak",05-6890991,Perak,NPRA,4.2102225,100.6695949,full,NPRA
+NPRA34d2ab8d90,HTM Pharmacy Sdn Bhd - Taman Pertama,"No 9-11 Lorong Taman 12, Taman Pertama 30100 Ipoh Perak",05-5281011,Perak,NPRA,4.5989244,101.0581284,full,NPRA
+NPRA154bff0d53,HTM Pharmacy Sdn Bhd - Taman Pertama,"No 9-11 Lorong Taman 12, Taman Pertama 30100 Ipoh Perak",05-5281011,Perak,NPRA,4.5989244,101.0581284,full,NPRA
+NPRA878a28f9f6,Newtown Pharmacy Sdn Bhd -Jalan Theatre,26-5 Jalan Theatre 30300 Ipoh Perak,05-2412714,Perak,NPRA,4.5947306,101.0838699,full,NPRA
+NPRA69b546c86c,Newtown Pharmacy Sdn Bhd -Jalan Theatre,26-5 Jalan Theatre 30300 Ipoh Perak,05-2412714,Perak,NPRA,4.5947306,101.0838699,full,NPRA
+NPRAe5ba942c83,Farmasi Ipoh Garden South Sdn Bhd -Taman Ipoh Selatan,"14, Tingkat Taman Ipoh 12, Taman Ipoh Selatan, 31400 Ipoh, Perak",05-5482011,Perak,NPRA,4.607844399999999,101.1196011,full,NPRA
+NPRAcdcafe5eae,"Unichem Pharmacy -Jalan Market, Ipoh","38 ,40 & 42, Jalan Market, 30000, Ipoh, Perak",05-2417889,Perak,NPRA,4.595684,101.0782933,full,NPRA
+NPRA53a7ecb8e5,I-Health Pharmacy (Kampar) Sdn Bhd,"87, Jalan Idris 31900 Kampar Perak",05-4662268,Perak,NPRA,4.3126887,101.1522939,full,NPRA
+NPRA19cd99c900,"Siang Pharmacy Sdn Bhd - Pusat Bandar 2, Parit Buntar","No.11 & 13, Jalan Bestari 2, Pusat Bandar 2, 34200 Parit Buntar, Perak",04-5833000,Perak,NPRA,5.1144324,100.4844885,full,NPRA
+NPRAd1e05d4c53,Kampar Medical Supplies(M) Sdn Bhd -Jalan Idris,"34, Jalan Idris, 31900 Kampar, Perak",05-4651884,Perak,NPRA,4.3105688,101.1526716,full,NPRA
+NPRA6dfa82ef3d,Farmasi Najwa -Parit Buntar,"No.12, Jalan Bendahara, Pusat Bandar Parit Buntar, 34200 Parit Buntar,Perak",05-7172540,Perak,NPRA,5.1177389,100.4877717,full,NPRA
+NPRA2caf5ee024,Metro Care Pharmacy Sdn Bhd -Jalan Kota,"136, Jalan Kota, 34000 Taiping,Perak",05-8085633,Perak,NPRA,4.8509669,100.7396919,full,NPRA
+NPRAc1fbe80468,"Farmasi Bercham -Taman Desa Kencana, Perak","12,Persisiran Bercham Selatan 8,Taman Desa Kencana,31400 Ipoh,Perak",05-5470406,Perak,NPRA,4.630370000000001,101.12694,full,NPRA
+NPRA9f7ca51cec,Farmasi Ikhwan -Taman Rapat Bistari,"No.11, Jln Rapat Bistari 1, Taman Rapat Bistari, 31350 Ipoh, Perak",05-3126334,Perak,NPRA,4.573011999999999,101.134019,full,NPRA
+NPRAf31cd6a618,Farmasi Fmb Sdn Bhd - Bandar Baru Menglembu,"55 & 57, Persiaran Kledang Timur 21, Bandar Baru Menglembu, 31450 Ipoh, Perak",05-2810245,Perak,NPRA,4.574555399999999,101.0495905,full,NPRA
+NPRAc4cb7a0d17,I-Health Pharmacy (Bercham) Sdn Bhd,"221, Jalan Bercham, Taman Desa Kencana, 31400 Ipoh, Perak",05-5455268,Perak,NPRA,4.640601,101.1284442,full,NPRA
+NPRA2aa9a2631b,Farmasi Cs Sdn Bhd,"20, Jalan Tawas Baru 1, Taman Tasek Damai, 30010 Ipoh, Perak",05-2911423,Perak,NPRA,4.652267,101.1047289,full,NPRA
+NPRA04dd921470,Farmasi Manjoi Sdn Bhd,"No 23-25A, Jalan Raja, Kampung Manjoi,30020 Ipoh Perak",05-5275527,Perak,NPRA,4.6136333,101.0694673,full,NPRA
+NPRA4b38077efd,Guardian Health And Beauty Sdn Bhd,"Lot G09, Aeon Ipoh Station 18 Shopping Centre, No. 2, Susuran Stesen 18, Station 18, 31650 Ipoh Perak",05-3222469,Perak,NPRA,4.544637799999999,101.0703202,full,NPRA
+NPRA633f473054,Gb Lim Pharmacy,"77, Jalan Leong Sin Nam, 30300 Ipoh, Perak",05-2556239,Perak,NPRA,4.596667399999999,101.0867074,full,NPRA
+NPRAeddc38b66b,Guardian Health And Beauty Sdn Bhd,"G 39A, Ipoh Parade, No. 105, Jalan Sultan Abdul Jalil, 30450 Ipoh, Perak",05-2432563,Perak,NPRA,4.5975136,101.0911675,full,NPRA
+NPRA18261854ae,Guardian Health And Beauty Sdn Bhd,"G 39A, Ipoh Parade, No. 105, Jalan Sultan Abdul Jalil, 30450 Ipoh, Perak",05-5476767,Perak,NPRA,4.5975136,101.0911675,full,NPRA
+NPRA4064bc94c8,Kampar Medical Supplies (M) Sdn Bhd,"No. 38 Bawah, Jalan Panggung Wayang,Taman Bandar Baru, 35500 Bidor, Perak",05-4340026,Perak,NPRA,4.1117466,101.2886167,full,NPRA
+NPRAce8ded57e0,Quinpharm (M) Sdn Bhd,"50, Jalan Mustapha Al Bakri, 30300 Ipoh Perak",05-2543257,Perak,NPRA,4.594838900000001,101.0844194,full,NPRA
+NPRAec18c94ad9,Quinpharm (M) Sdn Bhd,"662-664, Jalan Pasir Puteh, Ipoh, 31650 Kinta, Perak",05-3215424,Perak,NPRA,4.5685699,101.079842,full,NPRA
+NPRAe5e0ed1a51,Quinpharm (M) Sdn Bhd,"662-664, Jalan Pasir Puteh, Ipoh, 31650 Kinta, Perak",05-3215424,Perak,NPRA,4.5685699,101.079842,full,NPRA
+NPRA1009001b6a,Farmasi Rapat Sdn Bhd,"54, Jalan Besar, Gunung Rapat, 31350 Ipoh Perak",,Perak,NPRA,4.5648235,101.0453849,full,NPRA
+NPRAe01c2ec3b6,Greenpharm Pharmacy Sdn Bhd,"No. 262, Jalan Raja Dr. Nazrin Shah, Gunung Rapat, Ipoh, 31350 Kinta, Perak",05-3111467,Perak,NPRA,4.570576099999999,101.113092,full,NPRA
+NPRA37f7c9551c,Health Mate Pharmacy Sdn Bhd,"106, Jalan Idris, 31900 Kampar, Perak",05-4660651,Perak,NPRA,4.3129285,101.1525016,full,NPRA
+NPRAdb0ecfa10c,Propharma Pharmacy Sdn Bhd,"72, Jalan Pasir Puteh, Taman Boon Bak, New Pasir Pateh, 31650 Ipoh, Perak",05-3218942,Perak,NPRA,4.5621255,101.0773172,full,NPRA
+NPRAa9df40ab6b,Sejati Pharmacy Sdn Bhd,"387, Ground Floor Lorong 1, Taman Sejati 2 Sitiawan 32000 Manjung Perak",05-6913262,Perak,NPRA,4.2186393,100.6938818,full,NPRA
+NPRA4788fe8e72,Starchain Pharma (Farmasi Starchain),"19 & 17, Persiaran Perpaduan Jaya 1,Taman Perpaduan Jaya,31150 Ulu Kinta, Perak",05-5361009,Perak,NPRA,4.6391756,101.1423926,full,NPRA
+NPRA4758be732f,Gunung Rapat Pharmacy Sdn Bhd,"43, Selasar Rokam 11, Taman Ipoh Jaya, 31350, Kinta, Perak",05-3131011,Perak,NPRA,4.577489,101.123472,full,NPRA
+NPRAc443714c90,Allin Pharmacy -Petaling Jaya,"60 Jalan Ss22/25, Damansara Jaya, 47400 Petaling Jaya, Selangor",03-77293172,Selangor,NPRA,3.1261301,101.6169045,full,NPRA
+NPRA02516cf93e,Ascen Plus Pharmacy Holdings Sdn. Bhd. -Jalan Semangat,"K2 Ground Floor, Jaya 33 No 3 Lot 33, Jalan Semangat, Seksyen 13, 43100 Petaling Jaya, Selangor",,Selangor,NPRA,3.1094019,101.6380689,full,NPRA
+NPRA08b9efb5ff,Ascen Plus Pharmacy Holdings Sdn. Bhd -Jalan Masjid Pju 6A,"No 2 Pelangi One Avenue, Jalan Masjid Pju 6A, 47400 Petaling Jaya, Selangor",03-77276379,Selangor,NPRA,3.1389707,101.6143108,full,NPRA
+NPRA0dbe29a661,Ascen Plus Pharmacy Holdings Sdn. Bhd.-Jalan Masjid Pju 6A,"No 2 Pelangi One Avenue, Jalan Masjid Pju 6A, 47400 Petaling Jaya, Selangor",,Selangor,NPRA,3.1389707,101.6143108,full,NPRA
+NPRA2ad96b43c5,Be Pharmacy -Puchong Perdana,"23 & 25, Jalan Kekwa 1, Puchong Perdana, 47100 Puchong, Selangor",03-80525019,Selangor,NPRA,3.0069135,101.6062235,full,NPRA
+NPRA24893a2307,Be Pharmacy -Puchong Perdana,"23 & 25, Jalan Kekwa 1, Puchong Perdana, 47100 Puchong, Selangor",,Selangor,NPRA,3.0069135,101.6062235,full,NPRA
+NPRAaf299a2750,Bemed (Sp) Sdn Bhd - Taman Subang Perdana,"No 49 Jalan Dinar G U3/G Taman Subang Perdana Seksyen U3 40150 Shah Alam, Selangor",03-78458155,Selangor,NPRA,3.150335,101.543233,full,NPRA
+NPRAfaf4c01713,Base Hallmark Sdn Bhd [Aa Pharmacy] -Taman Eng Ann,"No.6, Jalan Kasawari 5, Taman Eng Ann, 41150 Klang, Selangor",03-33427818,Selangor,NPRA,3.0565056,101.4598846,full,NPRA
+NPRA0bafd5205f,Caring Pharmacy Sdn Bhd,"19A, Jalan Tk 1/11A, Section 1, Taman Kinrara, 47180 Puchong, Selangor",03-80709928,Selangor,NPRA,3.0641757,101.6486393,full,NPRA
+NPRAea5ab749e1,Caring Pharmacy Sdn Bhd - Seri Kembangan,"5A, Jalan Besar, 43300 Seri Kembangan, Selangor",03-89428918,Selangor,NPRA,3.0231779,101.706441,full,NPRA
+NPRAf63c5dc5d2,Anis Pharmacy Sdn Bhd - Shah Alam,"No.26, Jalan Nelayan 19/B, Seksyen 19, 40000 Shah Alam, Selangor",03-55481629,Selangor,NPRA,3.0491175,101.534514,full,NPRA
+NPRA64f68a87e4,Df Pharmacy Sdn Bhd -Jalan Tun Abdul Aziz,"18, Jalan Tun Abdul Aziz, 43000 Kajang, Selangor",03-87393963,Selangor,NPRA,2.9913074,101.7913211,full,NPRA
+NPRA93bfc79682,Df Pharmacy Sdn Bhd -Jalan Tun Abdul Aziz,"18, Jalan Tun Abdul Aziz, 43000 Kajang, Selangor",03-87393963,Selangor,NPRA,2.9913074,101.7913211,full,NPRA
+NPRA45bb927e8f,Farmasi Banting -Jalan Bunga Pekan,"170, Jalan Bunga Pekan, 42700 Banting, Selangor",03-31818509,Selangor,NPRA,2.812442,101.5016704,full,NPRA
+NPRAb059b2c405,All Day Pharmacy Sdn Bhd - Leboh Gopeng,"No.1, Leboh Gopeng, Off Jalan Goh Hock Huat, 41400 Klang, Selangor",03-33421384,Selangor,NPRA,3.0511779,101.4467043,full,NPRA
+NPRAea0a9530d5,Farmasi Kim Chuan,"No 168, Jalan Batu Unjur 1, Taman Bayu Perdana, 41200 Klang, Selangor",03-33235930,Selangor,NPRA,3.0151339,101.4335342,full,NPRA
+NPRA953087fd01,Guardian Shaftbury Square,"P1-29, Shaftbury Square, Persiaran Multimedia, Cyber 6, 63000, Cyberjaya, Selangor",03-83181291,Selangor,NPRA,2.9235029,101.6615759,full,NPRA
+NPRAebc74f9ca3,Farmasi Ok Sdn Bhd -J Avenue,"6-G Jalan J Avenue, J Avenue, 43200 Cheras, Selangor",03-90811861,Selangor,NPRA,3.0340026,101.7646911,full,NPRA
+NPRA6c103f14d5,Guardian Pharmacy - Ampang Point,"G07,Ground Floor , Jalan Mamanda 3, Ampang Point Shopping Centre, 68000 Ampang, Selangor",,Selangor,NPRA,3.1577008,101.7514953,full,NPRA
+NPRAd5a6a46b55,Health Lane Family Pharmacy Sdn Bhd -Setia Alam Seksyen U13,"No 17-1-1, Jalan Setia Prima R U13/R Setia Alam Seksyen U13, 40170 Shah Alam Selangor",03-58862788,Selangor,NPRA,3.1007971,101.4453512,full,NPRA
+NPRA7323cdd2c5,Health Lane Family Pharmacy Sdn Bhd -Kota Kemuning,"No 35, Jalan Anggerik Vanilla X 31/X, Kota Kemuning Seksyen 31, 40460 Shah Alam, Selangor",03-55253969,Selangor,NPRA,3.0046686,101.534445,full,NPRA
+NPRA53250d9576,Health Lane Family Pharmacy Sdn Bhd -Taman Damai Utama,"No 20, Jalan Damai Utama 2, Taman Damai Utama, 47180 Puchong, Selangor",03-58862089,Selangor,NPRA,3.0337166,101.6651362,full,NPRA
+NPRAd6a6c08776,Health Lane Family Pharmacy Sdn Bhd -Axis Atrium Taman Cempaka,"G32 Ground Floor, Axis Atrium Taman Cempaka, 68000 Ampang, Selangor",03-23035538,Selangor,NPRA,3.136547,101.7472762,full,NPRA
+NPRA8e1baa6ab5,Health Lane Family Pharmacy Sdn Bhd -Bukit Rahman Putra,"No 1 Jalan Brp 6/12, Bukit Rahman Putra, 40160 Sungai Buloh Selangor",03-61437118,Selangor,NPRA,3.2272388,101.5572107,full,NPRA
+NPRA6502e9c90a,Juzcare Pharmacy Sdn Bhd - Cheras,"No.10-G,10-1, Jalan J-Avenue, 43200 Cheras, Selangor",03-90755300,Selangor,NPRA,3.0340025,101.764691,full,NPRA
+NPRAc9fd71dd17,Lovy Pharmacy Sdn Bhd [ Lovy Pharmacy] -Taman Bayu Tinggi,"No.29 Jalan Bayu Tinggi 1A/Ks 6 Taman Bayu Tinggi, 41200 Klang, Selangor",03-33239169,Selangor,NPRA,3.0134338,101.4392589,full,NPRA
+NPRAe811ad0940,"Lovy Pharmacy Sdn Bhd [ Lovy Pharmacy] -, Pusat Bandar Rawang","9 Jalan Bandar Rawang 10, Pusat Bandar Rawang, 48000 Rawang, Selangor",,Selangor,NPRA,3.3191685,101.5776378,full,NPRA
+NPRA0aee58e8f6,Lsp Pharmacy Sdn Bhd - Tesco Bukit Puchong,"Lot G32&33 Ground Floor, Tesco Bukit Puchong, No 1, Jalan Bp 7/1, Bandar Bukit Puchong, 47100, Puchong, Selangor",03-80627263,Selangor,NPRA,2.9824015,101.6174577,full,NPRA
+NPRAcc7a167296,Multicare Pharmacy Sdn Bhd - Seapark,"13, Jalan 21/17, Seapark, 46300 Petaling Jaya, Selangor",03-78650897,Selangor,NPRA,3.1094246,101.6225712,full,NPRA
+NPRAd78a5f5dc6,Multicare Pharmacy Sdn Bhd -Bandar Puteri,"Puteri Mart No.1, Lengkok Puteri Utama, Bandar Puteri, 47100 Puchong, Selangor",03-80632369,Selangor,NPRA,3.0180202,101.6150212,full,NPRA
+NPRAb94e12ca55,Big Pharmacy Healthcare Sdn Bhd,"No. 57-G, Jalan Nelayan A 19/A, Seksyen 19, 40300 Shah Alam, Selangor",,Selangor,NPRA,3.0486732,101.5337162,full,NPRA
+NPRA7d8a3fdbc3,"Super Pharmacy Sdn Bhd -, Section 19, Petaling Jaya","No 18, Block C, Jalan 19/1, Section 19, 46300 Petaling Jaya, Selangor",03-79588813,Selangor,NPRA,3.1170781,101.6291335,full,NPRA
+NPRA7ed259c18c,Mycityhealth Sdn Bhd - Dataran Sunway,"2A-1 Jalan Pju5/7 Dataran Sunway, 47810 Petaling Jaya, Selangor",03-61418028,Selangor,NPRA,3.1524225,101.5944041,full,NPRA
+NPRAc702622444,Stay Caring Sdn Bhd - Paradigm Mall,"Lot Lg45, Lg Floor, Paradigm Mall, No 1, Jalan Ss7/26A, Kelana Jaya, 47301 Petaling Jaya, Selangor",03-78868384,Selangor,NPRA,3.1051171,101.5959701,full,NPRA
+NPRA0b98091b00,Sainuka Habib Sdn Bhd (Farmasi Materia Medica),"No. 4, Jalan Mahang 1, Taman Meru Utama, Pekan Meru, 41050 Klang, Selangor",,Selangor,NPRA,3.1291998,101.4405882,full,NPRA
+NPRAf430a61324,Sunway Pharma Sdn Bhd,"No 4, Jalan Susur, Taman Maniam, Dengkil, 43800 Selangor",03-87688829,Selangor,NPRA,2.862132,101.6771121,full,NPRA
+NPRA783e388661,Guardian Health And Beauty Sdn Bhd -Giant Hypermarket Shah Alam Stadium,"Mezzanine Floor, Giant Hypermarket Shah Alam Stadium, Lot 2, Persiaran Sukan, Seksyen 13, Shah Alam, Selangor",03-55448626,Selangor,NPRA,3.0812647,101.5508348,full,NPRA
+NPRA6107d66172,"Well-Being Pharmacy Sdn Bhd [Farmasi Alpha.Com] -, Dataran Sunway Kota Damansara","No.6-1 (Gf) Jalan Pju 5/9, Dataran Sunway Kota Damansara, 47810 Petaling Jaya, Selangor",03-61418620,Selangor,NPRA,3.1506318,101.5930267,full,NPRA
+NPRA5e513667f2,"Well-Being Pharmacy Sdn Bhd [Farmasi Alpha.Com] -, Dataran Sunway Kota Damansara","No.6-1 (Gf) Jalan Pju 5/9, Dataran Sunway Kota Damansara, 47810 Petaling Jaya, Selangor",03-61418620,Selangor,NPRA,3.1506318,101.5930267,full,NPRA
+NPRAf44b7f2ba2,Farmasi Kepong Sdn Bhd - Desa Jaya,"22G, Jalan 54, Desa Jaya 52100 Kepong, Selangor",03-62748620,Selangor,NPRA,3.2135017,101.632594,full,NPRA
+NPRA386c282c57,Farmasi Rawang Sdn Bhd - Jalan Maxwell,"20, Jalan Maxwell, Rawang 48000 Selangor",03-60926712,Selangor,NPRA,3.3211095,101.5759029,full,NPRA
+NPRA83134f8d02,AA Pharmacy Kd. Health Equation (Kd) S/B -Petaling Jaya,"39, Jalan Pju 5/10, 47800 Petaling Jaya, Selangor",03-61446838,Selangor,NPRA,3.1513417,101.5939136,full,NPRA
+NPRA42cf58f0c0,Taipan Pharmacy Healthcare Sdn Bhd [Aa Pharmacy] -Subang Jaya,"No.11A & 11A-1 Jalan Usj 10/1 Taipan Usj, 47620 Subang Jaya, Selangor",,Selangor,NPRA,3.0477743,101.5855665,full,NPRA
+NPRA6a7c4ff286,Farmasi Aa Ss2 (Health Equation Sdn Bhd) -Petaling Jaya,"18, Jalan Ss2/67, 47300 Petaling Jaya, Selangor",03-78656838,Selangor,NPRA,3.119234,101.622737,full,NPRA
+NPRA0331179247,Firstcare Pharmacy Sdn Bhd -Setia Alam,"6-1-2, Jalan Setia Prima P U13/P, Setia Alam 40170 Shah Alam, Selangor",03-33431370,Selangor,NPRA,3.0996976,101.4444355,full,NPRA
+NPRA0bdf042648,Firstcare Pharmacy Sdn Bhd [Firstcare Pharmacy] - Bandar Bukit Tinggi,"No 13-0-1 Lorong Batu Nilam 10A Bandar Bukit Tinggi, 41200 Klang, Selangor",03-33231992,Selangor,NPRA,3.0063849,101.4361333,full,NPRA
+NPRAbbc198e4b1,Wellfast Pharmacy Sdn Bhd - Kota Kemuning,"32G, Jalan Anggerik Vanilla M31/M, Kota Kemuning, 40460, Shah Alam, Selangor",03-55252988,Selangor,NPRA,3.0053676,101.5386407,full,NPRA
+NPRAb0775b86c5,Bb Boss Sdn Bhd -Pusat Bandar Puchong,"6G, Jalan Bandar 7, Pusat Bandar Puchong, 47100 Puchong, Selangor",03-58828685,Selangor,NPRA,3.0325447,101.6150101,full,NPRA
+NPRA0d5d4ab2f7,Farmasi Zuli Sdn. Bhd -Teluk Pulai Commercial Centre,"No 210@212, Jalan Sungai Bertek, Teluk Pulai Commercial Centre, 41100 Klang Selangor",03-33729517,Selangor,NPRA,3.0436587,101.4267332,full,NPRA
+NPRA7db5cd777d,True Pharmacy -Taman Klang Utama,"15, Lorong Sg Puloh, 13A, Taman Klang Utama, 42100 Klang Selangor",03-32902869,Selangor,NPRA,3.0790057,101.4208571,full,NPRA
+NPRA9f2a3da218,Big Pharmacy Healthcare Sdn Bhd,"No 88 & 90, Jalan Ss21/39, 47400 Petaling Jaya, Selangor",03-77259896,Selangor,NPRA,3.13373,101.6214059,full,NPRA
+NPRA59e6098923,Multicare Health Pharmacy Sdn Bhd,"28 Lrg Cp4/38, Cheras Perdana, 43200 Cheras Selangor",03-90742792,Selangor,NPRA,3.0591102,101.7713099,full,NPRA
+NPRAe9acb8ec71,Multicare (Banting) Pharmacy Sdn Bhd,"No. 3, Block D, Jalan Cemerlang 4, Pusat Perdagangan Banting, 42700 Banting, Selangor",03-31803530,Selangor,NPRA,2.8137544,101.5078006,full,NPRA
+NPRA9a6584b0fa,Farmasi Pluzmedic Sdn Bhd,"No 22 Medan Taming Dua, Taman Taming Jaya Balakong 43300 Seri Kembangan Selangor",03-89610270,Selangor,NPRA,3.0195028,101.7330644,full,NPRA
+NPRAc28ff8dc16,Multicare Pharmacy (L&L) S/B -Bandar Mahkota Cheras,"18, Jalan Temenggung 3/9, Bandar Mahkota Cheras, 43200 Kajang, Selangor",03-90104811,Selangor,NPRA,3.051053,101.7887971,full,NPRA
+NPRA2599fc7794,Jonhtks Pharmacy Sdn Bhd,"No 7 & 9, Jalan Sg1/3, Taman Sri Gombak, 68100 Batu Caves, Selangor",03-61811190,Selangor,NPRA,3.2376641,101.6976816,full,NPRA
+NPRA82cd9c0e73,Multicare Health Pharmacy Sdn Bhd -Bandar Sungai Long,"No 31 Jln Sl 1/3 Bandar Sungai Long, 43000 Kajang Selangor",03-90757184,Selangor,NPRA,3.0398557,101.7931943,full,NPRA
+NPRA4df847fc67,Caring Pharmacy Sdn Bhd - One Utama Shopping Centre,"B6 & B6A, Basement 1, One Utama Shopping Centre, Lebuh Bandar Utama, 47800 Petaling Jaya, Selangor",03-77281928,Selangor,NPRA,3.1478061,101.6159552,full,NPRA
+NPRAe626173ad4,LKP Pharmacy Sdn Bhd - Bandar Baru Bangi,"No 149-G, Jalan 8/1 Seksyen 8, 43650 Bandar Baru Bangi, Selangor",03-89202400,Selangor,NPRA,2.963209,101.756511,full,NPRA
+NPRAf445c177c5,Caring Pharmacy Retail Management Sdn Bhd (Caring Pharmacy) -Setia City Mall,"Lot Lg 62 Lg Floor Setia City Mall, No.7, Persiaran Setia Dagang Seksyen U13, Bandar Setia Alam, 40170 Shah Alam, Selangor",03-33582657,Selangor,NPRA,3.1094685,101.4602178,full,NPRA
+NPRAfc961f08c4,Eagle Cliffe (M) Sdn Bhd (Kaisar Farmasi) -Taman Maju Jaya,"10-1 Jalan Pjs 2/16A, Taman Maju Jaya, 46000, Off Old Klang Road, Petaling Jaya, Selangor",03-77721246,Selangor,NPRA,3.0801738,101.6369192,full,NPRA
+NPRA4e73e83443,Caring Pharmacy Sdn Bhd (Caring Pharmacy),"No 22G, Jalan Sj3, Taman Selayang Jaya, 68100 Batu Caves, Selangor",03-61389928,Selangor,NPRA,3.24058,101.648899,full,NPRA
+NPRAf85b217c8a,Caring Pharmacy Sdn Bhd - Sunway Pyramid,"Lot Lg2.77, Sunway Pyramid, No 3, Jalan Pjs 11/15, Bandar Sunway, 46150 Petaling Jaya, Selangor",03-56327928,Selangor,NPRA,3.0731724,101.6075559,full,NPRA
+NPRA177b0ef6ad,Wellplus Pharmacy Sdn Bhd,"27-G, Jalan Sungai Burung Z 32/Z, Bukit Rimau, Seksyen 32, 40460 Shah Alam, Selangor",03-51310168,Selangor,NPRA,2.9989112,101.5266385,full,NPRA
+NPRA8e211bb018,Guardian Pharmacy -1 Utama Shopping Centre,"Lot G143A, Ground Floor, 1 Utama Shopping Centre, No.1 Lebuh Bandar Utama, Bandar Utama, 47800 Petaling Jaya, Selangor",03-77261916,Selangor,NPRA,3.147911,101.6159551,full,NPRA
+NPRA4200a6d1b3,Guardian Giant Hypermarket Bandar Kinrara,"Lot 449, Jalan Bk 5A/1, Bandar Kinrara, 47180, Puchong, Selangor",03-80711131,Selangor,NPRA,3.050157,101.6463211,full,NPRA
+NPRAbf448fe3e6,Sia & Sia Pharmacy Sdn Bhd -Bandar Baru Salak Tinggi,"No 7, Jalan St 1C/5, Medan 88 Bandar Baru Salak Tinggi, 43900 Sepang, Selangor",03-87064491,Selangor,NPRA,2.8120639,101.7372226,full,NPRA
+NPRAdef4f2608d,Great Pharmacy Sdn Bhd (Farmasi Ok),"86G, Jalan Bpu 1, Bandar Puchong Utama, 47100 Puchong, Selangor",03-58807344,Selangor,NPRA,2.995824,101.6212337,full,NPRA
+NPRA449dda775f,Mediconstant Pharmacy (Klang) Sdn Bhd (Constant Pharmacy) -Persiaran Raja Muda,"2984, Ground Floor, Persiaran Raja Muda, 41100 Klang, Selangor",03-33728891,Selangor,NPRA,3.0295854,101.4310526,full,NPRA
+NPRA1c3d3cecf2,Mediconstant Pharmacy (Puchong) Sdn Bhd (Constant Pharmacy),"F-01-04 Block F Jalan Prima 5/3 Persiaran Prima Utama Puchong, 47100 Puchong, Selangor",03-80614018,Selangor,NPRA,2.98809,101.5956839,full,NPRA
+NPRA147659ad9e,Hefzac Sdn Bhd [Farmasi Allcare Pharmahealth] - Pusat Bandar Baru Bangi,"28-G-1, Jalan Medan Pusat Bandar 4, Pusat Bandar Baru Bangi, 43650 Bandar Baru Bangi, Selangor",03-89258420,Selangor,NPRA,2.9588802,101.7555251,full,NPRA
+NPRA7fda3275c9,Caring Pharmacy Sdn Bhd - Taman Muda,"No.28 Jalan Bunga Tanjung 9, Taman Muda, 68000 Ampang, Selangor",03-42956988,Selangor,NPRA,3.119579,101.759903,full,NPRA
+NPRA47e2eb77e9,H D H Resources [ Farmasi Sahabat ] -Bandar Saujana Putra,"No.74 Ground Floor Jalan Spu1, Bandar Saujana Putra, 42610 Jenjarom, Selangor",03-56144430,Selangor,NPRA,2.951847,101.581803,full,NPRA
+NPRAe4ca235696,Pharmgain Pharmacy Sdn Bhd [ Acare Pharmacy] - Taman Puchong Utama,"No.47 Jalan Pu 7/4, Taman Puchong Utama, 47100 Puchong, Selangor",03-80600118,Selangor,NPRA,2.9919015,101.6157165,full,NPRA
+NPRAea7e6ff650,One Caring Pharmacy Sdn Bhd [ Caring Pharmacy ] - Plaza Jelutong,"Lot 2 Gl 2 No.1 Plaza Jelutong Persiaran Gerbang Utama Bukit Jelutong, Seksyen U8, 40150 Shah Alam, Selangor",03-77342511,Selangor,NPRA,3.1158735,101.5290274,full,NPRA
+NPRAb3a18b4938,"Oratis Pharmaceuticals Sdn Bhd -Seksyen 15, Shah Alam","No 29-G, 31 Jalan Tukul N 15/N, Seksyen 15, 40200 Shah Alam, Selangor",03-55228607,Selangor,NPRA,3.07193,101.51808,full,NPRA
+NPRA1e78f2a155,Farmasi Ariv Vision (Telok) Sdn Bhd [ Farmasi Ariv] - Telok P.Garang,"No.10 Jalan Temenggong Taman Desawira, 42500 Telok P.Garang, Selangor",03-31226797,Selangor,NPRA,2.9145346,101.4747882,full,NPRA
+NPRA16c4d5530c,All Day Pharmacy Sdn Bhd - Selayang Baru,"5, Jalan 11A, Selayang Baru, 68100, Baru Caves, Selangor Darul Ehsan",603-61381722,Selangor,NPRA,3.2469921,101.6709907,full,NPRA
+NPRA445c8d329d,Medishop Pharmacy - Taman Sri Muda,"No 33 Gf Jalan Makmur 25/64, Taman Sri Muda Seksyen 25, 40400 Shah Alam, Shah Alam, Selangor",03-79551396,Selangor,NPRA,3.0321728,101.5365653,full,NPRA
+NPRAecbe880aa2,Farmasi Permata Sdn Bhd (Aa Pharmacy) -Ampang,"No 4 Persiaran Permata, Taman Permata, 68000 Ampang, Selangor",03-41088918,Selangor,NPRA,3.2062282,101.7519897,full,NPRA
+NPRA15143bffc5,Be Med Sdn Bhd [Be Farmasi] -Taman Putra Perdana,"No 40G Jalan Pp 1/1, Taman Putra Perdana, 47100 Puchong, Selangor",03-83191181,Selangor,NPRA,3.2410923,101.6671842,full,NPRA
+NPRAd416b27c3e,Df Pharmacy Sdn Bhd [Df Pharmacy] -Pearl Avenue,"No Pa-S-33 (Ground Floor ) Pearl Avenue Jalan Pasir Emas Sungai Chua, 43000 Kajang, Selangor",03-87412175,Selangor,NPRA,2.9860592,101.7809543,full,NPRA
+NPRAe89a495abf,Auramed Pharmacy Sdn Bhd -Taman Subang Permai,"No 21 (Ground Floor), Jalan Usj 1/19, Taman Subang Permai, 47600 Subang Jaya, Selangor",03-80819567,Selangor,NPRA,3.0577696,101.5999414,full,NPRA
+NPRAff5b33a99f,My Caring Pharmacy Sdn Bhd [Caring Pharmacy] - Empire Shopping Gallery,"Lot Lg 16 Empire Shopping Gallery, Jalan Ss 16/1, 47500 Subang Jaya, Selangor",03-56376988,Selangor,NPRA,3.0817783,101.5828038,full,NPRA
+NPRA7bf0207d7d,Caring Pharmacy Sdn Bhd - Subang Parade,"Lot 20 E-H Lg Floor, Subang Parade, 47500 Subang Jaya, Selangor",03-56329928,Selangor,NPRA,3.0737188,101.5861775,full,NPRA
+NPRA10991d58da,Cosy Vision Sdn Bhd [Caring Pharmacy] -Kajang,"12, Jalan Raja Haroun, 43000 Kajang, Selangor",03-87386988,Selangor,NPRA,2.9920383,101.7909128,full,NPRA
+NPRA30a6b6c901,Farmasi Chi Liung -Taman Chi Liung,"No.97, Jalan Batu Unjur, Taman Chi Liung, 42000 Pelabuhan Klang, Selangor",03-33246528,Selangor,NPRA,3.015423,101.4281658,full,NPRA
+NPRAecae36f53d,Sps Mutiara Pharmacy Sdn Bhd [Mutiara Pharmacy] - Taman Segar Perdana,"15, Jalan Sp 2, Taman Segar Perdana, 43200 Cheras, Selangor",03-90761835,Selangor,NPRA,3.058591,101.7256974,full,NPRA
+NPRA0077eda693,Alive Pharmacy Sdn Bhd - Kota Kemuning(Alive Pharmacy),"No.3, Jalan Anggerik Vanilla M31/M, Kota Kemuning, 40460 Shah Alam, Selangor",03-58795901,Selangor,NPRA,3.0053745,101.5386312,full,NPRA
+NPRAeff86e0fa6,Life Care Pharmacy Sdn Bhd -Taman Bayu Perdana,"No.48, Tingkat Bawah, Jalan Batu Unjur 1, Taman Bayu Perdana, 41200 Klang, Selangor",03-33243669,Selangor,NPRA,3.0147847,101.4351715,full,NPRA
+NPRA0cf3877c45,All Day Pharmacy Sdn. Bhd - Taman Eng Ann,"No.10, Tingkat Bawah, Jalan Kasawari 5, Taman Eng Ann, 41150 Klang, Selangor",03-33428387,Selangor,NPRA,3.0565017,101.4604328,full,NPRA
+NPRA776111ec65,All Day Pharmacy Sdn. Bhd - Shah Alam Sek 18,"No.52, Jalan Pinang18/C, Seksyen 18, 40200 Shah Alam,Selangor",,Selangor,NPRA,3.043943,101.5182781,full,NPRA
+NPRAef92c1923a,Vcare Pharmacy Sdn Bhd,"No 31, Jalan Plumbum R7/R Seksyen 7, 40000 Shah Alam, Selangor",03-55104228,Selangor,NPRA,3.0678699,101.4889934,full,NPRA
+NPRAcc37797d09,All Day Pharmacy Sdn. Bhd - Usj,"Mydin Mall, Lot F-15, First Floor, Persiaran Subang Permai Usj 1, 47500 Subang Jaya, Selangor",03-80221668,Selangor,NPRA,3.0570096,101.5929032,full,NPRA
+NPRA8813b7ec9d,I Pharmacy Sdn Bhd (Farmasi Ipharmacy) - Bandar Puteri,"20 Gf, Jalan Puteri 2/4, Bandar Puteri, 47100 Puchong, Selangor",03-80511001,Selangor,NPRA,3.021302,101.6170869,full,NPRA
+NPRA6fdefb2329,I Pharmacy Sdn Bhd (Farmasi Ipharmacy) - Bandar Puteri,"20 Gf, Jalan Puteri 2/4, Bandar Puteri, 47100 Puchong, Selangor",03-80511001,Selangor,NPRA,3.021302,101.6170869,full,NPRA
+NPRAf0196d34aa,Farmasi Najah Sdn Bhd (Farmasi Najah),"No.24A, Jalan 3/69, Seksyen 3, 43650 Bandar Baru Bangi, Selangor",03-89205088,Selangor,NPRA,2.938341,101.7748716,full,NPRA
+NPRA086c527115,Alpro Alliance Sdn Bhd (Farmasi Alpro),"No. 167, Ground Floor, Jalan 8/1 Seksyen 8, 43650 Bandar Baru Bangi, Selangor",03-89125060,Selangor,NPRA,2.9637542,101.7551655,full,NPRA
+NPRA4394bb7bd3,One-Stop Pharmacy Sdn Bhd,"106, Persiaran Raja Muda Musa,42000 Pelabuhan Klang, Selangor",03-31687976,Selangor,NPRA,3.00313,101.3996614,full,NPRA
+NPRAaa1f13fa48,Coco Mart (M) Sdn Bhd(Coco Mart Food & Pharmacy),"No 1 Jalan Wangsa Permai 1, Grd Floor, Bgn One Wangsa, Taman Wangsa Permai,52100 Kepong, Selangor",03-62779970,Selangor,NPRA,3.2109009,101.6075697,full,NPRA
+NPRA501109411c,51 Avenue Pharmacy Sdn Bhd(Farmasi Alpha.Com),"No. 50, 51 @ 51A Jalan Raja Haroun,43000 Kajang, Selangor",03-87378637,Selangor,NPRA,2.992275,101.790308,full,NPRA
+NPRA321d2620f3,Ideal Nauticare Sdn Bhd,"No. 10, Jalan Nagasari E 36/E,Desa Latania Seksyen 36,40470 Shah Alam, Selangor",03-51665866,Selangor,NPRA,3.0218889,101.4826902,full,NPRA
+NPRA343eb2ee17,Bettercare Pharmacy (Kajang) Sdn Bhd -Jalan Raja Harun,"11-G, Jalan Raja Harun, 43000 Kajang, Selangor",03-87418693,Selangor,NPRA,2.9937935,101.7705306,full,NPRA
+NPRA177d7c1c9e,Eennat Pharmacy,"23, Jalan Sg 3/10, Taman Sri Gombak,68100 Batu Caves, Selangor",03-61893089,Selangor,NPRA,3.2428055,101.7032485,full,NPRA
+NPRA369417fdd4,Farmasi Siva,"No. 17, Jalan Sri Sarawak 15,Taman Sri Andalas, 41200 Klang, Selangor",03-33246823,Selangor,NPRA,3.015264,101.4432322,full,NPRA
+NPRA8daab26905,Farmasi Hayyan,"No. 19, Jalan Seroja 3, Taman Seroja Bbst,43900 Sepang, Selangor",03-87053411,Selangor,NPRA,2.8280503,101.7313143,full,NPRA
+NPRA68f1b613dc,Unicare Pharmacy (M) Sdn Bhd,"No. 19A & 21A, Jalan 52/1,46200 Petaling Jaya, Selangor",03-79569300,Selangor,NPRA,3.0993888,101.6454985,full,NPRA
+NPRA5b1b7feed7,Guardian Health And Beauty Sdn Bhd,"Lot F40, Giant Hypermarket Kota Damansara,No. 16, Jalan Pju 5/1 Pju 5,47810 Petaling Jaya, Selangor",03-61422046,Selangor,NPRA,3.1559789,101.5962258,full,NPRA
+NPRA60b8050bcf,Subang Healthcare Sdn Bhd(Aa Pharmacy),"B-8, Jalan Ss15/4D, 47500 Subang Jaya, Selangor",03-56127718,Selangor,NPRA,3.0758774,101.5863886,full,NPRA
+NPRA47abd49c06,Farmasi Goodmedic (Bkt Mewah) Sdn Bhd,"3, Jalan Bukit Mewah 11, Taman Bukit Mewah, 43000 Kajang, Selangor",03-87333318,Selangor,NPRA,2.9902273,101.7998169,full,NPRA
+NPRA0fd8eab7a4,Farmasi Alpha Gombak(Farmasi Alpha.Com),"No. 16, Jalan Sg 1/5, Taman Sri Gombak,68100 Batu Caves, Selangor",03-61886128,Selangor,NPRA,3.2372698,101.6988385,full,NPRA
+NPRA655a8cbfd8,Guardian Health And Beauty Sdn Bhd(Farmasi Guardian),"Jaya Supermarket Tingkat Bawah Kompleks Pkns, 40000 Shah Alam, Selangor",03-55195392,Selangor,NPRA,3.0706712,101.5171661,full,NPRA
+NPRA0fae7079e2,Familychoice Pharmacy Sdn Bhd -Seri Kembangan,"No. 5, Jalan Dd3A/1, Taman Dato' Demang, 43300 Seri Kembangan, Selangor",03-95450341,Selangor,NPRA,3.2145514,101.3149464,full,NPRA
+NPRA33c0c5bb82,Medplus Pharmacy Sdn Bhd(Medplus Pharmacy),"No. 19, Jalan Mahogani 5, Bandar Botanik, 41200 Klang, Selangor",03-33193108,Selangor,NPRA,2.9965749,101.4452746,full,NPRA
+NPRAd3593fa806,Nextage Medicare Enterprise(Farmasi Nextage Putra),"6 Jalan Seri Putra 3/10, Bandar Seri Putra 43000 Kajang, Selangor",03-89289011,Selangor,NPRA,2.886528,101.7809,full,NPRA
+NPRAfa670853f2,Nextage Pharma Enterprise(Nextage Prima Pharmacy),"F-9-Ga, Jalan Prima Saujana 2/D Taman Prima Saujana 43000 Kajang, Selangor",03-87377751,Selangor,NPRA,3.0087878,101.8045032,full,NPRA
+NPRA457a799242,Health Lane Family Pharmacy Sdn Bhd(Health Lane Family Pharmacy),"No. 8A, Jalan Tk 1/11A, Taman Kinrara, 47100 Puchong, Selangor",03-5879724,Selangor,NPRA,3.064752,101.64916,full,NPRA
+NPRAf98198be3b,Farmasi Ariv Vision (Telok Pulai) Sdn Bhd,"No. 202, Lot 437, Tingkat Bawah, Jalan Sungai Bertek, Telok Pulai Commercial Centre, 41100 Klang, Selangor",03-33735416,Selangor,NPRA,3.0502313,101.4328645,full,NPRA
+NPRA0a2cdaf3a1,Arise Pharmacy Sdn Bhd,"No. C-13-G, Jalan Serai Wangi 16/L, Alam Avenue 2, Seksyen 16, 40000 Shah Alam, Selangor",03-55239613,Selangor,NPRA,3.0794369,101.4801697,full,NPRA
+NPRAca9e18e4fa,Arise Pharmacy Sdn Bhd,"Pusat Perdagangan Puchong Prima, E- 01-04, Blok E, Jalan Prima 5/3, Taman Puchong Prima, 47100 Puchong, Selangor",03-80606613,Selangor,NPRA,2.9994029,101.5955703,full,NPRA
+NPRA4987027cd3,Ok Health Group (Malaysia) Sdn Bhd,"158, Jalan 2/3A, Pusat Bandar Utara Selayang, 68100 Batu Caves, Selangor",03-61280678,Selangor,NPRA,3.237856,101.668926,full,NPRA
+NPRA7b4aa7aa59,Ok Health Group (Malaysia) Sdn Bhd,"158, Jalan 2/3A, Pusat Bandar Utara Selayang, 68100 Batu Caves, Selangor",03-61280678,Selangor,NPRA,3.237856,101.668926,full,NPRA
+NPRA30cbcca839,Lovy Pharmacy Sdn Bhd,"No. 79, Jalan Ss 23/15, Taman Sea, 47400 Petaling Jaya, Selangor",03-78030992,Selangor,NPRA,3.115554,101.6138837,full,NPRA
+NPRA78e3065ba9,Genecare Sdn Bhd (Trustz Pharmacy),"No. 22A-00-01, Lorong Batu Nilam 4A, Bandar Bukit Tinggi, 41200 Klang, Selangor",03-33236115,Selangor,NPRA,3.007941,101.43886,full,NPRA
+NPRA1b23512982,Slim Pharmacy Sdn Bhd(Slim Pharmacy),"Unit Lg-02, No. 1, Jalan Dataran Villa Putra 1, Dataran Villa Putra, Taman Villa Putra, 47000 Sungai Buloh, Selangor",03-77321727,Selangor,NPRA,3.2255114,101.5679464,full,NPRA
+NPRAc297bbc964,Pronature Pharmacy Sdn Bhd (Farmasi Pronature),"No. 35-01, Jalan Kenari 19A, Bandar Puchong Jaya, 47170 Puchong, Selangor",03-80823910,Selangor,NPRA,3.0449721,101.6233324,full,NPRA
+NPRAdfe2d02baa,Ace Caring Pharmacy Sdn Bhd,"17, Jalan Usj 10/1E, Uep Subang Jaya, 47620 Subag Jaya, Selangor",03-56322928,Selangor,NPRA,3.04901,101.583862,full,NPRA
+NPRA4578b22b0f,Ace Caring Pharmacy Sdn Bhd,"17, Jalan Usj 10/1E, Uep Subang Jaya, 47620 Subag Jaya, Selangor",03-56322928,Selangor,NPRA,3.04901,101.583862,full,NPRA
+NPRAf4cba77cc1,Goodlife Health Services Sdn Bhd (Goodlife Pharmacy),"14, Jalan Ss 5B/2, Kelana Jaya, Petaling Jaya, 47301 Petaling, Selangor",03-79566255,Selangor,NPRA,3.1003688,101.605744,full,NPRA
+NPRA4c09c2d8fc,All Day Pharmacy Sdn Bhd,"80, Lot 21, Jalan Besar Pekan Kapar, 42200 Klang, Selangor",03-32501216,Selangor,NPRA,3.1375097,101.372815,full,NPRA
+NPRA440ef8c034,All Day Pharmacy Sdn Bhd (Allday Pharmacy),"No. 38, Jalan Dato Yusof Shahbudin 29, Taman Sentosa, 41200 Klang, Selangor",03-51625496,Selangor,NPRA,2.9940851,101.4821904,full,NPRA
+NPRA48915c9b22,Farmasi Ariv Vision Sdn Bhd,"31 (Tingkat Bawah) Jalan Sri Sarawak 17 Taman Sri Andalas Klang 41200 Klang, Selangor.",03-33244597,Selangor,NPRA,3.0157257,101.4431803,full,NPRA
+NPRAbead1524ee,Juzcare Pharmacy Sdn Bhd,36 Jalan 1/2 Seksyen 1 Bandar Teknologi Kajang 43500 Semenyih Selangor.,03-87256610,Selangor,NPRA,2.9721355,101.8281114,full,NPRA
+NPRAcc63d52a98,Vibrante Pro Sdn Bhd ( Vpro Pharmacy ),26 Jalan Ss 26/4 Taman Mayang Jaya 47301 Petaling Jaya Selangor,03-78039428,Selangor,NPRA,3.116473,101.604382,full,NPRA
+NPRA61fa89e44c,Kinrara Agency Sdn Bhd ( A&S Wellness Pharmacy),"No 33-G Jalan Puj 3/13 Taman Puncak Jalil Bandar Putra Permai Seri Kembangan 43300 Hulu Langat, Selangor.",03-89401028,Selangor,NPRA,3.0224326,101.6745396,full,NPRA
+NPRA620055a1b6,Big Pharmacy Healthcare Sdn Bhd,22 (Ground Floor) Jalan Usj 10/1E Uep Subang Jaya 47620 Subang Jaya Selangor,03-80815521,Selangor,NPRA,3.0481258,101.5837148,full,NPRA
+NPRA14810e8582,Big Pharmacy Healthcare Sdn Bhd,"M19, Ground Floor, Jalan Pasar 1/21, 46000 Petaling Jaya Selangor",03-77709777,Selangor,NPRA,3.0847141,101.646014,full,NPRA
+NPRA830965c871,Big Pharmacy Healthcare Sdn Bhd,No 2 & 4 Jalan Sj 6 Taman Selayang Jaya 68100 Batu Caves Selangor,03-61202715,Selangor,NPRA,3.238718,101.6515018,full,NPRA
+NPRA0b7d044223,Olive9 Pharmacy Sdn Bhd ( Olive9 Pharmacy ),No 69 Tingkat Bawah Jalan Nova N U5/N Seksyen U5 40150 Shah Alam Selangor,03-77347762,Selangor,NPRA,3.1677621,101.5500867,full,NPRA
+NPRAf3ce58bdd2,Bintulu Pharmacy (M) Sdn Bhd(Farmasi Alpha.Com),"No.4 Taman Cahaya Sungai Chua Kajang 43000 Hulu Langat, Selangor",03-87370803,Selangor,NPRA,2.9938051,101.7784464,full,NPRA
+NPRA268f9e0a77,Ausmed Pharmacy Sdn Bhd,11-1 Jalan Pju 8/3B Bandar Damansara Perdana 47820 Petaling Jaya Selangor,03-77222882,Selangor,NPRA,3.1644361,101.6072576,full,NPRA
+NPRA1151b807f1,Salphy Pharmacy Sdn Bhd,"No 7A Jalan Liter D U19/D Seksyen U19, 40160 Shah Alam Selangor",03-61439906,Selangor,NPRA,3.188562,101.5312217,full,NPRA
+NPRAf89df17b26,AA Chemist,"No.10-0, Lorong Batu Nilam 4B, Bandar Bukit Tinggi, 41200 Klang Selangor",03-33188138,Selangor,NPRA,3.0071839,101.4355004,full,NPRA
+NPRA1bd1384d99,Wc Medicare Sdn. Bhd (Young Pharmacy),"S-42, Jalan Sekolah 1, Sungai Jarom, 42600, Jenjarom Selangor",03-55251206,Selangor,NPRA,2.8788322,101.4937208,full,NPRA
+NPRA9645a6e4b3,Pharmart Sdn Bhd (Farmasi Pharmart),"32-G, Jalan Warisan Megah1/4, Kota Warisan, 43900 Sepang Selangor",03-87053719,Selangor,NPRA,2.8194167,101.6948492,full,NPRA
+NPRA39d6ea3dcd,Springhealth Pharmacy Sdn Bhd,"No12A, Jalan Pjs 3/48, Sri Manja Square One,Taman Sri Manja, 46000 Pj, Selangor",03-62011058,Selangor,NPRA,3.0733257,101.6482701,full,NPRA
+NPRAf18de96e5e,Beyond Essential Sdn Bhd (Aa Pharmacy),"87, Jalan Ss21/37 Damansara Utama, 47400, Petaling Jaya,Selangor",03-77320117,Selangor,NPRA,3.134768100000001,101.6237933,full,NPRA
+NPRA764364efa2,Beyond Essential Sdn Bhd (Aa Pharmacy),"87, Jalan Ss21/37 Damansara Utama, 47400, Petaling Jaya,Selangor",03-77320117,Selangor,NPRA,3.134768100000001,101.6237933,full,NPRA
+NPRA1306ebe120,Avelon Arise Sdn Bhd (Farmasi Parkcity) -Bangsar,"28, Persiaran Ara Kiri Lucky Garden, Bangsar, 59100 Kuala Lumpur",03-28567822,Kuala Lumpur,NPRA,3.1279121,101.6695684,full,NPRA
+NPRA444e4a0214,Be Pharmacy -Bandar Sri Permaisuri,"No.15, Blok A, Jalan Dwitasik 1, Dataran Dwitasik, Bandar Sri Permaisuri, 56000 Kuala Lumpur",03-91718378,Kuala Lumpur,NPRA,3.0992061,101.7128474,full,NPRA
+NPRAcbcad14fd5,Caring Pharmacy Sdn Bhd - Bangsar Village,"Lot G8, Ground Floor, Bangsar Village, No 1, Jalan Telawi 1, Bangsar Baru, 59100 Kuala Lumpur",03-22878928,Kuala Lumpur,NPRA,3.129626,101.670946,full,NPRA
+NPRA31161e9723,Bemed (Ptj) Sdn Bhd (Be Pharmacy) -Diplomatik Enclave,"No.36, Jalan Diplomatik, Diplomatik Enclave, 62050 Putrajaya",03-88882237,Putrajaya,NPRA,2.9451439,101.7226344,full,NPRA
+NPRA420d38c3b5,Caring Pharmacy (Klp) Sdn Bhd -Pavilion Kl Shopping Mall,"Lot 1.23, Level 1, Pavilion Kl Shopping Mall 168, Jalan Bukit Bintang, 55100 Kuala Lumpur",03-21422928,Kuala Lumpur,NPRA,3.1489962,101.713418,full,NPRA
+NPRAaeaa15596b,Caring Pharmacy (Klp) Sdn Bhd -Pavilion Kl Shopping Mall,"Lot 1.23, Level 1, Pavilion Kl Shopping Mall 168, Jalan Bukit Bintang, 55100 Kuala Umpur",03-21422928,Kuala Lumpur,NPRA,3.1489962,101.713418,full,NPRA
+NPRA00d54336b3,Caring Pharmacy Rising Sdn Bhd -Jalan Ipoh,"479, Batu 3, Jalan Ipoh, 51200 Kuala Lumpur",03-40418918,Kuala Lumpur,NPRA,3.1823997,101.6818611,full,NPRA
+NPRA673537b99c,Caring Pharmacy Sdn Bhd - Pandan Indah,"G9 & G10 Ground Floor Mid Point Shopping Centre, Jalan Pandan Indah 1/25 Pandan Indah, 55100 Kuala Lumpur",03-92748928,Kuala Lumpur,NPRA,3.1321677,101.7520538,full,NPRA
+NPRAe4d91cbe23,Avelon Healthcare S/B- Taman Sri Bintang,"33, Jalan Sri Bintang 2, Taman Sri Bintang, Kepong, 52100 Kuala Lumpur",03-62759545,Kuala Lumpur,NPRA,3.1881748,101.6423254,full,NPRA
+NPRA7b244235b0,Farmasi Vitacare -Suria Klcc,"Lot C 43B & E Concourse Floor, Suria Klcc, Kl City Centre, 50088, Kuala Lumpur",03-21662469,Kuala Lumpur,NPRA,3.146642,101.6958449,full,NPRA
+NPRA51fd5a5ba2,Farmasi Vitacare -Suria Klcc,"Lot C 43B & E Concourse Floor, Suria Klcc, Kl City Centre, 50088, Kuala Lumpur",03-21662469,Kuala Lumpur,NPRA,3.146642,101.6958449,full,NPRA
+NPRA7e24456936,"Farmasi Vitacare -The Gardens, Midvalley City","Lg-220, The Gardens, Midvalley City, Lingkaran Syed Putra, 59200 Kuala Lumpur",03-22824641 / 016-2299890,Kuala Lumpur,NPRA,3.118649,101.6760355,full,NPRA
+NPRAe0155aa3b6,"Farmasi Vitacare -Kampung Pandan, Kl","No 16, Jalan 1/76D, Desa Pandan, Off Kampung Pandan, 55100 Kuala Lumpur",03-92006271 / 012-3369263,Kuala Lumpur,NPRA,3.1469589,101.7373419,full,NPRA
+NPRAdd84f188aa,Farmasi Vitacare Sdn Bhd - Taman Setiawangsa,"11G, Jalan Setiawangsa 9, Taman Setiawangsa, 54200 Kuala Lumpur",03-42519949,Kuala Lumpur,NPRA,3.1784298,101.7414806,full,NPRA
+NPRA11b0a72040,Guardian Pharmacy -Mid Valley Megamall,"Unit Lg 047, Lower Ground Floor Mid Valley Magamall, Mid Valley City, 58000 Kuala Lumpur",,Kuala Lumpur,NPRA,3.1175628,101.6774073,full,NPRA
+NPRA9294ceb656,Guardian Pharmacy (Putrajaya),"Block C-T00-U01, No.1, Jalan P8D, Presint 8, 62250 Putrajaya",,Putrajaya,NPRA,2.9396556,101.6829119,full,NPRA
+NPRA0277928f2c,Guardian Pharmacy -Suria Klcc,"Lot C-21B, Concourse Area, Suria Klcc, Kuala Lumpur City Centre, Jalan Ampang, 50088 Kuala Lumpur",,Kuala Lumpur,NPRA,3.1572757,101.7122335,full,NPRA
+NPRA306c141331,Health Lane Family Pharmacy Sdn Bhd -Taman Melawati Fasa 2,"53 Jalan Negara, Taman Melawati Fasa 2, 53100 Kuala Lumpur",03-41611611,Kuala Lumpur,NPRA,3.2094723,101.750766,full,NPRA
+NPRAe9dfef5e74,Health Lane Family Pharmacy Sdn Bhd,"No. 23, Jalan 3/125D, Desa Petaling, 57100 Kuala Lumpur",03-23035486,Kuala Lumpur,NPRA,3.0828511,101.7046006,full,NPRA
+NPRAe4d1e6a531,Health Lane Family Pharmacy Sdn Bhd -Taman Bukit Maluri,"No 5, Jalan Burung Jentayu, Taman Bukit Maluri, Kepong, 52100 Kuala Lumpur",03-67305793,Kuala Lumpur,NPRA,3.200784,101.633008,full,NPRA
+NPRA8fbbeaf896,Health Lane Family Pharmacy Sdn Bhd -Wisma Health Lane,"Wisma Health Lane, No 760 & 762 Jalan Sentul, 51000 Kuala Lumpur",03-40419182,Kuala Lumpur,NPRA,3.1783738,101.6924532,full,NPRA
+NPRAbda80539ed,Health Lane Family Pharmacy Sdn Bhd -Kepong Baru,"24, Jalan Ambong Kiri Satu, Kepong Baru, Kepong 52100 Kuala Lumpur",03-62509269,Kuala Lumpur,NPRA,3.2100305,101.6466755,full,NPRA
+NPRAb02d620d3e,Health Lane Family Pharmacy Sdn Bhd -Jalan 11 Desa Jaya,"11, Jalan 11 Desa Jaya, Kepong, 52100 Kuala Lumpur",03-62709878,Kuala Lumpur,NPRA,3.2166312,101.6300246,full,NPRA
+NPRAb547f6bb19,Kumpulan Farmasi Vitacare Sdn Bhd -Nu Sentral Shopping Centre,"Unit No. Lg 03, Lower Ground Floor, Nu Sentral Shopping Centre, No 201 Jln Tun Sambanthan 50470 Kl",03-28569298,Kuala Lumpur,NPRA,3.1328277,101.6873496,full,NPRA
+NPRA4a0973903b,Kumpulan Farmasi Vitacare Sdn Bhd -Nu Sentral Shopping Centre,"Unit No. Lg 03, Lower Ground Floor, Nu Sentral Shopping Centre, No 201 Jln Tun Sambanthan 50470 Kl",03-28569298,Kuala Lumpur,NPRA,3.1328277,101.6873496,full,NPRA
+NPRAce5ca34aaa,Kumpulan Farmasi Vitacare Sdn Bhd -Nu Sentral Shopping Centre,"Unit No. Lg 03, Lower Ground Floor, Nu Sentral Shopping Centre, No 201 Jln Tun Sambanthan 50470 Kl",03-28569298,Kuala Lumpur,NPRA,3.1328277,101.6873496,full,NPRA
+NPRA10fe4ced10,Multicare Health Pharmacy Sdn Bhd -Pandan Jaya,"No.36, Jalan Pandan Jaya 3/2, Pandan Jaya, 55100 Kuala Lumpur",03-92854770 / 012-3291820,Kuala Lumpur,NPRA,3.13536,101.74014,full,NPRA
+NPRA7105c930b1,Multicare Health Pharmacy Sdn Bhd -Desa Cheras Jaya,"No. 2, Jalan Kijang Satu, Desa Cheras Jaya, 43200 Cheras, Kuala Lumpur",03-90752129,Kuala Lumpur,NPRA,3.0726609,101.7661023,full,NPRA
+NPRA111688862d,Kumpulan Farmasi Vitacare Sdn Bhd,"Lot G131, Ground Floor, Bangsar Shopping Centre, 285 Jalan Maarof, 59000 Kuala Lumpur",03-20950705,Kuala Lumpur,NPRA,3.1428401,101.6675173,full,NPRA
+NPRA090e0b329d,"Multicare (Yms) Pharmacy Sdn Bhd -Bandar Sri Damansara,Kepong","No 19G, Jalan Tanjung Sd13/1, Bandar Sri Damansara, Kepong, 52200, Kuala Lumpur",03-62701178,Kuala Lumpur,NPRA,3.1879671,101.6054289,full,NPRA
+NPRA8ebd5469c1,Farmasi Srimulia Sdn Bhd - Taman Midah Cheras,"3 Jalan Midah 5, Taman Midah Cheras, 56000 Kuala Lumpur",03-91317818,Kuala Lumpur,NPRA,3.1007162,101.7322529,full,NPRA
+NPRAcae57df41a,Big Pharmacy Healthcare Sdn Bhd,"19&21, Plaza Danau 2, Jalan 2/109F, Taman Danau Desa, Jalan Klang Lama, 58100 Kuala Lumpur",03-79715858,Kuala Lumpur,NPRA,3.0993872,101.6865094,full,NPRA
+NPRAde2c47e5d2,Big Pharmacy -Taman Oug,"18, Jalan Hujan Rahmat, Taman Oug, 58200, Kuala Lumpur",03-79725818,Kuala Lumpur,NPRA,3.073905700000001,101.6728763,full,NPRA
+NPRA148b98f668,Farmasi Sentral -Jalan Chow Kit,"No 44, Jalan Chow Kit, 50350 Kuala Lumpur",03-40456698,Kuala Lumpur,NPRA,3.1666449,101.6967312,full,NPRA
+NPRA7260b72122,Farmasi Goodmedic (Kl) Sdn Bhd -Taman Gembira,"359 Jalan Selesa, Taman Gembira, 58200 Kuala Lumpur",03-79812707,Kuala Lumpur,NPRA,3.0845773,101.6815253,full,NPRA
+NPRA5b14167b23,Farmasi Goodmedic (Midah) Sdn Bhd,"No.36,Jalan Midah Besar, Taman Midah, Cheras, 56000 Kuala Lumpur",03-91333395,Kuala Lumpur,NPRA,3.1016738,101.7329416,full,NPRA
+NPRA096a6dd4d0,Jonhtks Pharmacy Sdn Bhd - Pandan Indah,"20Gf, Jalan Pandan Indah 4/8, Pandan Indah, 55100 Kuala Lumpur",03-42883038,Kuala Lumpur,NPRA,3.1312081,101.753906,full,NPRA
+NPRA639df41693,Caring Pharmacy Sdn Bhd - Hartamas Shopping Center,"Lot 3, Ground Floor, Hartamas Shopping Center, No.60, Jalan Sri Hartamas 1, Sri Hartamas, 50480 Kuala Lumpur",03-62010879,Kuala Lumpur,NPRA,3.1639099,101.6566697,full,NPRA
+NPRA7c408b1dac,Caring Pharmacy Sdn Bhd - Hartamas Shopping Center,"Lot 3, Ground Floor, Hartamas Shopping Center, No.60, Jalan Sri Hartamas 1, Sri Hartamas, 50480 Kuala Lumpur",03-62010879,Kuala Lumpur,NPRA,3.1639099,101.6566697,full,NPRA
+NPRA8ad68ded3b,Caring Pharmacy Retail Management Sdn Bhd - Midvalley Megamall,"Lot Lg-060A, Midvalley Megamall, Mid Valley City, Lingkaran Syed Putra, 59200 Kuala Lumpur",03-22828928,Kuala Lumpur,NPRA,3.1176854,101.6774338,full,NPRA
+NPRA4fe3e09c97,Caring Pharmacy Retail Management Sdn Bhd -Ioi City Mall,"LG18, IOI City Mall, IOI Resort City, 62502 Putrajaya",03-83280718,Putrajaya,NPRA,2.970663,101.7136681,full,NPRA
+NPRA880d606596,Caring Pharmacy Retail Management Sdn Bhd -Ioi City Mall,"Lg18, Ioi City Mall, Ioi Resort City, 62502 Putrajaya",,Putrajaya,NPRA,2.970663,101.7136681,full,NPRA
+NPRAa2ae9c5e28,Caring Pharmacy Sdn Bhd - Taman Overseas Union,"21, Jalan Hujan Rahmat, Taman Overseas Union, 58200 Kuala Lumpur",03-77826988,Kuala Lumpur,NPRA,3.0742478,101.6731327,full,NPRA
+NPRA7116eccc77,Caring Pharmacy Sdn Bhd - Sungei Wang Plaza,"Lot C39, Concourse Floor, Sungei Wang Plaza, Jalan Sultan Ismail, 50250 Kuala Lumpur",03-21429928,Kuala Lumpur,NPRA,3.14515,101.7114298,full,NPRA
+NPRAe135729927,Caring Pharmacy Sdn Bhd - Sungei Wang Plaza,"Lot C39, Concourse Floor, Sungei Wang Plaza, Jalan Sultan Ismail, 50250 Kuala Lumpur",03-21429928,Kuala Lumpur,NPRA,3.14515,101.7114298,full,NPRA
+NPRA062617a24f,Caring Pharmacy Always Sdn Bhd -Taman Midah,"30, Tingkat Bawah, Jalan Midah Besar, Taman Midah , 56000 Kuala Lumpur",03-91306928,Kuala Lumpur,NPRA,3.096103,101.729275,full,NPRA
+NPRA34d914ff26,Caring Pharmacy Always Sdn Bhd -Taman Midah,"30, Tingkat Bawah, Jalan Midah Besar, Taman Midah , 56000 Kuala Lumpur",03-91306928,Kuala Lumpur,NPRA,3.096103,101.729275,full,NPRA
+NPRA887a252913,Caring Pharmacy Always Sdn Bhd -Taman Midah,"30, Tingkat Bawah, Jalan Midah Besar, Taman Midah , 56000 Kuala Lumpur",03-91306928,Kuala Lumpur,NPRA,3.096103,101.729275,full,NPRA
+NPRA375623f1ec,"Guardian Alamanda, Putrajaya -Alamanda Shopping Centre","Lot G32, Ground Floor, Alamanda Shopping Centre, 62000, Putrajaya",03-88811387,Putrajaya,NPRA,2.939406,101.7109215,full,NPRA
+NPRA8de40fdf28,Guardian Solaris Mount Kiara,"No.8 & 10, Ground Floor, Block H, Solaris Mount Kiara, Jalan Solaris 5, Off Jalan Duta Kiara, 50480, Kuala Lumpur",03-62037941,Kuala Lumpur,NPRA,3.1744142,101.6596537,full,NPRA
+NPRA5755da979c,Caring Trio Sdn Bhd - Berjaya Time Square,"Lot Lg 32 & 33, Tingkat Bawah, Berjaya Times Square, No 1, Jalan Imbi, 55100 Kuala Lumpur",03-21426918,Kuala Lumpur,NPRA,3.1425177,101.7103847,full,NPRA
+NPRA1eb4a6031a,Caring Trio Sdn Bhd - Berjaya Time Square,"Lot Lg 32 & 33, Tingkat Bawah, Berjaya Times Square, No 1, Jalan Imbi, 55100 Kuala Lumpur",03-21426918,Kuala Lumpur,NPRA,3.1425177,101.7103847,full,NPRA
+NPRAf3f1984a4a,Big Pharmacy Healthcare Sdn Bhd,"No.66 & 66A Jalan Negara Taman Melawati, 53100 Kuala Lumpur",03-77251898,Kuala Lumpur,NPRA,3.2087527,101.7504238,full,NPRA
+NPRA2233185dd8,Guardian Health And Beauty Sdn Bhd -Berjaya Times Square,"Lot Lg-06 Lg-07 Lower Ground Floor, Berjaya Times Square, No 1, Jalan Imbi, 55100 Kuala Lumpur",03-21442908,Kuala Lumpur,NPRA,3.1425177,101.7103847,full,NPRA
+NPRAc267f72287,"V Care Retail (Constant Parmacy) -Jalan Genting Klang,Setapak","195-G, Tingkat Bawah, Jalan Genting Klang, Setapak, 53300 Kuala Lumpur",03-40217018,Kuala Lumpur,NPRA,3.208032,101.727283,full,NPRA
+NPRAe4ded39ed4,Pharmhouse Retail (Constant Pharmacy) - Taman Tun Dr. Ismail,"22G, Jalan Tun Mohd Fuad 2, Taman Tun Dr. Ismail, 60000 Kuala Lumpur",03-77270018,Kuala Lumpur,NPRA,3.1401879,101.628534,full,NPRA
+NPRA892635bc81,"Mediconstant Pharmacy (Ampang) Sdn Bhd (Constant Pharmacy) - Taman Dahlia, Cheras","83, Tingkat Bawah, Jalan 34/154 Taman Dahlia, Cheras 56000 Kuala Lumpur",03-91017018,Kuala Lumpur,NPRA,3.0575813,101.7486938,full,NPRA
+NPRA67280ae703,"Max Medi Pro Sdn Bhd (Cottage Pharmacy) -Taman Kok Doh, Segambut","No 19, Jalan 17/42, Taman Kok Doh, Segambut, 51200 Kuala Lumpur",03-62527118,Kuala Lumpur,NPRA,3.1957782,101.6656949,full,NPRA
+NPRA4f75f75e05,Farmasi Kesuma -Medan Idaman Business Centre,"No.37, Tingkat Bawah , Jalan Jernai 2, Medan Idaman Business Centre, Jalan Gombak, 53000 Kuala Lumpur",03-40310827,Kuala Lumpur,NPRA,3.2124925,101.7120659,full,NPRA
+NPRAba346cb27b,Mediconstant Pharmacy (Ampang) Sdn Bhd,"24, Jalan 20C/146, Taman Desa Tasik, Sungai Besi, 57000 Kuala Lumpur",03-90592018,Kuala Lumpur,NPRA,3.0694742,101.7142503,full,NPRA
+NPRAb871ef8f0f,Farmasi Neu Setbury - Kepong Baru,"No.51,Lorong Bangau Satu,Kepong Baru, 52100 Kuala Lumpur",03-62733102,Kuala Lumpur,NPRA,3.2025454,101.6443332,full,NPRA
+NPRA47125e4063,Farmasi Seri Petaling Sdn Bhd (Aa Pharmacy) -Bandar Baru Seri Petaling,"No.2 & 4, Jalan Radin Anum Zon J2, Bandar Baru Seri Petaling, 57000 Kuala Lumpur",03-90577718,Kuala Lumpur,NPRA,3.0670261,101.6904424,full,NPRA
+NPRAcb425e45b4,Farmasi Seri Petaling Sdn Bhd (Aa Pharmacy) -Bandar Baru Seri Petaling,"No.2 & 4, Jalan Radin Anum Zon J2, Bandar Baru Seri Petaling, 57000 Kuala Lumpur",03-90577718,Kuala Lumpur,NPRA,3.0670261,101.6904424,full,NPRA
+NPRAdb1d98287d,One Caring Pharmacy Sdn Bhd (Caring Pharmacy) - Mont Kiara,"Lot Lg-12, Tingkat Terbawah, One Mont Kiara No.1, Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur",03-62037928,Kuala Lumpur,NPRA,3.1659615,101.652742,full,NPRA
+NPRAf02adb83dd,Lesley Pharmacy Sdn Bhd - Taman Overseas Union,"No.58, Jalan Hujan Rahmat 2 Taman Overseas Union, 58200 Kuala Lumpur",03-79719766,Kuala Lumpur,NPRA,3.0725842,101.6728197,full,NPRA
+NPRA2ac58c01d8,"Oug Pharmacy Sdn Bhd -, Taman Oug","No.15,Tingkat Bawah, Jalan Hujan Rahmat 2, Taman Oug, Jalan Klang Lama, 58200 Kuala Lumpur",03-77841525,Kuala Lumpur,NPRA,3.0731816,101.6727515,full,NPRA
+NPRAd5b0dee716,"Oug Pharmacy Sdn Bhd -, Taman Oug","No.15,Tingkat Bawah, Jalan Hujan Rahmat 2, Taman Oug, Jalan Klang Lama, 58200 Kuala Lumpur",03-77841525,Kuala Lumpur,NPRA,3.0731816,101.6727515,full,NPRA
+NPRA7bd80f6d8e,Favourite Skyline Sdn Bhd - Servicare Pharmacy,"No.48,Tingkat Bawah,Jalan Sri Permaisuri 9, Bandar Sri Permaisuri, Cheras 56000 Kuala Lumpur",03-91727414,Kuala Lumpur,NPRA,3.1022514,101.7076956,full,NPRA
+NPRAd7c737168d,Farmasi Syabas Sdn Bhd (Farmasi Alpha.Com) -Plaza Damansara,"77G, Medan Setia 1, Plaza Damansara, Bukit Damansara, 50490 Kuala Lumpur",03-20942188,Kuala Lumpur,NPRA,3.1502425,101.6539531,full,NPRA
+NPRAc213de1c32,Farmasi Sentul Sdn Bhd (Farmasi Alpha.Com) -Jalan Sentul,"105, Jalan Sentul, Sentul Pasar, 51000 Kuala Lumpur",03-40449937,Kuala Lumpur,NPRA,3.1884797,101.6909984,full,NPRA
+NPRA0745fb18fe,Armanee Pharmacy Sdn Bhd (Farmasi Parkcity) - Kepong,"22-G, Blok B, Vista Magna, Metro Prima, Jalan Prima, Kepong, 52100 Kuala Lumpur",03-62582588,Kuala Lumpur,NPRA,3.2135723,101.6428558,full,NPRA
+NPRA41a2d44f6f,Seraya Lagenda Sdn Bhd (Farmasi Dailycare) - Setapak,"No.20, Tingkat Bawah, Jalan 13/5, Taman Melati, Setapak, 53100 Kuala Lumpur",03-41613397,Kuala Lumpur,NPRA,3.2259454,101.7003574,full,NPRA
+NPRA39f488f863,Farmasi Segar Healthcare Sdn. Bhd -Taman Segar,"No.43, Jalan Manis 4, Taman Segar, Cheras, Kuala Lumpur",03-91307918,Kuala Lumpur,NPRA,3.0895146,101.7427315,full,NPRA
+NPRA94cfdbf70d,Farmasi Segar Healthcare Sdn. Bhd -Taman Segar,"No.43, Jalan Manis 4, Taman Segar, Cheras, Kuala Lumpur",03-91307918,Kuala Lumpur,NPRA,3.0895146,101.7427315,full,NPRA
+NPRA7efb623ee0,Radiantcare Pharmacy Sdn. Bhd,"No.19, Jalan Damai Perdana 1/8B, Bandar Damai Perdana, Cheras, 56000 Kuala Lumpur",03-89589604,Kuala Lumpur,NPRA,3.0467159,101.7400355,full,NPRA
+NPRA83f235a01f,Pharmasave Pharmacy Sdn Bhd -Taman United,"No.8, Jalan Sepadu, Taman United, 58200 Kuala Lumpur",03-79819081,Kuala Lumpur,NPRA,3.0840441,101.6747721,full,NPRA
+NPRA15ab98a725,Holistic Pharmacy Sdn Bhd,"55, Jalan Landak, Off Jalan Pudu,55100 Kuala Lumpur",03-21415192,Kuala Lumpur,NPRA,3.1376115,101.7129319,full,NPRA
+NPRA9d43ec8700,Vcare Pharmacy Sdn Bhd,"No. 26, Ground Floor, Jalan Diplomatik,Presint 15, 62000 Putrajaya",03-88888166,Putrajaya,NPRA,2.9449952,101.7209052,full,NPRA
+NPRA732d480116,Vcare Pharmacy Sdn Bhd,"No. 26, Ground Floor, Jalan Diplomatik,Presint 15, 62000 Putrajaya",03-88888166,Putrajaya,NPRA,2.9449952,101.7209052,full,NPRA
+NPRAb4078022e7,Guardian Health And Beauty Sdn Bhd -Bangsar Shopping Centre,"Lot F1, Bangsar Shopping Centre,285, Jalan Maarof, Bukit Bandaraya,59000 Kuala Lumpur",03-20937391,Kuala Lumpur,NPRA,3.1428401,101.6675173,full,NPRA
+NPRAe61c6a10c3,Guardian Health And Beauty Sdn Bhd,"Lot No. 1F-1A, Tingkat 1, Bangsar Village Ii,No. 2, Jalan Telawi 1, Bangsar Baru,59100 Kuala Lumpur",03-22800140,Kuala Lumpur,NPRA,3.1306409,101.6712869,full,NPRA
+NPRA622b10fee2,Guardian Health And Beauty Sdn Bhd,"7-0-10, Jalan 3/109F, Taman Danau Desa,58100 Kuala Lumpur",03-79870272,Kuala Lumpur,NPRA,3.100275,101.686878,full,NPRA
+NPRA67c749a9b8,Guardian Health And Beauty Sdn Bhd,"Lot F04, Tingkat 1, Jusco Alpha Angel Shopping Centre,Jalan R1, Seksyen 1, Bandar Baru Wangsa Maju,53300 Kuala Lumpur",03-41431402,Kuala Lumpur,NPRA,3.202210500000001,101.7340713,full,NPRA
+NPRA0d2dd6d391,Guardian Health And Beauty Sdn Bhd,"Lot G02, Ground Floor, Jusco Taman Maluri, Jalan Jejaka, Cheras, 55100 Kuala Lumpur",03-92858748,Kuala Lumpur,NPRA,3.1275076,101.7322692,full,NPRA
+NPRA9126cc0564,Green Lane Pharmacy Sdn Bhd(Farmasi Alpha.Com),"No. 33, Jalan Bangau 1, Kepong Baru, 52100 Kuala Lumpur",03-62760693,Kuala Lumpur,NPRA,3.2024293,101.6444664,full,NPRA
+NPRAbe17723189,Bargain Base Sdn Bhd,"No. 30, Persiaran Ara Kiri, Lucky Garden, Bangsar, 59100 Kuala Lumpur",03-20949133,Kuala Lumpur,NPRA,3.1279113,101.6695439,full,NPRA
+NPRA9359641644,Bargain Base Sdn Bhd,"No. 30, Persiaran Ara Kiri, Lucky Garden, Bangsar, 59100 Kuala Lumpur",03-20949133,Kuala Lumpur,NPRA,3.1279113,101.6695439,full,NPRA
+NPRA3d61d620bd,Ok Distribution Sdn Bhd (Aa Pharmacy),"No. 6, Jalan Hujan Emas 4, Taman Overseas Union, Off Jalan Klang Lama, 58200 Kuala Lumpur",,Kuala Lumpur,NPRA,3.0823013,101.6684135,full,NPRA
+NPRAd56e383a2d,Caring Pharmacy Sdn Bhd,"No 8 Jalan 56, Persiaran Mergastua, Kepong Baru, Kepong 52100 Kuala Lumpur",,Kuala Lumpur,NPRA,3.2016111,101.6457371,full,NPRA
+NPRAe086fb92b4,Caring Pharmacy Rising Sdn Bhd,"22, Jalan Manis 4, Taman Segar, Cheras, 56100 Kuala Lumpur",03-91335928,Kuala Lumpur,NPRA,3.0894001,101.7425524,full,NPRA
+NPRA6dad47b393,Jolly Pharmacy Sdn Bhd,"80, Jalan Pudu, 55100 Kuala Lumpur",03-20222199,Kuala Lumpur,NPRA,3.1457185,101.7027581,full,NPRA
+NPRA2289867214,Sunway Pharma Sdn Bhd,"15-17, Jalan Jejaka 2, Taman Maluri, Cheras, 55100 Kuala Lumpur",03-92828878,Kuala Lumpur,NPRA,3.1266925,101.729876,full,NPRA
+NPRA27e6c0f6b4,Tip Top Pharmacy Sdn Bhd,"18, Jalan 2/50C, Taman Setapak Indah Jaya, Off Jalan Genting Klang, 53300 Kuala Lumpur",03-40310161,Kuala Lumpur,NPRA,3.1954462,101.7113264,full,NPRA
+NPRA5867b85b10,Axiana Pharmacy Sdn Bhd,"94, Tkt Bawah, Kompleks Bandar Park, Jalan Mega Mendung, Bandar Park, 58200 Kuala Lumpur",03-79728911,Kuala Lumpur,NPRA,3.0830334,101.6712038,full,NPRA
+NPRAafc2b4f362,Action Approach Sdn Bhd (Aa Pharmacy),"No. G-01, Tingkat Bawah, Wisma Bukit Bintang, No.28, Jalan Bukit Bintang, 55100 Kuala Lumpur",03-21438818,Kuala Lumpur,NPRA,3.1451872,101.7088977,full,NPRA
+NPRA4e02721e9d,Farmasi Maluri Sdn Bhd,"23, Jalan Burung Jentayu, Taman Bukit Maluri, Kepong, 52100 Kuala Lumpur",03-62728061,Kuala Lumpur,NPRA,3.2007839,101.633938,full,NPRA
+NPRA9841f0c7b5,Pharmaniaga Pristine Sdn Bhd (Farmasi Royalepharma),"L1-031, Tingkat 1, Mytown Shopping Centre,No. 6, Jalan Cochrane, Seksyen 90, 55100 Kuala Lumpur",,Kuala Lumpur,NPRA,3.1348713,101.722742,full,NPRA
+NPRAb465a9a9e1,Berjaya Pharmacy Retail Sdn Bhd,"15C & D, Tingkat 15, Office Block, Plaza Berjaya,12, Jalan Imbi, 55100 Kuala Lumpur",03-2110 6688,Kuala Lumpur,NPRA,3.1430807,101.7091965,full,NPRA
+NPRA0018afa2ef,"Multicare Pharmacy - Bandar Damai Perdana,Cheras","No 6, Jalan Damai Perdana 1/8A, Bandar Damai Perdana, Cheras, 56000, Kuala Lumpur",03-91003070,Kuala Lumpur,NPRA,3.0472376,101.7397744,full,NPRA
+NPRA78402c325b,Health Lane Family Pharmacy Sdn Bhd,"8, Tingkat Bawah, Jalan 7/108C, Taman Sungai Besi, 57100 Kuala Lumpur",03-28586637,Kuala Lumpur,NPRA,3.0936054,101.7004825,full,NPRA
+NPRA6494e26050,Berjaya Pharmacy Retail Sdn Bhd (Tigas Alliance Pharmacy),"22, Tingkat Bawah, Persiaran Zaaba, Taman Tun Dr Ismail, 60000 Kuala Lumpur",03-77100099,Kuala Lumpur,NPRA,3.1444118,101.6267611,full,NPRA
+NPRA99c4aadb49,Farmasi Jaya 22 Sdn Bhd,"No 23, Tingkat Bawah Jalan Sarikei, Off Jalan Pahang 53000 Kuala Lumpur",03-40211702,Kuala Lumpur,NPRA,3.1777356,101.6999305,full,NPRA
+NPRA3486aa8e50,Farmasi Pantai Hillpark ( Farmasi Pantai Hillpark ),"No 27 Jalan Pantai Murni 6, Desa Pantai 59200 Kuala Lumpur",03-22411215,Kuala Lumpur,NPRA,3.1037354,101.6651748,full,NPRA
+NPRA748db417d6,Sunway Pharma Sdn Bhd (Sunway Pharmacy),"Wisma Siah Brothers, 74A-C,Jalan Pahang 53000 Kuala Lumpur",,Kuala Lumpur,NPRA,3.1707419,101.698334,full,NPRA
+NPRA9dba794cd9,Mediconstant Pharmacy (Ampang) Sdn. Bhd,"33, Tingkat Bawah, Jalan 45A/26, Taman Sri Rampai, Setapak, 53300 Kuala Lumpur",03-41497018,Kuala Lumpur,NPRA,3.1958211,101.7316334,full,NPRA
+NPRA82871a2d50,Vc Pavilion Sdn Bhd (Big Pharmacy),"19 & 21, Plaza Danau2, Jalan 2/109F, Taman Danau Desa,Jalan Klang Lama, 58100 Kuala Lumpur",03-79715858,Kuala Lumpur,NPRA,3.0994371,101.6864288,full,NPRA
+NPRA889dae7d81,Big Pharmacy Healthcare Sdn Bhd,"No.61-G, Tingkat Bawah, Jalan Radin Tengah Bandar Baru Seri Petaling 57000 Kuala Lumpur",03-90554722,Kuala Lumpur,NPRA,3.0687002,101.6927795,full,NPRA
+NPRAa53360b4ae,WKF Pharmacy Sdn Bhd(Multicare Pharmacy),"No.9, Jalan Jernai 2, Medan Idaman, Batu 5, Jalan Gombak, 53100, Kuala Lumpur",016-2373491,Kuala Lumpur,NPRA,3.2132836,101.7126758,full,NPRA
+NPRA7c6e06c945,"Alpro Alliance Sdn Bhd - Jalan Dato Bandar Tunggal, Seremban","No 35 & 36, Jalan Dato Bandar Tunggal, 70000 Seremban, Negeri Sembilan",06-7630888,Negeri Sembilan,NPRA,2.7268905,101.9381942,full,NPRA
+NPRAcc3e7e423c,"Alpro Alliance Sdn Bhd - Jalan Dato Bandar Tunggal, Seremban","No 35 & 36, Jalan Dato Bandar Tunggal, 70000 Seremban, Negeri Sembilan",06-7630888,Negeri Sembilan,NPRA,2.7268905,101.9381942,full,NPRA
+NPRA601eae6b85,Alpro Pharmacy (Teluk Kemang) Sdn Bhd -Pd Sunggala Gateway,"19G, Jalan Pds I, Pd Sunggala Gateway, 71050 Port Dickson, Negeri Sembilan",06-6621923,Negeri Sembilan,NPRA,2.4760208,101.8559864,full,NPRA
+NPRA8763e8ec98,Alpro Pharmacy (Teluk Kemang) Sdn Bhd -Pd Sunggala Gateway,"19G, Jalan Pds I, Pd Sunggala Gateway, 71050 Port Dickson, Negeri Sembilan",06-6621923,Negeri Sembilan,NPRA,2.4760208,101.8559864,full,NPRA
+NPRA38ccb5f4c4,Alpro Pharmacy (Teluk Kemang) Sdn Bhd -Pd Sunggala Gateway,"19G, Jalan Pds I, Pd Sunggala Gateway, 71050 Port Dickson, Negeri Sembilan",06-6621923,Negeri Sembilan,NPRA,2.4760208,101.8559864,full,NPRA
+NPRAcaffa3a04c,Alpro Pharmacy Sdn Bhd - Oceanic Mall,"Lot G11-G15, Jalan Pantai Batu 1/2, Oceanic Mall, 71000 Port Dickson, Negeri Sembilan",,Negeri Sembilan,NPRA,2.523306400000001,101.8079865,full,NPRA
+NPRAf639980c82,Alpro Alliance Sdn.Bhd. - Jalan Dato' Sheikh Ahmad,"No.13G, Jalan Dato' Sheikh Ahmad, 70000 Seremban, Negeri Sembilan",06-6621923,Negeri Sembilan,NPRA,2.7247141,101.9404035,full,NPRA
+NPRAbf22ac091a,"Cosway Pharmacy -Sungai Gadut, Seremban","528, Ground Floor, Jalan 1/3, Taman Tuanku Jaafar, 71450 Sungai Gadut, Seremban, Negeri Sembilan",03-20301000,Negeri Sembilan,NPRA,2.6188198,102.0592644,full,NPRA
+NPRA6dd8a0cdc8,"Guardian Pharmacy Jalan Dato Sheikh Ahmad, Seremban","No.10&11, Jalan Dato Sheikh Ahmad, 70000 Seremban, Negeri Sembilan",,Negeri Sembilan,NPRA,2.7244002,101.9404965,full,NPRA
+NPRA010b2ddc00,"Multicare Wellness Pharmacy -Biz Avenue, Seremban","No.20, Jalan S2 B18, Biz Avenue, Seremban 2, 70300 Sereman, Negeri Sembilan",06-6016683,Negeri Sembilan,NPRA,2.6986463,101.911769,full,NPRA
+NPRA5be1e0763f,Seremban Premier Pharmacy Sdn Bhd -Jalan Dato' Bandar Tunggal,"106 & 107, Jalan Dato' Bandar Tunggal, 70000 Seremban, Negeri Sembilan",06-7671070,Negeri Sembilan,NPRA,2.7246932,101.9390022,full,NPRA
+NPRA7cbd1b4a7d,Ann-Care Pharmacy Sdn Bhd -Jalan Tan Srimanickavasagam (Lobak),"381, Jalan Tan Sri Manickavasagam (Lobak) 70200 Seremban, Negeri Sembilan",06-7610399,Negeri Sembilan,NPRA,2.72909,101.9307427,full,NPRA
+NPRA2b6e9be4a6,Guardian Giant Superstore Nilai,"Lot G34-39, Giant Superstore Nilai, Pt6367, Jalan Bbn3/1, Putra Nilai, 71800, Nilai, Negeri Sembilan",06-7991661,Negeri Sembilan,NPRA,2.813,101.79183,full,NPRA
+NPRA75dbb679f4,Multicare Pharmacy (Bahau) S/B,"55, Jalan Besar, 72100 Bahau, Negeri Sembilan",06-4541971,Negeri Sembilan,NPRA,2.810409,102.4025569,full,NPRA
+NPRA4fa66e6348,"Multicare Wellness Pharmacy Sdn Bhd -B1Z Avenue, Seremban","No. 20, Jalan S2 B18, B1Z Avenue, Seremban 2, 70300 Seremban, Negeri Sembilan",06-6016683,Negeri Sembilan,NPRA,2.6986463,101.911769,full,NPRA
+NPRAfc31871d74,Pharmart Nilai Sdn Bhd,"Pt 11382, Jalan Bbn 6/2B, Taman Desa Cempaka, Bandar Baru Nilai, 71800 Nilai, Negeri Sembilan",06-8500159,Negeri Sembilan,NPRA,2.8029373,101.7688821,full,NPRA
+NPRA82cb0f4ac8,Farmasi Rj Sdn Bhd.,"3441, Jalan Rasah Jaya Utama 1, Taman Rasah Jaya, 70300 Seremban, Negeri Sembilan.",06-6324050,Negeri Sembilan,NPRA,2.6908126,101.9345439,full,NPRA
+NPRA45db4cd5d7,Sa Pharma Sdn Bhd ( Heal Pharmacy ),"Pt10858 Jalan Bbn 6/1 B, Taman Desa Cempaka, 71800 Nilai Negeri Sembilan",,Negeri Sembilan,NPRA,2.8016719,101.7642426,full,NPRA
+NPRA82c8e9d889,Multicare Wellness Pharmacy Sdn Bhd,"No.25-G, Jalan S2 F1, Garden Homes, Seremban 2, 70300 Seremban Negeri Sembilan",,Negeri Sembilan,NPRA,2.684731,101.9070377,full,NPRA
+NPRA0ba27d3739,Alpro Alliance Sdn Bhd - Kuala Pilah,"No 130, Jalan Yam Tuan Raden, 72000 Kuala Pilah, Negeri Sembilan",,Negeri Sembilan,NPRA,2.7391322,102.2485331,full,NPRA
+NPRA2e08244f56,Big Bee Pharmacy Sdn Bhd - Taman Batu Berendam Putra,"25 Jalan Bbpi, Taman Batu Berendam Putra, 75350 Melaka",06-3177654,Melaka,NPRA,2.242992,102.2566061,full,NPRA
+NPRA5ed7823d18,Alpro Alliance,"No. 112, Jalan Munshi Abdullah, 75100 Melaka",,Melaka,NPRA,2.1999749,102.2520024,full,NPRA
+NPRA04e8d7dea4,Straits Pharmacy (Tanjung Minyak) Sdn. Bhd -Kws Perindustrian Bkt Rambai,"Gf01 No 7000 Jln Pbr38, Kws Perindustrian Bkt Rambai, 75260 Melaka",06-3515988,Melaka,NPRA,2.2644508,102.1899359,full,NPRA
+NPRA98619b6179,Guardian Health And Beauty Sdn Bhd,"F19, Jusco Melaka Shopping Centre, Lebuh Ayer Keroh, 75450 Melaka",06-2346297,Melaka,NPRA,2.234798,102.2814029,full,NPRA
+NPRA1dd0786eb1,Alpro Alliance Sdn Bhd - Jasin,"No 36, Jalan Kesang, 77000 Jasin, Melaka",,Melaka,NPRA,2.3109526,102.4301721,full,NPRA
+NPRA19ef929594,Farmasi Alang Sdn Bhd - Masjid Tanah,"Mt 1396 Kompleks Perniagaan, 78300 Masjid Tanah, Melaka",06-3848013,Melaka,NPRA,2.1980476,102.2310709,full,NPRA
+NPRAfdd65d7c9c,Guardian Pharmacy - Mahkota Parade,"G8, Mahkota Parade, Jalan Taman, 75000 Melaka",06-2829499,Melaka,NPRA,2.1893097,102.2497857,full,NPRA
+NPRAc411e7f405,All Day Pharmacy Sdn Bhd,"Lot G04 & G05, Mydin Mall, Mitc, 75450 Ayer Keroh Melaka",06-2346001,Melaka,NPRA,2.271537,102.284892,full,NPRA
+NPRAd0a5c77b9c,Guardian Pharmacy -Tesco Hypermarket Melaka,"Lot No.34, Ground Floor, Tesco Hypermarket Melaka, 75300 Melaka",,Melaka,NPRA,2.2128109,102.2447782,full,NPRA
+NPRAff9d5def1a,Straits Pharmacy (Ayer Keroh) Sdn Bhd -Lebuh Ayer Keroh,"G8, Bangunan Kings Hotel, Lebuh Ayer Keroh, 75450 Melaka",06-2333988,Melaka,NPRA,2.2366085,102.2888011,full,NPRA
+NPRA0a281d922e,Straits Pharmacy Sdn Bhd - Jalan Munshi Abdullah,"83-V, Jalan Munshi Abdullah, 75000 Melaka",06-2829898,Melaka,NPRA,2.2004461,102.2511704,full,NPRA
+NPRAccaaa4958f,Green Island Pharmacy Sdn Bhd -Taman Melaka Raya,"320 Jln Melaka Raya 1, Taman Melaka Raya, 75000 Melaka",06-2819818,Melaka,NPRA,2.1867914,102.25245,full,NPRA
+NPRAcefc03131e,My Health Pharmacy Sdn Bhd,"35 Jalan Inang 3, Taman Paya Rumput Utama, 76450 Melaka,Melaka",06-3360021,Melaka,NPRA,2.2806918,102.2168894,full,NPRA
+NPRA5056c01810,Am Pm Pharmacy (Bukit Indah Branch),"50, Jalan Indah 8/15, Taman Bukit Indah, 81200 Johor Bahru, Johor.",07-2372286,Johor,NPRA,1.4776939,103.6503247,full,NPRA
+NPRAb539882783,Am Pm Pharmacy -Kulaijaya,"19, Jalan Anggerik 1, Taman Kulai Utama, 81000 Kulaijaya, Johor",07-6622814,Johor,NPRA,1.6650069,103.594163,full,NPRA
+NPRA56a6e5436e,Am Pm Pharmacy S/B - Taman Perling,"28, Jalan Camar 1, Taman Perling, 81200, Tampoi, Johor Bahru, Johor",07-2448966,Johor,NPRA,1.48999,103.705399,full,NPRA
+NPRAef6feb4014,Caring Pharmacy Retail Management Sdn.Bhd. - Johor Bahru City Centre,"Lot 218, 2Nd Floor, Komtar Jbcc, Johor Bahru City Centre, 80000 Johor Bahru, Johor.",07-2955196,Johor,NPRA,1.4636738,103.7628602,full,NPRA
+NPRAcf9c962d8d,Big Pharmacy Healthcare Sdn Bhd,"No.6, 6-01,6-02, Jalan Padi Emas 4/1, Bandar Baru Uda, 81200 Johor Bahru, Johor",07-2328236,Johor,NPRA,1.4990459,103.7099218,full,NPRA
+NPRA4927e6c33a,Big Pharmacy Healthcare Sdn Bhd,"No. 2911, Jalan Merbau 3, Bandar Putra, 81000 Kulai, Johor",07-5996063,Johor,NPRA,1.6462765,103.6240102,full,NPRA
+NPRAe3b14c8d77,Big Pharmacy Healthcare Sdn Bhd,"No.18G Susur Larkin Perdana 2, Jalan Persiaran Larkin Perdana, Taman Larkin Perdana, 80350 Johor Bahru, Johor",07-2324117,Johor,NPRA,1.5009646,103.7488361,full,NPRA
+NPRA4c301a0d23,Dillons Pharmacy -Masai,"Lot 15 & 19, Giant Hypermarket Plentong, No. 3, Jalan Masai Lama, 81750 Masai Johor.",07-3581133,Johor,NPRA,1.5280571,103.8146585,full,NPRA
+NPRAcc7a6ba05e,Farmasi Wellness Sdn Bhd - Skudai,"No.96, Jalan Sutera Tanjung 8/3, Taman Sutera Utama, 81300 Skudai, Johor",07-5568788,Johor,NPRA,1.5152922,103.6692724,full,NPRA
+NPRA575dc00718,Farmasi Wellness Sdn Bhd - Skudai,"No.96, Jalan Sutera Tanjung 8/3, Taman Sutera Utama, 81300 Skudai, Johor",07-5568788,Johor,NPRA,1.5152922,103.6692724,full,NPRA
+NPRAc293bbb7f6,Ij Pharmacy (M) Sdn Bhd - Taman Molek,"No 87, Jalan Molek 3/1, Taman Molek, 81100 Johor Bahru, Johor",07-3552878,Johor,NPRA,1.5230565,103.7864284,full,NPRA
+NPRA07ba620e61,Ij Pharmacy (Pi) Sdn.Bhd. - Jalan Kolam Ayer 2,"G-16, Jalan Kolam Ayer 2, 80100 Johor Bahru, Johor",07-3552878,Johor,NPRA,1.4648241,103.7369574,full,NPRA
+NPRAa0543c58ec,Am Pm Pharmacy Sdn Bhd - Bukit Pasir Batu Pahat,"No 10 Jalan Muar, Parit Sulong, 83500 Batu Pahat, Johor",07-4186529,Johor,NPRA,1.9773801,102.8816967,full,NPRA
+NPRAe061c36e78,Am Pm Pharmacy Sdn Bhd - Taman Intan Kluang,"49, Jalan Intan 2/1, Taman Intan, 86000 Kluang, Johor",07-7760459,Johor,NPRA,2.0180796,103.3006018,full,NPRA
+NPRA15fcbb5c62,My Pharmacy ( Austin ) Sdn Bhd,"No 67, Jalan Austin Heights 3, Taman Mount Austin, 81100 Johor Bahru, Johor",07-3596110,Johor,NPRA,1.5613898,103.7798331,full,NPRA
+NPRA58059f1942,My Pharmacy (Jj) Sdn Bhd - Taman Johor Jaya,"29, Jalan Dedap 4, Taman Johor Jaya, 81100 Johor Bahru, Johor",07-3523110,Johor,NPRA,1.5404641,103.804204,full,NPRA
+NPRA424fe60187,My Pharmacy (Kt) Sdn Bhd - Senai,"Sn32, Sn33 & Sn34, 274-1, Jalan Utama, Taman Bintang Utama, 81400 Johor",07-5982110,Johor,NPRA,1.611079,103.643963,full,NPRA
+NPRA950b3a9327,My Pharmacy (Kulai) Sdn Bhd -Tampoi,"38, Jalan Titiwangsa 3/2, Taman Tampoi Indah, 81200 Tampoi, Johor",07-2328110,Johor,NPRA,1.5072611,103.6887424,full,NPRA
+NPRA7613b74f27,Life Plus Pharmacy Group Sdn Bhd [My Pharmacy] - Taman Impian Emas,"25, Jalan Impian Emas 3, Taman Impian Emas, 81300 Skudai Johor Bahru, Johor",07-5562110,Johor,NPRA,1.5411805,103.6833324,full,NPRA
+NPRAf7f125695a,My Pharmacy (M) Sdn Bhd - Masai,"20G, Jalan Suria 2, Bandar Seri Alam, 81750 Masai, Johor",07-2528110,Johor,NPRA,1.4940915,103.8738146,full,NPRA
+NPRA6a5fa1dcb5,Life Plus Pharmacy Group Sdn Bhd [My Pharmacy] - Jalan Wong Ah Fook,"86, Jalan Wong Ah Fook, 80000 Johor Bahru, Johor",07-2213110,Johor,NPRA,1.4605071,103.7634787,full,NPRA
+NPRA8d1f4e426e,My Pharmacy (M) Sdn Bhd - Kota Tinggi,"No S-80 Kipmart (Kota Tinggi), Jalan Maju, 81900 Kota Tinggi, Johor",07-5982110,Johor,NPRA,1.7338006,103.9057805,full,NPRA
+NPRA19abb9beae,My Pharmacy (Pelangi) Sdn Bhd -Taman Pelangi,"56, Jalan Perang, 80400, Taman Pelangi. Johor Bahru, Johor",07-3321110,Johor,NPRA,1.481712,103.7750088,full,NPRA
+NPRAe54abdc48a,My Pharmacy (Sentosa) Sdn.Bhd.,"45, Jalan Sutera 1, Taman Sentosa, 80150 Johor Bahru, Johor",07-3323110,Johor,NPRA,1.4914842,103.7675992,full,NPRA
+NPRAef989d5b3d,Sing Ming Pharma Sdn Bhd / New Life Pharmacy - Taman Mount Austin,"01-35, Jalan Mutiara Emas 9/3, Austin Boulevard, Taman Mount Austin, 81100, Johor Bahru, Johor",07-3524968,Johor,NPRA,1.5453569,103.7894063,full,NPRA
+NPRAeb61f601f6,Win Health Pharmacy Sdn Bhd,"No. 20, Jalan Gangsa 1, Taman Gunung Pulai, 81000 Kulai, Johor",07-6624960,Johor,NPRA,1.6547444,103.5882805,full,NPRA
+NPRAda08776aee,Win Health Pharmacy Sdn Bhd,"No. 20, Jalan Gangsa 1, Taman Gunung Pulai, 81000 Kulai, Johor",07-6634961,Johor,NPRA,1.6547444,103.5882805,full,NPRA
+NPRA64a950f766,Chem City Pharmacy Sdn Bhd -Taman Tun Dr. Ismail,"No.69, Tingkat Bawah, Jalan Pesta, Taman Tun Dr. Ismail, 84000 Muar, Johor",06-9511787,Johor,NPRA,2.0484634,102.5844075,full,NPRA
+NPRA9ee9bd4d79,Loving Pharmacy Sdn Bhd - Skudai,"10, Jalan Sutera Tanjung 8/3, Taman Sutera Utama, 81300 Skudai Johor",07-5585933,Johor,NPRA,1.5170329,103.6672239,full,NPRA
+NPRA07e6796970,Big Pharmacy Healthcare Sdn Bhd,"No.8, Jalan Serangkai 18, Taman Bukit Dahlia, 81700 Pasir Gudang, Johor",07-2889340,Johor,NPRA,1.47811,103.894351,full,NPRA
+NPRA8dac451625,Farmasi Sri Ledang Sdn Bhd - Kluang,"No 6-8, Tingkat Bawah, Jalan Sentol 1, 86000, Kluang, Johor",07-7765807,Johor,NPRA,2.0416491,103.3326536,full,NPRA
+NPRA98f851d168,Guardian Johor Bahru City Square,"M2-02, M2-03, Level 2, Johor Bahru City Square, No 106-108, Jalan Wong Ah Fook, 80000, Johor Bahru, Johor",07-2200584,Johor,NPRA,1.4616534,103.7638662,full,NPRA
+NPRA889fc94874,Caring Pharmacy (Jb Molek) Sdn.Bhd.,"14, Jalan Molek 2/1 Taman Molek 81100 Tebrau, Johor",07-3579918,Johor,NPRA,1.527682,103.792572,full,NPRA
+NPRAece27f0734,Hock Hai Pharmacy Sdn.Bhd. -Bukit Gambir,"No.29, Jalan Gambir 3, Bandar Baru Bukit Gambir, 84800 Bukit Gambir, Johor",06-9761634,Johor,NPRA,2.210885,102.6541598,full,NPRA
+NPRA55fc1df899,Am Pm Pharmacy Snd Bhd,"103, Jalan Dedap 4, Taman Johor Jaya, 81100 Johor Bahru, Johor",07-3507507,Johor,NPRA,1.5424693,103.8025098,full,NPRA
+NPRAaaa1cfa78d,Am Pm Pharmacy Sdn Bhd - Indahpura,"1, Jalan Kenanga 29/1, Bandar Indahpura, 81000 Kulaijaya, Johor",07-6636286,Johor,NPRA,1.6415366,103.620891,full,NPRA
+NPRA94653c07e2,Am Pm Pharmacy Sdn Bhd - Indahpura,"1, Jalan Kenanga 29/1, Bandar Indahpura, 81000 Kulaijaya, Johor",07-6636286,Johor,NPRA,1.6415366,103.620891,full,NPRA
+NPRAd79a8682ea,Life Care Pharmacy -Taman Bukit Pasir,"4 & 5, Jalan Kundang 3A, Taman Bukit Pasir, 83000 Batu Pahat, Johor",07-4333119,Johor,NPRA,1.8664328,102.9406102,full,NPRA
+NPRAf1847c414b,You Pharmacy Sdn.Bhd - Taman Century,"No.185, Jalan Harimau, Taman Century, 80250 Johor Bahru, Johor",07-3310089,Johor,NPRA,1.4870116,103.7600047,full,NPRA
+NPRAf13b808539,Perennial Pharmacy Sdn.Bhd. -Skudai,"33, Jalan Pahlawan 1, Taman Ungku Tun Aminah, 81300 Skudai, Johor",07-5577368,Johor,NPRA,1.5241909,103.6655519,full,NPRA
+NPRA5671cf3835,Med Ville Pharmacy Sdn. Bhd -Muar,"No.16, Jalan Perdana 15, Taman Junid Perdana, Jalan Abdul Rahman, 84000 Muar, Johor",06-9530495,Johor,NPRA,2.0332931,102.5656481,full,NPRA
+NPRA89fddfa0c8,Am Pm Pharmacy Sdn. Bhd - Taman Daya,"65, Jalan Sagu 10, Taman Daya, 81100 Tebrau, Johor.",07-3558286,Johor,NPRA,1.5445104,103.7639291,full,NPRA
+NPRA0d0bebca53,Axon Pharmacy Sdn Bhd,"1-D, Jalan Raya, 81000 Kulai,Johor.",07-6636639,Johor,NPRA,1.599184,103.820769,full,NPRA
+NPRA4f38825a40,Xplus Pharmacy Sdn Bhd,"19, Jalan Maju, Taman Maju Jaya,80400 Johor Bahru, Johor",07-3355793,Johor,NPRA,1.480891,103.765974,full,NPRA
+NPRA0cb0133288,Farmasi Sihat Sdn Bhd,"14-2, Jalan Besar, Pekan Pagoh, 84600 Pagoh, Johor",06-9748160,Johor,NPRA,2.3456154,102.8305764,full,NPRA
+NPRAd31f9103ed,Farmasi Murni Marketing Sdn Bhd,"No. 20, Jalan Sulong, 83500 Parit Sulong,Batu Pahat,Johor",07-4187742,Johor,NPRA,1.975538,102.884645,full,NPRA
+NPRA3bf315046c,Vertex Pharmacy Sdn Bhd (Caring Pharmacy),"Lg 71 & 72, Ksl City, Jalan Seladang, Taman Abad, 80250 Johor Bahru, Johor.",07-2891530,Johor,NPRA,1.4858456,103.762422,full,NPRA
+NPRA8752dc9bb5,Innova Wellness Sdn Bhd,"215, Jalan Simbang, Taman Perling, 81200 Tampoi,Johor.",07-2315768,Johor,NPRA,1.4821045,103.6819572,full,NPRA
+NPRAae2c4c6b4c,Big Pharmacy Healthcare Sdn Bhd,"No. 47, Jalan Ledang 25, Taman Bukit Tiram, 81800 Ulu Tiram,Johor",,Johor,NPRA,1.6023892,103.8123864,full,NPRA
+NPRA647958b526,Smile Pharmacy Sdn Bhd,"No. 14, Jalan Pendekar 17, Taman Ungku Tun Aminah, 81300 Skudai, Johor",07-5850868,Johor,NPRA,1.5131683,103.6559308,full,NPRA
+NPRA54747a07bf,Amn Health,"No. 34, Jalan Genuang Perdana, Taman Genuang Perdana, 85000 Segamat, Johor",07-9434590,Johor,NPRA,2.4899868,102.8470473,full,NPRA
+NPRAaf03b6f56e,Loving Pharmacy Sdn Bhd,"No. 2, Jalan Padi Emas 6/1, Bandar Baru Uda, 81200 Tampoi,Johor.",07-2315999,Johor,NPRA,1.49966,103.70822,full,NPRA
+NPRA2c55df6996,Caring Pharmacy (Idr) Sdn Bhd,"Lot 5B-04A/1, Ground Floor, Kompleks Pengangkutan Awam Larkin, 80350 Johor Bahru, Johor.",07-2225288,Johor,NPRA,1.4976344,103.7499989,full,NPRA
+NPRAb0532db891,Ij Pharmacy Sdn Bhd,"No 28 Jalan Lembah 19, Bandar Seri Alam,81750 Masai, Johor.",,Johor,NPRA,1.5087538,103.8679514,full,NPRA
+NPRAde28145848,Vertex Pharmacy Sdn Bhd.,"F29B, Aeon Tebrau City Shopping Centre Jalan Desa Tebrau 81100 Tebrau, Johor",07-3559928,Johor,NPRA,1.5490688,103.7959073,full,NPRA
+NPRA90125e1526,Am Pm Pharmacy Sdn Bhd.,"Lot F1.25, Aeon Big Batu Pahat Shopping Complex, 1B, Jalan Persiaran Flora Utama, Taman Flora Utama, 83000 Batu Pahat, Johor.",,Johor,NPRA,1.8655125,102.9484663,full,NPRA
+NPRA4452371252,Big Pharmacy Healthcare Sdn Bhd,"24-G, Jalan Perdana 3/2, Taman Sri Pulai Perdana 2, Kangkar Pulai 81300 Skudai, Johor",07-5544031,Johor,NPRA,1.5618377,103.5978732,full,NPRA
+NPRA2bb9547c7a,Big Pharmacy Healthcare Sdn Bhd,"No 33, Jalan Suria 3, Bandar Seri Alam 81750 Masai, Johor",07-2524330,Johor,NPRA,1.4933648,103.8752722,full,NPRA
+NPRA9bc17cfed0,Farmasi Murni Marketing Sdn Bhd,"No. 15, Jalan Bintang Ria 1 Taman Bintang Ria 86200 Simpang Renggam, Johor",07-7557742,Johor,NPRA,1.8293243,103.3070921,full,NPRA
+NPRA078a0d08df,Am Pm Pharmacy Sdn Bhd,"No.77 Jalan Sutera 1, Taman Sentosa 80150 Johor Bahru,Johor.",,Johor,NPRA,1.4925355,103.7674765,full,NPRA
+NPRAb9f07ef4c6,Farmasi Ophir Sdn Bhd,"No. 22, Jalan Solok 84900 Tangkak,Johor.",06-9788739,Johor,NPRA,2.2654548,102.5401014,full,NPRA
+NPRA2f12c27351,Morning Pharmacy Sdn Bhd,"No.11, Ground Floor, Jalan Langsat, 86000 Kluang, Johor",07-7715771,Johor,NPRA,2.0373109,103.3192104,full,NPRA
+NPRA793f4baa01,Perniagaan Herba Sri Tanjung Sdn Bhd,"No.9, Jalan Sri Sulong, Taman Sri Sulong Mewah, 83500 Parit Sulong, Batu Pahat Johor",,Johor,NPRA,1.9270262,102.8573406,full,NPRA
+NPRA528ed231ab,Ij Pharmacy (Kt) Sdn Bhd,"Lot A&B, No 8L & 8M, Jalan Tun Habab, 81900, Kota Tinggi Johor",,Johor,NPRA,1.7318932,103.8994937,full,NPRA
+NPRA4d3c8a29c7,Am Pm Pharmacy Sdn Bhd,"23G, Jalan Austin Heights 8/8, Taman Mount Austin, 81100, Tebrau, Johor",07-3504715,Johor,NPRA,1.5578733,103.7759332,full,NPRA
+NPRAb8218d170a,Alsyifaa Farmasi -Kuala Rompin,"D’ Ansara Pharmashoppe & Healthcare S/B, No.26 & 27, Jalan Utama, Bandar Baru Rompin, 26800 Kuala Rompin, Pahang.",09-4141393,Pahang,NPRA,2.7965208,103.4861255,full,NPRA
+NPRA75618f89a4,Farmasi Bentong,"82, Jalan Ah Peng, 28700 Bentong, Pahang",09-2235920,Pahang,NPRA,3.5242814,101.9070132,full,NPRA
+NPRAe79461650d,Farmasi Cenderawasih Sdn Bhd -Pusat Komersial Batu 3,"A59, Pusat Komersial Batu 3, Jalan Sg.Isap, 25150 Kuantan, Pahang",09-5364766,Pahang,NPRA,3.782189,103.2753845,full,NPRA
+NPRA37ddc27682,Mercury Pharmacy - Bentong,44 Jalan Ah Peng 28700 Bentong Pahang,09-2224676,Pahang,NPRA,3.5235183,101.9078897,full,NPRA
+NPRAabfae42fed,Mercury Pharmacy Sdn Bhd -Mentakab,"No. 63, Jalan Temerloh, 28400 Mentakab, Pahang Darul Makmur",09-2774676,Pahang,NPRA,3.4836896,102.345906,full,NPRA
+NPRA718e180296,"Alpro Alliance (Pahang) Sdn Bhd -Taman Tas, Kuantan","No 39, Lorong Pandan Damai 2/2, Batu 7, Taman Tas, 25150 Kuantan, Pahang",09-5383288,Pahang,NPRA,3.7700332,103.2324375,full,NPRA
+NPRAb0c97f1547,Mercury Pharmacy (Mp Prestige Sdn Bhd) -Pusat Perdagangan Raub,"No.8, Jalan Perdagangan 1, Pusat Perdagangan Raub, 27600 Raub, Pahang",09-3555658,Pahang,NPRA,3.7958735,101.8552834,full,NPRA
+NPRA8ca3b83935,Mercury Pharmacy (Mp Prestige Sdn Bhd) -Bandar Sri Semantan,"No 16, Jalan Pak Sako 1, Bandar Sri Semantan, 28000 Temerloh, Pahang",09-2963032,Pahang,NPRA,3.4541167,102.4161873,full,NPRA
+NPRA9c60043275,Mercury Pharmacy Sdn Bhd -Jerantut,"S-16, Jalan Tahan, Bandar Baru, 27000 Jerantut, Pahang",09-2661950,Pahang,NPRA,3.9371225,102.3616932,full,NPRA
+NPRA5251a9a05b,Mercury Pharmacy (Mygs Venture Sdn Bhd) -Triang Sentral,"No. 23 & 25, Jalan Sentral Triang 8, Triang Sentral, 28300 Triang, Pahang",049-2506980,Pahang,NPRA,3.258335,102.436313,full,NPRA
+NPRA6b254e6c08,"Avanti Pharmacy Sdn.Bhd. - Taman Pandan Damai, Kuantan","No.B18-20, Tingkat Bawah, Lorong Pandan Damai 2/201, Taman Pandan Damai, 25050 Kuantan, Pahang",09-5382288,Pahang,NPRA,3.7713286,103.2308938,full,NPRA
+NPRA7337a72e0d,Farmasi Mediglo -Jalan Air Putih,"B-2006 & B-2008, Jalan Air Putih, 25300 Kuantan, Pahang",09-5662628,Pahang,NPRA,3.8348283,103.3365654,full,NPRA
+NPRA11496a984e,Farmasi Nadiah,"No. B-33, Ground Floor, Lorong Kempadang Aman 1,Perumahan Kempadang Aman, 25150 Kuantan, Pahang",09-5341590,Pahang,NPRA,3.7352157,103.3046935,full,NPRA
+NPRA468a2193ec,I Care Pharmacy Sdn Bhd,"No. S-17, Tingkat Bawah, Jalan Tahan,Bandar Baru, 27000 Jerantut, Pahang",09-2666398,Pahang,NPRA,4.3573797,102.4014763,full,NPRA
+NPRA8c50cc4dc4,Farmasi Sekilau,"B-124, Ground Floor, Jalan Bukit Sekilau, Bukit Sekilau, 25200 Kuantan Pahang",09-5158716,Pahang,NPRA,3.816675,103.3243393,full,NPRA
+NPRA7f69a609dd,Astorea Pharmacy Sdn Bhd(Promed Pharmacy),"No. 29, Jalan Dato Abdullah, 27600 Raub, Pahang",09-3550769,Pahang,NPRA,3.79109,101.856594,full,NPRA
+NPRA4e721cfb53,Farmasi Al-Falah (Farmasi Al- Falah Sdn Bhd),"B-28, Tingkat Bawah, Jalan Kampung Padang 3, Km13, Jalan Sungai Lembing, 25200 Kuantan, Pahang",09-5612049,Pahang,NPRA,3.8619478,103.2497399,full,NPRA
+NPRA13cc594229,Alpro Alliance (Pahang) Sdn.Bhd. (Farmasi Alpro),"No.B12 & B14, Lorong Pasar Baru 4, Jalan Tun Ismail, 25000 Kuantan, Pahang",06-6621923,Pahang,NPRA,3.8118954,103.3245016,full,NPRA
+NPRA0420a30d11,Farmasi Ehsan Jerteh Sdn Bhd,"No.235, Bangunan Kedai, Jalan Haji Jusoh, 22000 Jerteh, Terengganu",09-6978561,Terengganu,NPRA,5.7750966,102.4951408,full,NPRA
+NPRA3abf829c06,Lau & Tan Pharmacy Sdn Bhd -Jalan Banggol,"95, Jalan Banggol, 20100 Kuala Terengganu, Terengganu",09-6234550,Terengganu,NPRA,5.331358,103.135247,full,NPRA
+NPRA6234d19b57,Lau & Tan Pharmacy Sdn Bhd -Jalan Hiliran,"17-A Jalan Hiliran, 20300 Kuala Terengganu, Terengganu",,Terengganu,NPRA,5.319494199999999,103.1283909,full,NPRA
+NPRA6c68a809fa,"Farmasi Fajr Sdn.Bhd. - Wakaf Tembesu, Gong Badak","Pt 13433-K, Taman Permint Makmur, Wakaf Tembesu, Gong Badak, 21300 Kuala Terengganu",09-6671303,Terengganu,NPRA,5.3702412,103.085213,full,NPRA
+NPRA4bac31b256,Iman Medicare Entreprise (Farmasi Iman Medicare),"Mpkt 1931, Bangunan Perkasa, Pengadang Baru, 20050 Kuala Terengganu, Terengganu",09-6305351,Terengganu,NPRA,5.2768579,103.1028227,full,NPRA
+NPRAa8f980fbca,Lo (Gb) Farmasi Sdn Bhd,"Lot Pt 35353 &35354, Dataran Austin,Jalan Austin 3,Wakaf Tembesu,21200 Gong Badak, Terengganu",09-6627448,Terengganu,NPRA,5.3560493,103.0956196,full,NPRA
+NPRAd6ebcb1e5a,Farmasi Ehsan Machang Sdn Bhd,"Lot 32-B, Bangunan Tabung Haji, 18500 Machang, Kelantan",09-9751425,Kelantan,NPRA,5.7460527,102.1861447,full,NPRA
+NPRA5f163ef05e,Farmasi Ehsan Sdn Bhd - Pasir Puteh,"Lot 127, Seksyen 1, Jalan Kota Bharu, 16800 Pasir Puteh, Kelantan",09-7855777,Kelantan,NPRA,5.838965,102.3770992,full,NPRA
+NPRAb5c6baf174,Farmasi Ehsan Wakaf Bharu Sdn Bhd,"B 18, Lot Pt.171, Rumah Kedai Wakaf Bharu, 16250 Tumpat, Kelantan",09-7195292,Kelantan,NPRA,6.1375734,102.1879359,full,NPRA
+NPRAfec6be3558,Mira Pharmacy,"No. 452, Jalan Tasek, 17500 Tanah Merah, Kelantan",09-9555672,Kelantan,NPRA,5.809091599999999,102.1491888,full,NPRA
+NPRAee7ca4f2c3,Kian Farmasi (Kel) Sdn Bhd - Jalan Pintu Pong,"Pt 144 & 145 Jalan Pintu Pong, 15000 Kota Bharu, Kelantan",09-7438866,Kelantan,NPRA,6.130398599999999,102.2403701,full,NPRA
+NPRA88666a3912,Kian Pharmacy (Kel) Sdn Bhd -Jalan Padang Garong,"2981-B & C, Jalan Padang Garong, 15000 Kota Bharu, Kelantan",09-7438886,Kelantan,NPRA,6.128264199999999,102.2407884,full,NPRA
+NPRAcc9026c9d1,Farmasi Iman Sdn Bhd (Farmasi Iman),"Pt. 363, Kedai Melor, Melor, 16400 Kota Bharu, Kelantan",09-7825501,Kelantan,NPRA,5.964686,102.2967263,full,NPRA
+NPRA1d4fe58954,Farmasi Nazen,"Lot 338, Seksyen 1, Jalan Tengku Ahmad, 17000 Pasir Mas, Kelantan",,Kelantan,NPRA,6.0431191,102.1447407,full,NPRA
+NPRA4a95b8202a,Alpro Pharmacy (Sarawak)Center,"Sublot 11, Ground Floor, Premier 101 Commercial Center, Jln Tun Jugah, 93350 Kuching, Sarawak",082-458846,Sarawak,NPRA,1.5151958,110.3546175,full,NPRA
+NPRA72f3fd01bb,Bahagia Farmasi Sdn Bhd - Jln Wong Nai Siong,"No.21, Ground Floor, Jln Wong Nai Siong, 96000 Sibu, Sarawak",084-344533,Sarawak,NPRA,2.2899092,111.8277131,full,NPRA
+NPRAfbd5873436,Bath Pharmacy Sdn Bhd - Jalan Courthouse,"8 Jalan Courthouse, 93000 Kuching Sarawak",08-2242331,Sarawak,NPRA,1.5599336,110.3446457,full,NPRA
+NPRA46239bc67e,Damai Pharmalife (Ks) Sdn. Bhd. (Damai Pharmacy),"Groud Floor, Sl11 Of Parent Lot 877 Samarahan Land District, And Lot 2303 & 2306 Both Of Block 26 Mtld @ Iman Jalan Datuk Mohammad Musa Kota Samarahan 94300 Samarahan, Sarawak",082-662033,Sarawak,NPRA,1.4620874,110.4892765,full,NPRA
+NPRAd5008b8694,"Global Pharma Sdn Bhd - Tabuan Stutong, Commercial Centre","Block 11, Mtld, Tabuan Stutong, Commercial Centre, Phase Ii, Jalan Setia Raja, 93350 Kuching, Sarawak",082-362460,Sarawak,NPRA,1.5195121,110.3799463,full,NPRA
+NPRA8b24af380f,Pmg Pharmacy (Sarikei) Sdn. Bhd. -Jalan Masjid Lama,"Ground Floor, No.52, Jalan Masjid Lama, 96100 Sarikei, Sarawak",08-4659668,Sarawak,NPRA,2.130664,111.5200127,full,NPRA
+NPRA3b1ebd2686,Shine Pharmacy Sdn Bhd - Song Plaza,"Sublot 13, Ground Floor, Song Plaza, Jalan Tun Jugah, 93350 Kuching, Sarawak",082-461553,Sarawak,NPRA,1.522247,110.3549312,full,NPRA
+NPRAf59a57733c,Wymed Pharma Sdn Bhd - Kuching-Samarahan Expressway,"No. 30, Uni Capital, Kuching- Samarahan Expressway, 94300 Kota Samarahan, Sarawak.",08-2663798,Sarawak,NPRA,1.4893401,110.4054369,full,NPRA
+NPRA729b51cef1,B Y Chan Pharmacy Sdn Bhd -Jalan Channel,"No 63, Jalan Channel, 96000 Sibu, Sarawak",084-313920,Sarawak,NPRA,2.287889,111.8292309,full,NPRA
+NPRAed88a25b2d,B Y Chan Pharmacy Sdn Bhd -Jalan Bengkel,"No. 3, Central Market Complex, Jalan Bengkel, 96000 Sibu Sarawak",084-326277,Sarawak,NPRA,2.2885579,111.8292477,full,NPRA
+NPRA018a8670c4,Kin Centre Pharmacy -Jln Simpang Tiga King'S Centre,"Lot 1 Block A Grd Floor, Jln Simpang Tiga King'S Centre, 93300 Kuching, Sarawak",082-450726,Sarawak,NPRA,1.5362241,110.3563632,full,NPRA
+NPRA93994c6b2f,Joy & Health Pharmacy Sdn Bhd -Sing Kwong Shopping Complex,"Lot 1 No.10 G/F Sing Kwong Shopping Complex, Lot 351 Blk 18, Sld Jalan Salim 96000 Sibu Sarawak",84-211434,Sarawak,NPRA,2.2654258,111.8598449,full,NPRA
+NPRA1fd47d73cf,Wija Pharmacy -Kubah Ria Complex,"No 19, Kubah Ria Complex, Petra Jaya, 93050 Kuching, Sarawak",082-245944,Sarawak,NPRA,1.55498,110.322804,full,NPRA
+NPRA187d6629ff,"William Pharmacy (2009) Sdn Bhd -Repok Road, Sarikei","No 30, Repok Road, Sarikei, 96100 Sarawak",084-651317,Sarawak,NPRA,2.1315479,111.5213387,full,NPRA
+NPRA69d6b7985e,"Guardian Pharmacy - Boulevard Shopping Mall, Kuching","Lot G-B-2 & G-B-3A, Ground Floor Boulevard Shopping Mall, 93250 Kuching, Sarawak",082-579876,Sarawak,NPRA,1.5096009,110.3359475,full,NPRA
+NPRA350c058a43,Cahaya Indah Pharma Sdn Bhd -Synergy Square,"Lot 12G Synergy Square, Jalan Matang, 93050 Kuching, Sarawak",082-645996,Sarawak,NPRA,1.574624,110.2972839,full,NPRA
+NPRAc4e851c449,Jom Pharmacy Sdn Bhd Kuching Sentral,"Parcel Lot 138, Ground Floor, Kuching Sentral, 6 1/2 Mile, Jalan Penrissen, 93250 Kuching, Sarawak",082-646615,Sarawak,NPRA,1.481769,110.331728,full,NPRA
+NPRAdb09d87536,"J.O.Y Pharmacy -Central Park, Kuching","Lot 2585 & 2586, Block 10, Kcld, 3Rd Mile, Central Park, 93250 Kuching, Sarawak",082-237200,Sarawak,NPRA,1.5259546,110.3393216,full,NPRA
+NPRA7669ca0321,Ting Pharmacy Sdn.Bhd - Serian Bazaar,"No.12,Serian Bazaar,94700 Serian,Sarawak",010-9826844,Sarawak,NPRA,1.1708955,110.5692179,full,NPRA
+NPRA4dd04b144b,Alpro Alliance Sdn Bhd - Tabuan Plaza,"Sublot 6, Tabuan Plaza, Parent Lot 6503, Block 11, Mtld, 93350 Kuching Sarawak",08-2360920,Sarawak,NPRA,1.5424209,110.3552259,full,NPRA
+NPRAf4d174bb57,C.S Lo Pharmacy -Khoo Hun Yeang Street,"No.18, Khoo Hun Yeang Street, 93000 Kuching, Sarawak",082-414669,Sarawak,NPRA,1.5589411,110.3421709,full,NPRA
+NPRA518508560e,PMG Pharmacy (Bintangor) Sdn. Bhd,"No.3, Jalan Kelupu, 96500 Bintangor, Sarawak",084-692889,Sarawak,NPRA,2.1697494,111.6350728,full,NPRA
+NPRA1f32606997,Jom Pharmacy Sdn. Bhd -E- Mart Commercial Centre,"Arcade Shop S17, Lot 9808, Sect 65, Ktld, E-Mart Commercial Centre, 4Th Mile, Jalan Matang, 93050 Kuching, Sarawak.",082-646615,Sarawak,NPRA,1.575173,110.2939882,full,NPRA
+NPRA61291e501a,Guardian Health And Beauty Sdn Bhd,"No. 40, Jalan Tunku Osman, Tingkat Bawah, Wisma See Hua, 96000 Sibu, Sarawak",084-323037,Sarawak,NPRA,2.2932417,111.8266771,full,NPRA
+NPRA8ce5c0e69c,Today Pharmacy Sdn Bhd,"No. 217, Ground Floor & 2Nd Floor, Bintulu Sentral, Jalan Tg Kidurong, 97000 Bintulu, Sarawak",086-344333,Sarawak,NPRA,3.2043988,113.0595202,full,NPRA
+NPRA72dc620561,Central Pharmacy Sdn Bhd,"No. 05, Sarawak House, 96000 Sibu, Sarawak",084-325150,Sarawak,NPRA,2.3556865,111.9522491,full,NPRA
+NPRAea5e4fcb4b,Medtown Pharmacy Sdn Bhd,"Subplot 48, Ground Floor, Eastern Mall, Eastern Commercial Centre, 17Th Mile, Jalan Kuching-Serian, 94200 Kuching, Sarawak",082-863881,Sarawak,NPRA,1.3636548,110.4024442,full,NPRA
+NPRAef19377f72,True Label Pharmacy Sdn Bhd,"Lot 2310, Ground & 1St Floor, Bulatan Commercial Centre, Jalan Datuk Muip, 98000 Miri, Sarawak.",085-668396,Sarawak,NPRA,4.4254465,114.0076496,full,NPRA
+NPRA1da0612907,Jen Pharmacy Sdn Bhd (Jen Pharmacy),"27 Ground Floor, Taman Damai 96000 Sibu Sarawak",012-8757470,Sarawak,NPRA,2.3106859,111.830854,full,NPRA
+NPRA72d3145d03,Hometown Pharmacy,"No 17, Ground Floor, Lorong Salim 17, Jalan Salim, 96000 Sibu, Sarawak.",084-214085,Sarawak,NPRA,2.2647591,111.8634917,full,NPRA
+NPRA1a4e2be6ef,True Label Pharmacy Sdn Bhd,"Lot 7171, Pusat Bandar Permyjaya Phase 2, Bandar Baru Permyjaya, 98000 Miri, Sarawak",085-651270,Sarawak,NPRA,4.4590304,114.040592,full,NPRA
+NPRAf07236321d,Chong Guan Pharmacy,"No.10G, Jalan Mantis Selatan, Upper Lanang, 96000 Sibu, Sarawak",084-218577,Sarawak,NPRA,2.2512887,111.8479916,full,NPRA
+NPRAc93b284e61,Ml Farmasi Maju Sdn Bhd,"Lot 2409, Ground Floor, Boulevard Commercial Cemtre, 98000 Miri, Sarawak.",085-439369,Sarawak,NPRA,4.416151,114.0111248,full,NPRA
+NPRA6357a04dd3,Marina Pharmacy Sdn Bhd,"Lot 2051, Ground Floor,Marina Square Phase 1,98000 Miri, Sarawak",085-321760,Sarawak,NPRA,4.3769176,113.974761,full,NPRA
+NPRA53a3bff5fb,Lot 9 Pharmacy,"No.14, Ground Floor, Lorong Pedada 20A, 96000 Sibu, Sarawak",084-341339,Sarawak,NPRA,2.2894997,111.8334167,full,NPRA
+NPRAc8aa12f26b,Icare Rx (Sibu) Sdn Bhd,"No149, Ground Floor, Jalan Kampong Nyabor, 96000, Sibu, Sarawak",084-339298,Sarawak,NPRA,2.2906194,111.8284109,full,NPRA
+NPRA163ce42817,Goodwill Pharmacy,"U0411, Block 2, Jalan Bunga Dahlia,W.P. Labuan",087-422295,Wilayah Persekutuan Labuan,NPRA,5.2787478,115.2452407,full,NPRA
+NPRA150bf5b165,Farmasi Aslam -Taman Indah Permai,"Lot 4, Blok G, Taman Indah Permai, Jalan Sepangar, 88450 Kota Kinabalu, Sabah",088-491255,Sabah,NPRA,6.0577787,116.1545406,full,NPRA
+NPRA63f6aafdde,Farmasi Aslam -Plaza Kingfisher,"No.4-0 Ground Floor, Lorong Plaza Kingfisher 6, Plaza Kingfisher, Jalan Smc, 88450 Kota Kinabalu, Sabah",08-8437803,Sabah,NPRA,6.016706999999999,116.12267,full,NPRA
+NPRA41125c7b84,Sabahcare -Jalan Lintas Kepayan,"Gf, Block C, Unit 9, Lintas Jaya Uptownship, Jalan Lintas Kepayan, 88300, Kota Kinabalu, Sabah",88720952,Sabah,NPRA,5.917167,116.0682945,full,NPRA
+NPRA5ed3f4ab4e,Dailycare Pharmacy Sdn Bhd -Damai Plaza,Block B Lot 19 Ground Floor Damai Plaza 88300 Kota Kinabalu Sabah,088-259733,Sabah,NPRA,5.9615429,116.0890628,full,NPRA
+NPRA7f942889d7,Life Pharmacy -City Mall,"M-0-68, Ground Floor, City Mall, Jalan Lintas, 88300 Kota Kinabalu, Sabah",088-447044,Sabah,NPRA,5.9617153,116.0964267,full,NPRA
+NPRA9f3364d834,Mediland Pharmacy - Kompleks Karamunsing,"Lot 61 & 62, Ground Floor Kompleks Karamunsing, 88300 Kota Kinabalu, Sabah",,Sabah,NPRA,5.970824899999999,116.0751345,full,NPRA
+NPRA8c8bd06c74,Mediland Pharmacy - Kompleks Karamunsing,"Lot 61 & 62, Ground Floor Kompleks Karamunsing, 88300 Kota Kinabalu, Sabah",,Sabah,NPRA,5.970824899999999,116.0751345,full,NPRA
+NPRAd87b6e650d,Sunlight Pharmacy (Kk) Sdn Bhd -Kampong Air,"No 8 Ground Floor, Jalan Haji Yaakub, Kampong Air 88000 Kota Kinabalu, Sabah",088-258802,Sabah,NPRA,5.9787544,116.0751777,full,NPRA
+NPRAc599eabfc8,Sunlight Pharmacy (Kk) Sdn Bhd -Wisma Merdeka,"Lot Ag22 Ground Floor Phase 1 Wisma Merdeka, 88000 Kota Kinabalu Sabah",088-266755,Sabah,NPRA,5.9857546,116.0757571,full,NPRA
+NPRAf57607808b,Sunlight Pharmacy (Kk) Sdn Bhd -Centre Point,G41 Ground Floor Centre Point 88000 Koata Kinabalu,088-213899,Sabah,NPRA,5.981918100000001,116.0749389,full,NPRA
+NPRA2a78001960,Sunlight Pharmacy (Kk) Sdn Bhd -Menggatal Plaza,"No. H-0-12, Lot 93, Ground Floor, Block H, Menggatal Plaza, Phase 2, Kota Kinabalu, Sabah",088-498802,Sabah,NPRA,6.0435918,116.1249062,full,NPRA
+NPRA2125acfb01,Sunlight Pharmacy (Kk) Sdn Bhd -Damai Plaza,Lot 12 Ground Floor Block C Damai Plaza Phase 3 88300 Kota Kinabalu Sabah,088-252520,Sabah,NPRA,5.9615429,116.0890628,full,NPRA
+NPRA972ccbc1c1,Sunlight Pharmacy (Kk) Sdn Bhd -Damai Plaza,Lot 12 Ground Floor Block C Damai Plaza Phase 3 88300 Kota Kinabalu Sabah,088-252520,Sabah,NPRA,5.9615429,116.0890628,full,NPRA
+NPRAe797684fb7,Sunlight Pharmacy Sdn Bhd - Bandar Sabindo,"Tb 379, Block E, Bandar Sabindo, 91000 Tawau, Sabah",089-771089,Sabah,NPRA,4.243040199999999,117.8873014,full,NPRA
+NPRA5fe3cd3c46,Sunlight Pharmacy Sdn Bhd - Bandar Sabindo,"Tb 379, Block E, Bandar Sabindo, 91000 Tawau, Sabah",089-771089,Sabah,NPRA,4.243040199999999,117.8873014,full,NPRA
+NPRA84c08553a4,Sunlight Pharmacy Sdn.Bhd. -Jalan Dunlop,"Tb 24, Jalan Dunlop, 91000, Tawau Sabah",089-761088,Sabah,NPRA,4.243685999999999,117.8855431,full,NPRA
+NPRA539bb2f717,Sunlight Pharmacy (Kk) Sdn Bhd -Jalan Pantai,"No.30, Ground Floor, Jalan Pantai, 88000 Kota Kinabalu, Sabah",088-250802,Sabah,NPRA,5.9847112,116.0766962,full,NPRA
+NPRA07c753b2aa,Sunlight Pharmacy (Kk) Sdn Bhd -Jalan Pantai,"No.30, Ground Floor, Jalan Pantai, 88000 Kota Kinabalu, Sabah",088-250802,Sabah,NPRA,5.9847112,116.0766962,full,NPRA
+NPRAe189920ddb,KDH Pharmacy & Organic - Prima Square (Ph 1),"Lot 15 Blok 2 Tingkat Bawah,Prima Square (Ph 1),Batu 4,Jalan Utara, 90702 Sandakan,Sabah",089-213178,Sabah,NPRA,5.8574135,118.0731396,full,NPRA
+NPRA2fff2a32b5,Sunlight Pharmacy Sdn Bhd - Kubota Square,"Tb 15583-0, Lot 38, Block A, Ground Floor, Kubota Square, Jalan Kubota, 91000 Tawau,Sabah",60-89770379,Sabah,NPRA,4.2576745,117.9150966,full,NPRA
+NPRA409c3205a3,Sihat Mekar Sdn.Bhd. - Penampang,"Lot 9, Tkt Bawah, Blok C, Kedai Lintas Jaya, Ph 1, Penampang, Kota Kinabalu, Sabah",088-722950,Sabah,NPRA,5.9308366,116.0703353,full,NPRA
+NPRA193b187335,"Bumi Pharmacy -Kg.Air, Kota Kinabalu","Lot 4, Ground Floor, Jalan Sentosa, Kg.Air, Kota Kinabalu Sabah",08-8238601,Sabah,NPRA,5.9798488,116.0747987,full,NPRA
+NPRA6d41ecfcbb,Public Chemist (Sabah) Sdn Bhd,"No. 9, Ground Floor, Kampung Air, P.O. Box 14041, Jalan Tugu, 88846 Kota Kinabalu, Sabah",088-235777,Sabah,NPRA,5.9796078,116.0738964,full,NPRA
+NPRAfcbba7c832,Pillbox Pharmacy Sdn.Bhd,"Lot No.L2A36 & L2A37,Level 2 (Airside), Kota Kinabalu International Airport Jalan Kepayan 88740 Kota Kinabalu Sabah",,Sabah,NPRA,5.923283,116.0512391,full,NPRA
+NPRAc1f2c8b6d4,PMG Pharmacy (Tuaran) Sdn Bhd (Pmg Pharmacy),Lot No 7. Tuaran Township 89200 Tuaran Sabah,,Sabah,NPRA,6.1330743,116.2153349,full,NPRA
+NPRA93bf1d196a,AM PM Pharmacy Sdn Bhd,"Lot No.5, Ground Floor & 1St Floor,Lorong Mawas 1, Taman Foh Sang Luyang,Jalan Mawas, 88300 Kota Kinabalu, Sabah",088-256188,Sabah,NPRA,5.9576803,116.0882547,full,NPRA
+NPRA2fc2a9dc02,A Med Plus Pharmacy Plt,"Lot 42-D,Blok E,Ground Floor,Lorong Plaza 333-6,Plaza 333,Kobusak Commercial Central,Jalan Pintas Penampang,89500,Penampang,Sabah",088-742628,Sabah,NPRA,5.923981299999999,116.07707,full,NPRA
+NPRAfba7b60c97,PMG Pharmacy (Keningau) Sdn Bhd,"G/F Of A16,Lot 9, Bangunan Hakka,Jalan Andulag, 89000, Keningau, Sabah",084-659966,Sabah,NPRA,5.3367547,116.1559563,full,NPRA
+NPRAf956b6130d,My Choice Pharmacy Sdn Bhd,"Ground Floor, Lot 10, Block B, Kedai Sedco Baru, Pekan Ranau, Jalan Taman,89300,Ranau, Sabah",019-8079580,Sabah,NPRA,5.9529639,116.6646976,full,NPRA

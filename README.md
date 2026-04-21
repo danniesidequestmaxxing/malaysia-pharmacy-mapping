@@ -54,9 +54,12 @@ pre-processed CSV (addresses + coordinates, no PII) is committed.
 python refresh_data.py              # respects 24h TTL
 python refresh_data.py --force
 
-# Re-geocode the NPRA PDF (slow — ~15-20 min at Nominatim's 1 req/sec)
-python geocode_npra.py              # resumes from cache
-python geocode_npra.py --max 100    # rate-cap one batch
+# Re-geocode the NPRA PDF — two providers available
+# 1) Google (recommended; ~95-100% hit rate, ~3 min at 50ms sleep)
+cp .env.example .env                # then paste your GOOGLE_MAPS_API_KEY
+python geocode_npra.py --provider google
+# 2) OSM Nominatim (free, no key; ~40-60% hit rate with cascade, ~15-20 min)
+python geocode_npra.py --provider nominatim --max 100   # rate-cap one batch
 
 # Re-aggregate WorldPop from the raw CSV (requires the 543 MB file on disk)
 python -c "
@@ -78,7 +81,20 @@ compute_worldpop_per_district(
 * **Nominatim geocoding** only resolves ~60-70% of Malaysian shophouse addresses
   precisely; the cascade falls back to postcode + town centroid for the rest,
   which is accurate to ~500m — fine for district-level aggregation, not for
-  pin-point navigation.
+  pin-point navigation.  Use the Google provider (above) for pin-point accuracy.
+
+## Security notes
+
+* `.env` is **git-ignored** — your `GOOGLE_MAPS_API_KEY` never enters the repo.
+  Always restrict the key in the [GCP console](https://console.cloud.google.com/google/maps-apis/credentials)
+  with an HTTP-referrer or IP allow-list before using it on shared infra.
+* The raw NPRA PDF (`data/source/farmasi-komuniti.pdf`) is **git-ignored**
+  because it contains preceptor names and email addresses. Only the
+  PII-stripped `data/pharmacies_npra_geocoded.csv` (addresses + coords only)
+  is committed.
+* Deploy on Streamlit Cloud: set `GOOGLE_MAPS_API_KEY` in the app's
+  **Settings → Secrets** panel; the app reads `st.secrets` before falling
+  back to `.env`.
 
 ## Tech stack
 

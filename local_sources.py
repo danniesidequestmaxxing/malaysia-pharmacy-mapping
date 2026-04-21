@@ -226,6 +226,8 @@ def parse_npra_pdf(path: str | Path) -> pd.DataFrame:
 NOMINATIM_ENDPOINT = "https://nominatim.openstreetmap.org/search"
 USER_AGENT = "malaysia-pharmacy-mapping/1.0 (https://github.com/danniesidequestmaxxing/malaysia-pharmacy-mapping)"
 
+GOOGLE_GEOCODE_ENDPOINT = "https://maps.googleapis.com/maps/api/geocode/json"
+
 # Strip Malaysian state suffixes we already know, so we don't duplicate them
 # when we append ", <state>, Malaysia" to the query. Also a few commercial
 # prefixes that confuse Nominatim (it tends to lock onto the specific lot).
@@ -290,6 +292,156 @@ def _build_query_cascade(address: str, state: str) -> List[str]:
             queries.append(state_only)
 
     return queries
+
+
+def _load_google_api_key() -> Optional[str]:
+    """Resolve the Google Maps API key from env or a local .env file.
+
+    Looked up in this order:
+      1. `GOOGLE_MAPS_API_KEY` environment variable
+      2. `.env` file in the CWD (`KEY=VALUE` format, shell-style comments OK)
+
+    Never logged or printed.  Returns None if not found.
+    """
+    import os
+    key = os.environ.get("GOOGLE_MAPS_API_KEY")
+    if key:
+        return key.strip()
+    env_path = Path(".env")
+    if env_path.exists():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            s = line.strip()
+            if not s or s.startswith("#") or "=" not in s:
+                continue
+            k, v = s.split("=", 1)
+            if k.strip() == "GOOGLE_MAPS_API_KEY":
+                return v.strip().strip('"').strip("'")
+    return None
+
+
+def _geocode_one_google(query: str, api_key: str, timeout: int = 20) -> Optional[Tuple[float, float]]:
+    """Single Google Geocoding API request. Returns (lat, lon) or None.
+
+    Uses `components=country:MY` to bias results to Malaysia, and `region=my`
+    for ccTLD hints. Errors (over-quota, invalid key, etc.) raise so the
+    caller can decide whether to bail or continue.
+    """
+    params = {
+        "address": query,
+        "key": api_key,
+        "components": "country:MY",
+        "region": "my",
+    }
+    r = requests.get(GOOGLE_GEOCODE_ENDPOINT, params=params, timeout=timeout)
+    r.raise_for_status()
+    payload = r.json()
+    status = payload.get("status")
+    if status == "ZERO_RESULTS":
+        return None
+    if status != "OK":
+        # Surface everything actionable (quota, key restrictions) to the caller.
+        msg = payload.get("error_message") or status or "unknown error"
+        raise RuntimeError(f"Google Geocoding returned {status}: {msg}")
+    results = payload.get("results") or []
+    if not results:
+        return None
+    loc = results[0].get("geometry", {}).get("location") or {}
+    try:
+        return float(loc["lat"]), float(loc["lng"])
+    except (KeyError, ValueError, TypeError):
+        return None
+
+
+def geocode_addresses_google(
+    df: pd.DataFrame,
+    api_key: Optional[str] = None,
+    cache_path: str | Path = "data/geocode_cache_google.json",
+    address_col: str = "address",
+    state_col: str = "state",
+    max_requests: Optional[int] = None,
+    sleep_seconds: float = 0.05,   # Google QPS is generous; 20 req/s is safe
+    verbose: bool = True,
+) -> pd.DataFrame:
+    """Geocode each row with Google Geocoding API, cached per-query on disk.
+
+    Cache file is separate from the Nominatim cache so the two can coexist;
+    when both exist, Google wins. Addresses are tried with the full address,
+    falling back to postcode + town if the full address returns zero hits.
+    """
+    api_key = api_key or _load_google_api_key()
+    if not api_key:
+        raise RuntimeError(
+            "GOOGLE_MAPS_API_KEY not set. Put it in the shell env or in a "
+            "local .env file (git-ignored).  See README.md."
+        )
+
+    cache_path = Path(cache_path)
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache: Dict[str, Optional[List[float]]] = {}
+    if cache_path.exists():
+        cache = json.loads(cache_path.read_text(encoding="utf-8"))
+
+    out = df.copy()
+    lats: List[Optional[float]] = []
+    lons: List[Optional[float]] = []
+    sources: List[str] = []
+    new_calls = 0
+
+    for _, row in out.iterrows():
+        address = (row.get(address_col) or "").strip()
+        state = (row.get(state_col) or "").strip()
+        queries = _build_query_cascade(address, state)
+
+        hit: Optional[List[float]] = None
+        hit_kind = "miss"
+        for i, q in enumerate(queries):
+            if q in cache:
+                if cache[q]:
+                    hit = cache[q]
+                    hit_kind = ["full", "postcode", "state"][i] if i < 3 else "other"
+                    break
+                continue  # cached miss — try next cascade step
+            if max_requests is not None and new_calls >= max_requests:
+                break
+            try:
+                result = _geocode_one_google(q, api_key)
+            except Exception as e:
+                if verbose:
+                    # Don't print the query (may contain the address) at error level;
+                    # print only the kind of failure.
+                    print(f"  google geocode error: {type(e).__name__}: {e}")
+                # Hard errors (bad key, over quota) are fatal — abort so we don't
+                # waste more requests.
+                msg = str(e).lower()
+                if "api_key" in msg or "over_query_limit" in msg or "request_denied" in msg:
+                    cache_path.write_text(json.dumps(cache), encoding="utf-8")
+                    raise
+                result = None
+            cache[q] = list(result) if result else None
+            new_calls += 1
+            if sleep_seconds > 0:
+                time.sleep(sleep_seconds)
+            if new_calls % 50 == 0:
+                cache_path.write_text(json.dumps(cache), encoding="utf-8")
+                if verbose:
+                    hits = sum(1 for v in cache.values() if v)
+                    print(f"  {new_calls} new calls, {hits}/{len(cache)} cache hits")
+            if result:
+                hit = result
+                hit_kind = ["full", "postcode", "state"][i] if i < 3 else "other"
+                break
+
+        if hit:
+            lats.append(hit[0]); lons.append(hit[1])
+        else:
+            lats.append(np.nan); lons.append(np.nan)
+        sources.append(hit_kind)
+
+    cache_path.write_text(json.dumps(cache), encoding="utf-8")
+    out["latitude"] = lats
+    out["longitude"] = lons
+    out["geocode_source"] = sources
+    return out
 
 
 def geocode_addresses(
