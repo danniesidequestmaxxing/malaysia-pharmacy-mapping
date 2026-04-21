@@ -622,17 +622,29 @@ def _canonical_state(s) -> str:
     return _STATE_ALIASES.get(_normalize_token(s), s)
 
 
+def _canonical_mukim(s) -> str:
+    """Title-case a mukim name. geoBoundaries ships them ALL-CAPS ('MUKIM
+    PETALING'), which is ugly in tooltips. Preserve the 'Mukim ' / 'Bandar '
+    leading word since that's part of the official name, just normalize case."""
+    if not isinstance(s, str):
+        return s
+    return " ".join(w.capitalize() for w in s.split()) if s.strip() else s
+
+
 def normalize_district_names(
     df: pd.DataFrame,
     district_col: str = "district",
     state_col: str = "state",
+    mukim_col: str = "mukim",
 ) -> pd.DataFrame:
-    """Return a copy of `df` with state/district spellings canonicalized."""
+    """Return a copy of `df` with state/district/mukim spellings canonicalized."""
     out = df.copy()
     if state_col in out.columns:
         out[state_col] = out[state_col].map(_canonical_state)
     if district_col in out.columns:
         out[district_col] = out[district_col].map(_canonical_district)
+    if mukim_col in out.columns:
+        out[mukim_col] = out[mukim_col].map(_canonical_mukim)
     return out
 
 
@@ -640,6 +652,7 @@ def normalize_geojson_names(
     gj: Dict,
     district_key: str = "district",
     state_key: str = "state",
+    mukim_key: str = "mukim",
 ) -> Dict:
     """Apply the same canonicalization to a FeatureCollection's properties."""
     out = json.loads(json.dumps(gj))  # deep copy
@@ -649,6 +662,8 @@ def normalize_geojson_names(
             props[district_key] = _canonical_district(props[district_key])
         if state_key in props:
             props[state_key] = _canonical_state(props[state_key])
+        if mukim_key in props:
+            props[mukim_key] = _canonical_mukim(props[mukim_key])
     return out
 
 
