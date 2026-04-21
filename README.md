@@ -8,52 +8,77 @@ population-to-pharmacy ratio per district (daerah).
 ```bash
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-
-# Option A — run immediately on live data (recommended)
-python refresh_data.py       # pre-caches pharmacies, population, boundaries
-streamlit run app.py         # defaults to "Live (OSM + DOSM)" in the sidebar
-
-# Option B — run offline on bundled mock data
-streamlit run app.py         # then flip the sidebar radio to "Mock"
+streamlit run app.py
 ```
 
-The app launches at <http://localhost:8501>.
+The app launches at <http://localhost:8501>. It defaults to the **Local
+(NPRA PDF + KMZ + WorldPop)** data source, which serves the pre-processed
+authoritative data committed in `./data/`.
+
+To refresh any of the data sources, see [Refreshing data](#refreshing-data).
 
 ## Project layout
 
 ```
-app.py            Streamlit dashboard (UI, map, charts, filters)
-data_pipeline.py  Data loaders (live + CSV) + spatial join + metrics
-mock_data.py      Bundled sample pharmacies / districts / GeoJSON
-refresh_data.py   One-shot CLI: pre-caches all live sources into ./data/
-requirements.txt  Python dependencies
-data/             Cache directory for the live-data sources
+app.py               Streamlit dashboard (UI, map, charts, filters)
+data_pipeline.py     Live-data loaders (OSM/DOSM/geoBoundaries) + spatial join + metrics
+local_sources.py     KMZ / NPRA-PDF / WorldPop loaders + geocoding cascade
+mock_data.py         Bundled sample pharmacies / districts / GeoJSON
+refresh_data.py      One-shot CLI: pre-caches OSM + DOSM + geoBoundaries
+geocode_npra.py      One-shot CLI: parses NPRA PDF and geocodes via Nominatim
+requirements.txt     Python dependencies
+data/                Cache directory + committed processed artefacts
+  source/            User-provided raw files (KMZ committed; PDF git-ignored for privacy)
 ```
 
 ## Data sources
 
-Three modes, switchable in the sidebar:
+Four modes, switchable in the sidebar:
 
 | Mode | Pharmacies | Population | District polygons |
 |---|---|---|---|
-| **Live (OSM + DOSM)** (default) | OSM Overpass `amenity=pharmacy` in Malaysia | DOSM `population_district` (latest year) | geoBoundaries `MYS/ADM2` + spatial join to `ADM1` for state names |
-| **Mock** | Bundled 300+ jittered points around 35 real district centroids | Illustrative figures per district | Square polygons around district centroids |
+| **Local (NPRA + KMZ + WorldPop)** (default) | Project Pharma KMZ (~957, chain-tagged) ∪ geocoded NPRA "Senarai Premis" (~594 ROPA-1951 premises) | WorldPop 2020 aggregated per ADM2 (100m grid → district sums) | geoBoundaries MYS ADM2 |
+| **Live (OSM + DOSM)** | OSM Overpass `amenity=pharmacy` in Malaysia | DOSM `population_district` (latest year) | geoBoundaries MYS ADM2 |
+| **Mock** | Bundled 300+ jittered points around 35 district centroids | Illustrative figures per district | Square polygons |
 | **Custom CSV + GeoJSON** | `data/pharmacies.csv` you supply | `api.data.gov.my?id=population_district` | GeoJSON path/URL you supply |
 
-Live mode needs **no API keys**. First boot: `python refresh_data.py` populates
-`./data/` and subsequent Streamlit loads use the cache (default TTL: 24h for
-OSM + DOSM, 30 days for boundaries). The app still boots offline if cached
-files exist.
+**Privacy:** the raw NPRA PDF contains preceptor names and email addresses.
+Those columns are stripped at parse time in `local_sources.parse_npra_pdf`
+and never leave that function. The raw PDF is git-ignored; only the
+pre-processed CSV (addresses + coordinates, no PII) is committed.
 
-### Caveats on OSM pharmacy coverage
+## Refreshing data
 
-OSM's community-sourced `amenity=pharmacy` tags cover most chains (Guardian,
-Watsons, Alpro, Caring, CARiNG, etc.) and many independents, but under-count
-NPRA's authoritative registry (~3,500 retail pharmacies). Treat ratios as
-directional. To use the official NPRA list, drop it into
-`data/pharmacies.csv` with columns
-`pharmacy_id,name,address,license_no,district,state,latitude,longitude` and
-switch the sidebar to **Custom CSV + GeoJSON**.
+```bash
+# Live-mode caches (OSM + DOSM + geoBoundaries)
+python refresh_data.py              # respects 24h TTL
+python refresh_data.py --force
+
+# Re-geocode the NPRA PDF (slow — ~15-20 min at Nominatim's 1 req/sec)
+python geocode_npra.py              # resumes from cache
+python geocode_npra.py --max 100    # rate-cap one batch
+
+# Re-aggregate WorldPop from the raw CSV (requires the 543 MB file on disk)
+python -c "
+from local_sources import compute_worldpop_per_district
+from data_pipeline import load_malaysia_districts_geojson
+compute_worldpop_per_district(
+    '/path/to/mys_general_2020.csv',
+    load_malaysia_districts_geojson(),
+    force_refresh=True)
+"
+```
+
+### Caveats
+
+* **OSM coverage** undercounts the NPRA registry. Use Local mode for the
+  authoritative view; Live mode is the zero-setup fallback.
+* **WorldPop 2020** is the latest public WorldPop release; Malaysia's total
+  is ~32.3 M (2020 census baseline), vs. DOSM's 2024 estimate of ~34.0 M.
+* **Nominatim geocoding** only resolves ~60-70% of Malaysian shophouse addresses
+  precisely; the cascade falls back to postcode + town centroid for the rest,
+  which is accurate to ~500m — fine for district-level aggregation, not for
+  pin-point navigation.
 
 ## Tech stack
 

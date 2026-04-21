@@ -13,6 +13,17 @@ env/
 # Live-data cache (refreshed on first app boot)
 data/*
 !data/.gitkeep
+# Commit the small, non-PII processed artefacts so the Streamlit Cloud
+# deploy works without needing raw files.
+!data/source/
+data/source/*
+!data/source/Project\ Pharma.kmz
+# DO NOT commit the raw NPRA PDF — it contains preceptor names & emails.
+# We only commit the processed output where PII is already stripped.
+!data/pharmacies_npra_geocoded.csv
+!data/worldpop_per_district.csv
+!data/districts_my_adm2.geojson
+!data/geocode_cache.json
 
 # OS / editor
 .DS_Store

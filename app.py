@@ -14,6 +14,7 @@ from pathlib import Path
 
 import folium
 from folium.plugins import MarkerCluster
+import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -38,6 +39,11 @@ from data_pipeline import (
     normalize_district_names,
     normalize_geojson_names,
 )
+from local_sources import (
+    parse_kmz,
+    merge_pharmacy_sources,
+    compute_worldpop_per_district,
+)
 
 # --------------------------------------------------------------------------------------
 # Page config
@@ -55,9 +61,17 @@ DEFAULT_ZOOM = 6
 # --------------------------------------------------------------------------------------
 # Cached loaders
 # --------------------------------------------------------------------------------------
-DATA_SOURCE_MOCK = "Mock (demo data)"
+DATA_SOURCE_LOCAL = "Local (NPRA PDF + KMZ + WorldPop)"
 DATA_SOURCE_LIVE = "Live (OSM + DOSM)"
+DATA_SOURCE_MOCK = "Mock (demo data)"
 DATA_SOURCE_CUSTOM = "Custom CSV + GeoJSON"
+
+# Paths for the Local pipeline — committed processed artifacts so the deploy
+# does not need access to the 17 GB WorldPop TIF or the raw NPRA PDF.
+LOCAL_KMZ_PATH = "data/source/Project Pharma.kmz"
+LOCAL_NPRA_GEOCODED_CSV = "data/pharmacies_npra_geocoded.csv"
+LOCAL_WORLDPOP_PER_DISTRICT = "data/worldpop_per_district.csv"
+LOCAL_WORLDPOP_RAW_CSV = "/Users/evoverebitda/Downloads/mys_general_2020.csv"  # only needed for refresh
 
 
 @st.cache_data(show_spinner="Loading data...")
@@ -66,9 +80,10 @@ def load_all(data_source: str,
              geojson_path: str | None = None):
     """Returns (pharmacies_df, population_df, districts_geojson).
 
-    `data_source` routes to one of three pipelines:
-      * Mock — bundled sample data (no network).
+    `data_source` routes to one of four pipelines:
+      * Local — KMZ placemarks + NPRA-geocoded PDF + WorldPop per-district.
       * Live — OpenStreetMap Overpass + DOSM population + geoBoundaries ADM2.
+      * Mock — bundled sample data (no network).
       * Custom — user-supplied NPRA CSV + district GeoJSON, DOSM population via API.
     """
     if data_source == DATA_SOURCE_MOCK:
@@ -77,10 +92,43 @@ def load_all(data_source: str,
         geojson = generate_mock_geojson()
         return pharmacies, population, geojson
 
-    if data_source == DATA_SOURCE_LIVE:
+    # All three real-data modes reuse the geoBoundaries ADM2 polygons.
+    geojson = load_malaysia_districts_geojson()
+
+    if data_source == DATA_SOURCE_LOCAL:
+        # Pharmacies: KMZ ∪ NPRA-geocoded (dedup on name+rounded-coords).
+        sources = []
+        kmz_path = Path(LOCAL_KMZ_PATH)
+        if kmz_path.exists():
+            sources.append(parse_kmz(kmz_path))
+        npra_path = Path(LOCAL_NPRA_GEOCODED_CSV)
+        if npra_path.exists():
+            npra = pd.read_csv(npra_path)
+            npra["source"] = npra.get("source", "NPRA").fillna("NPRA")
+            npra["brand"] = npra.get("brand", "NPRA").fillna("NPRA")
+            sources.append(npra)
+        if not sources:
+            st.error(
+                "No local pharmacy sources found. Place 'Project Pharma.kmz' in "
+                f"{LOCAL_KMZ_PATH} and/or run `python geocode_npra.py` to produce "
+                f"{LOCAL_NPRA_GEOCODED_CSV}."
+            )
+            st.stop()
+        pharmacies = merge_pharmacy_sources(*sources)
+
+        # Population: WorldPop aggregated per ADM2 (cached CSV; falls back to raw).
+        pop_cache = Path(LOCAL_WORLDPOP_PER_DISTRICT)
+        if pop_cache.exists():
+            population = pd.read_csv(pop_cache)
+        else:
+            population = compute_worldpop_per_district(
+                csv_path=LOCAL_WORLDPOP_RAW_CSV,
+                districts_geojson=geojson,
+                cache_path=LOCAL_WORLDPOP_PER_DISTRICT,
+            )
+    elif data_source == DATA_SOURCE_LIVE:
         pharmacies = fetch_pharmacies_from_osm()
         population = load_population_district_dosm()
-        geojson = load_malaysia_districts_geojson()
     else:  # Custom
         pharmacies = load_pharmacies_from_csv(pharmacy_csv)
         population = load_population_from_api()
@@ -108,21 +156,25 @@ st.sidebar.title("⚙️ Settings")
 
 data_source = st.sidebar.radio(
     "Data source",
-    [DATA_SOURCE_LIVE, DATA_SOURCE_MOCK, DATA_SOURCE_CUSTOM],
+    [DATA_SOURCE_LOCAL, DATA_SOURCE_LIVE, DATA_SOURCE_MOCK, DATA_SOURCE_CUSTOM],
     index=0,
     help=(
-        "Live: OpenStreetMap pharmacies + DOSM population + geoBoundaries ADM2 "
-        "(no API key; cached under ./data/).  "
+        "Local: KMZ chain-map + geocoded NPRA PDF + WorldPop per-district.  "
+        "Live: OpenStreetMap + DOSM + geoBoundaries (no API key; cached in ./data/).  "
         "Mock: bundled sample data, runs offline.  "
         "Custom: point to your own NPRA CSV and district GeoJSON."
     ),
 )
 
-if data_source == DATA_SOURCE_LIVE:
+if data_source == DATA_SOURCE_LOCAL:
+    st.sidebar.success(
+        "✅ Using authoritative sources: NPRA Senarai Premis (594 pharmacies) "
+        "+ Project Pharma chain KMZ (957 pharmacies) + WorldPop 2020 population."
+    )
+elif data_source == DATA_SOURCE_LIVE:
     st.sidebar.info(
         "ℹ️ OSM `amenity=pharmacy` covers most Malaysian retail pharmacies but "
-        "under-counts the NPRA registry. Treat counts as directional until an "
-        "authoritative KKM/NPRA feed is wired in via the Custom path."
+        "under-counts the NPRA registry. Treat counts as directional."
     )
 
 pharmacy_csv = geojson_path = None
@@ -154,6 +206,17 @@ selected_strata = st.sidebar.multiselect(
     "Strata (Urban/Rural)", strata_options, default=strata_options
 ) if strata_options else None
 
+# Brand filter (only meaningful when the pharmacy DF has brand labels,
+# i.e. in Local mode where KMZ tags chain colours).
+brand_options = (
+    sorted(pharmacies_joined["brand"].dropna().unique())
+    if "brand" in pharmacies_joined.columns else []
+)
+selected_brands = (
+    st.sidebar.multiselect("Brand / Chain", brand_options, default=brand_options)
+    if brand_options else None
+)
+
 # Choropleth metric chooser
 metric_choice = st.sidebar.radio(
     "Choropleth metric",
@@ -177,6 +240,8 @@ p_mask = pharmacies_joined["state"].isin(selected_states) & \
          pharmacies_joined["district"].isin(selected_districts)
 if selected_strata and "strata" in pharmacies_joined.columns:
     p_mask &= pharmacies_joined["strata"].isin(selected_strata)
+if selected_brands and "brand" in pharmacies_joined.columns:
+    p_mask &= pharmacies_joined["brand"].isin(selected_brands)
 pharmacies_f = pharmacies_joined[p_mask].copy()
 
 # Filter the GeoJSON features as well so the choropleth respects filters
@@ -251,18 +316,32 @@ folium.GeoJson(
     ),
 ).add_to(m)
 
-# Pharmacy markers (clustered for performance)
+# Pharmacy markers (clustered for performance). Colour by brand when we have
+# that signal (Local mode), fall back to a single navy marker otherwise.
+BRAND_COLORS = {
+    "CARiNG":      "#2e7d32",  # green
+    "Guardian":    "#1a237e",  # dark blue
+    "Watsons":     "#c62828",  # red
+    "Alpro":       "#6a1b9a",  # purple
+    "Independent": "#455a64",  # slate
+    "NPRA":        "#ef6c00",  # orange (NPRA-only, no KMZ match)
+    "Other":       "#1f4e79",
+}
+
 cluster = MarkerCluster(name="Pharmacies").add_to(m)
 for _, row in pharmacies_f.iterrows():
+    brand = row.get("brand", "Other") or "Other"
+    color = BRAND_COLORS.get(brand, "#1f4e79")
     folium.CircleMarker(
         location=[row["latitude"], row["longitude"]],
-        radius=3, weight=1, color="#1f4e79", fill=True, fill_opacity=0.8,
+        radius=3, weight=1, color=color, fill=True, fill_color=color, fill_opacity=0.85,
         popup=folium.Popup(
             f"<b>{row['name']}</b><br>"
-            f"License: {row.get('license_no','—')}<br>"
+            f"Brand: {brand}<br>"
+            f"Source: {row.get('source','—')}<br>"
             f"District: {row.get('district','—')}<br>"
             f"State: {row.get('state','—')}",
-            max_width=260,
+            max_width=280,
         ),
     ).add_to(cluster)
 

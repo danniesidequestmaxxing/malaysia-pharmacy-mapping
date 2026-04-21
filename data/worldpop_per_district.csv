@@ -1,0 +1,160 @@
+district,state,population
+Tumpat,Kelantan,155335
+Kota Bharu,Kelantan,516038
+Pasir Puteh,Kelantan,112997
+Pasir Mas,Kelantan,190092
+Machang,Kelantan,95989
+Tanah Merah,Kelantan,124462
+Jeli,Kelantan,40229
+Kuala Krai,Kelantan,111689
+Hulu Perak,Perak,91796
+Selama,Perak,42606
+Bandar Baharu,Kedah,44414
+Seberang Perai Selatan,Penang,217631
+Seberang Perai Tengah,Penang,419105
+Seberang Perai Utara,Penang,320773
+Kulim,Kedah,391259
+Barat Daya,Penang,224482
+Timur Laut,Penang,590613
+Baling,Kedah,131111
+Kuala Muda,Kedah,543706
+Yan,Kedah,65888
+Pendang,Kedah,93560
+Sik,Kedah,69676
+Kota Setar,Kedah,382092
+Pokok Sena,Kedah,53711
+Padang Terap,Kedah,65913
+Kubang Pasu,Kedah,232790
+Perlis,Perlis,241069
+Langkawi,Kedah,110622
+Kerian,Perak,194149
+Larut dan Matang,Perak,324332
+Kuala Kangsar,Perak,157652
+Hulu Terengganu,Terengganu,76612
+Setiu,Terengganu,55828
+Kuala Terengganu,Terengganu,221629
+Kecil Lojing,Kelantan,12099
+Cameron Highlands,Pahang,45677
+Gua Musang,Kelantan,81048
+Dungun,Terengganu,163512
+Kampar,Perak,105991
+Kinta,Perak,850114
+Perak Tengah,Perak,113460
+Hilir Perak,Perak,135737
+Muallim,Perak,68577
+Batang Padang,Perak,123497
+Bagan Datuk,Perak,67025
+Sabak Bernam,Selangor,88346
+Kuala Selangor,Selangor,247173
+Ulu Selangor,Selangor,240854
+Lipis,Pahang,95929
+Kemaman,Terengganu,190735
+Jerantut,Pahang,90327
+Raub,Pahang,99303
+Kuantan,Pahang,537031
+Temerloh,Pahang,175000
+Maran,Pahang,103126
+Pekan,Pahang,104453
+Bentong,Pahang,127198
+Bera,Pahang,108113
+Jelebu,Negeri Sembilan,37230
+Jempol,Negeri Sembilan,94534
+Kuala Pilah,Negeri Sembilan,61543
+Rembau,Negeri Sembilan,44525
+Tampin,Negeri Sembilan,79791
+Seremban,Negeri Sembilan,701204
+Port Dickson,Negeri Sembilan,106489
+Segamat,Johor,180850
+Alor Gajah,Malacca,210167
+Melaka Tengah,Malacca,596717
+Jasin,Malacca,159711
+Ledang,Johor,131207
+Muar,Johor,261463
+Batu Pahat,Johor,451893
+Kluang,Johor,307019
+Kulaijaya,Johor,317537
+Pontian,Johor,152254
+Johor Bahru,Johor,1848773
+Kota Tinggi,Johor,170468
+Sepang,Selangor,355766
+Klang,Selangor,1036321
+Kuala Langat,Selangor,226701
+Petaling,Selangor,2476869
+Kuala Lumpur,Kuala Lumpur,1802654
+Gombak,Selangor,876508
+Ulu Langat,Selangor,1365394
+Lundu,Sarawak,36572
+Bau,Sarawak,67553
+Kuching,Sarawak,619970
+Samarahan,Sarawak,136198
+Asajaya,Sarawak,33546
+Tebedu,Sarawak,22774
+Serian,Sarawak,138228
+Simunjan,Sarawak,35486
+Sri Aman,Sarawak,64467
+Betong,Sarawak,42118
+Pusa,Sarawak,19306
+Saratok,Sarawak,26444
+Kabong,Sarawak,19811
+Sarikei,Sarawak,53017
+Pakan,Sarawak,14463
+Lubok Antu,Sarawak,34067
+Julau,Sarawak,15247
+Maradong,Sarawak,23877
+Kanowit,Sarawak,28256
+Sibu,Sarawak,244979
+Song,Sarawak,19285
+Selangau,Sarawak,824
+Dalat,Sarawak,14185
+Kapit,Sarawak,35462
+Tatau,Sarawak,34363
+Mukah,Sarawak,35509
+Matu,Sarawak,34122
+Daro,Sarawak,30581
+Bintulu,Sarawak,194104
+Sebauh,Sarawak,31950
+Bukit Mabong,Sarawak,17052
+Belaga,Sarawak,49432
+Beluru,Sarawak,15856
+Subis,Sarawak,63681
+Miri,Sarawak,300696
+Telang Usan,Sarawak,12012
+Marudi,Sarawak,16115
+Lawas,Sarawak,44775
+Limbang,Sarawak,44317
+Sipitang,Sabah,38652
+Tenom,Sabah,68308
+Beaufort,Sabah,82691
+Kuala Penyu,Sabah,23375
+Labuan,Labuan,91867
+Nabawan / Persiangan,Sabah,41653
+Keningau,Sabah,217153
+Papar,Sabah,155141
+Putatan,Sabah,11144
+Tambunan,Sabah,44458
+Penampang,Sabah,190648
+Kota Kinabalu,Sabah,506224
+Tuaran,Sabah,127854
+Kota Belud,Sabah,111597
+Ranau,Sabah,121470
+Kota Marudu,Sabah,84055
+Kudat,Sabah,100742
+Kalabakan,Sabah,94057
+Tawau,Sabah,413707
+Kunak,Sabah,78995
+Semporna,Sabah,150912
+Lahad Datu,Sabah,242993
+Tongod,Sabah,44824
+Kinabatangan,Sabah,190391
+Sandakan,Sabah,478261
+Telupid,Sabah,38356
+Beluran,Sabah,85170
+Pitas,Sabah,45154
+Besut,Terengganu,148222
+Kuala Nerus,Terengganu,137557
+Marang,Terengganu,101383
+Rompin,Pahang,112003
+Mersing,Johor,65435
+Manjung,Perak,248377
+Bachok,Kelantan,136891
+Tanjung Manis,Sarawak,17715
