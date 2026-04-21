@@ -485,6 +485,42 @@ else:
 # Use green-is-good for "per-1000/100k" metrics (higher = better access)
 # and red-is-bad for the "pop_per_pharmacy" ratio (higher = worse access).
 _fill_color = "YlOrRd" if metric_choice == "pop_per_pharmacy" else "YlGnBu"
+
+
+def _choropleth_bins(metric: str, series: pd.Series) -> list | None:
+    """Tuned threshold_scale per metric so the colour ramp actually shows
+    variation.  Folium's default is 7 quantile bins, which breaks badly on
+    skewed distributions: at mukim level most polygons are 0 and a few are
+    outliers, so the default legend ends up 0→15 while real values live in
+    0.05→0.5.  These breakpoints are anchored to KKM/WHO pharmacy-access
+    planning norms (Malaysia target is ~1 retail pharmacy per 3-5k people =
+    0.2-0.33 per 1,000)."""
+    s = series.dropna()
+    if s.empty:
+        return None
+    lo, hi = float(s.min()), float(s.max())
+    if metric == "pop_per_pharmacy":
+        # Ratio — higher is worse.  Cap the tail at the observed max so the
+        # scale ends exactly where data ends (avoids wasted whitespace).
+        return sorted({0, 3000, 5000, 10000, 20000, 50000, max(50001, round(hi))})
+    if metric == "pharmacies_per_1000":
+        # Saturation ~0.2 per 1,000.  Tail cap at 1.0 or 99th %ile, whichever
+        # is larger, to keep a rare 10-per-1000 outlier from flattening the scale.
+        top = max(1.0, float(s.quantile(0.99)))
+        return sorted({0.0, 0.05, 0.1, 0.2, 0.3, 0.5, round(top, 2)})
+    if metric == "pharmacies_per_100k":
+        top = max(100.0, float(s.quantile(0.99)))
+        return sorted({0.0, 5.0, 10.0, 20.0, 30.0, 50.0, round(top, 1)})
+    if metric == "population":
+        # Quantile bins are fine for raw population distributions.
+        qs = list(s.quantile([0.0, 0.2, 0.4, 0.6, 0.8, 0.95]).round().astype(int))
+        return sorted(set(qs + [round(hi)]))
+    return None
+
+
+_bins = _choropleth_bins(metric_choice, metrics_f[metric_choice])
+_choropleth_kwargs = {"threshold_scale": _bins} if _bins and len(_bins) >= 3 else {}
+
 folium.Choropleth(
     geo_data=filtered_geojson,
     data=metrics_f,
@@ -495,12 +531,13 @@ folium.Choropleth(
     line_opacity=0.3,
     nan_fill_color="lightgray",
     legend_name={
-        "pop_per_pharmacy": "Population per Pharmacy",
-        "pharmacies_per_1000": "Pharmacies per 1,000 residents",
+        "pop_per_pharmacy": "Population per Pharmacy (lower = better)",
+        "pharmacies_per_1000": "Pharmacies per 1,000 residents (higher = better)",
         "pharmacies_per_100k": "Pharmacies per 100k",
         "population": "Population",
     }[metric_choice],
     name="Choropleth",
+    **_choropleth_kwargs,
 ).add_to(m)
 
 # Transparent overlay carrying the rich tooltip (Choropleth's own tooltip is
