@@ -46,21 +46,66 @@ _KML_NS = {"k": "http://www.opengis.net/kml/2.2"}
 
 
 def _style_to_brand(style_url: str) -> str:
-    """Map the KMZ's styleUrl colour to a human-readable brand category.
+    """Map the KMZ's styleUrl hex colour to its chain name.
 
-    The user's "Project Pharma" KMZ uses six icon colours for different chains.
-    The mapping below is derived from the icon palette in the KMZ; unknown
-    styles fall through to 'Other'.
+    The "Project Pharma" KMZ organises placemarks into six folders, one per
+    chain, and assigns a distinct icon colour per folder:
+        Caring Pharmacy          #097138  green
+        Alpro Pharmacy           #9C27B0  purple
+        BIG Pharmacy             #FF5252  red
+        Healthlane Pharmacy      #757575  grey
+        Sunway Multicare         #1A237E  dark blue
+        AA Pharmacy              #FFEA00  yellow
     """
     code = (style_url or "").split("-")[-2] if "-" in (style_url or "") else ""
     return {
-        "097138": "CARiNG",        # green
-        "1A237E": "Guardian",       # dark blue
-        "757575": "Independent",    # grey
-        "9C27B0": "Alpro",          # purple
-        "FF5252": "Watsons",        # red
-        "097138-nodesc": "CARiNG",
+        "097138": "Caring",
+        "9C27B0": "Alpro",
+        "FF5252": "BIG Pharmacy",
+        "757575": "Healthlane",
+        "1A237E": "Sunway Multicare",
+        "FFEA00": "AA Pharmacy",
     }.get(code, "Other")
+
+
+# Name-based chain detection — works on KMZ sub-brands (e.g. Georgetown
+# Pharmacy inside the Caring folder), NPRA PDF rows, and PMG Excel rows.
+# Ordered: more-specific patterns first so "farmasi alpro" hits "Alpro" not
+# the generic "farmasi" fallback.
+_BRAND_PATTERNS: List[Tuple[re.Pattern, str]] = [
+    (re.compile(r"\bcaring\s+pharmacy|farmasi\s+caring", re.I),        "Caring"),
+    (re.compile(r"\b(farmasi\s+alpro|alpro)\b", re.I),                 "Alpro"),
+    (re.compile(r"\bbig\s+pharmacy|aeon\s*big", re.I),                 "BIG Pharmacy"),
+    (re.compile(r"\bhealth\s*lane\b", re.I),                           "Healthlane"),
+    (re.compile(r"sunway\s+multicare|\bmulticare\s+pharmacy", re.I),   "Sunway Multicare"),
+    (re.compile(r"\baa\s+pharmacy\b", re.I),                           "AA Pharmacy"),
+    (re.compile(r"\bguardian\b", re.I),                                "Guardian"),
+    (re.compile(r"\bwatsons?\b", re.I),                                "Watsons"),
+    (re.compile(r"\bpmg\s+pharmacy\b|^pmg\s+|\(pmg\)", re.I),          "PMG"),
+    (re.compile(r"am\s*pm\s+pharmacy", re.I),                          "AM PM"),
+    (re.compile(r"\bnazen\b",     re.I),                               "Nazen"),
+    (re.compile(r"\bgeorgetown\s+pharmacy", re.I),                     "Georgetown"),
+    (re.compile(r"\bsiang\s+pharmacy|siang.*kulim", re.I),             "Siang"),
+    (re.compile(r"\balliance\s+pharmacy", re.I),                       "Alliance"),
+    (re.compile(r"\bmega\s+kulim", re.I),                              "Mega Kulim"),
+    (re.compile(r"\bwellings\s+pharmacy", re.I),                       "Wellings"),
+    (re.compile(r"\bstraits\s+pharmacy", re.I),                        "Straits"),
+    (re.compile(r"\brx\s+pharmacy|rx\s+drug", re.I),                   "Rx"),
+    (re.compile(r"\bconstant\s+pharmacy", re.I),                       "Constant"),
+    (re.compile(r"\bmediq\b", re.I),                                   "MediQ"),
+    (re.compile(r"\brejoice\s+pharmacy", re.I),                        "Rejoice"),
+    (re.compile(r"\bbemed|be\s+pharmacy", re.I),                       "Be Pharmacy"),
+]
+
+
+def detect_brand_from_name(name: str, default: str = "Independent") -> str:
+    """Identify the chain a pharmacy belongs to by its name string."""
+    if not isinstance(name, str) or not name.strip():
+        return default
+    for pat, brand in _BRAND_PATTERNS:
+        if pat.search(name):
+            return brand
+    return default
 
 
 def parse_kmz(path: str | Path) -> pd.DataFrame:
@@ -95,16 +140,108 @@ def parse_kmz(path: str | Path) -> pd.DataFrame:
         style = (style_el.text or "").strip() if style_el is not None else ""
 
         pid = "KMZ" + hashlib.md5(f"{name}|{lon:.6f}|{lat:.6f}".encode()).hexdigest()[:10]
+        # Prefer name-based detection (catches sub-brands like Georgetown
+        # Pharmacy nested inside the Caring folder) and fall back to the
+        # folder-colour mapping for records where the name is a sentinel like
+        # "Jalan Sultan" (a KMZ artefact where a row has no business name).
+        brand = detect_brand_from_name(name, default="") or _style_to_brand(style)
         rows.append({
             "pharmacy_id": pid,
             "name": name,
             "address": "",
             "latitude": lat,
             "longitude": lon,
-            "brand": _style_to_brand(style),
+            "brand": brand,
             "source": "KMZ",
         })
     return pd.DataFrame(rows)
+
+
+# --------------------------------------------------------------------------------------
+# PMG Excel — Pharmacy, Medical & Dental Clinics branch list
+# --------------------------------------------------------------------------------------
+
+def parse_pmg_excel(path: str | Path,
+                    segment_filter: str = "pharmacy") -> pd.DataFrame:
+    """Parse the PMG 'outlets' Excel into the canonical pharmacy schema.
+
+    The sheet has one row per branch with columns:
+        Entity Legal Name | Branch Name | Segment | Region
+
+    We filter to the 'Pharmacy' segment (dropping Medical / Dental / SCM / HQ /
+    Lab / P&M / Physio / Wholesale / E-Commerce / Others), then build a
+    geocode-friendly query by extracting the location hint from the branch
+    name's parentheses.
+
+    No lat/lon yet — `geocode_addresses_google` fills those in.
+    """
+    raw = pd.read_excel(path, sheet_name=0, header=1)
+    raw = raw.dropna(axis=1, how="all")  # drop the empty left columns
+    raw.columns = [str(c).strip() for c in raw.columns]
+    df = raw[raw["Segment"].astype(str).str.lower().str.strip() == segment_filter.lower()].copy()
+
+    def _extract_location(branch: str) -> str:
+        """Pull the location hint out of parentheses, e.g.
+        'AM PM Pharmacy (Ayer Hitam)' -> 'Ayer Hitam'.  Falls back to the
+        whole branch name if no parens."""
+        if not isinstance(branch, str):
+            return ""
+        m = re.search(r"\(([^)]+)\)", branch)
+        return m.group(1).strip() if m else branch.strip()
+
+    def _region_state(region: str) -> str:
+        """Translate the coarse region column into a state hint Google can use."""
+        if not isinstance(region, str):
+            return ""
+        r = region.lower()
+        if "johor" in r:           return "Johor"
+        if "east malaysia" in r:   return ""  # Sabah vs Sarawak — let Google guess
+        if "north peninsula" in r: return ""  # Perlis/Kedah/Penang/Perak — let Google guess
+        if "central" in r:         return "Selangor"
+        return ""
+
+    df = df.copy()
+    df["name"] = df["Branch Name"].fillna(df["Entity Legal Name"]).astype(str).str.strip()
+    df["chain"] = df["Entity Legal Name"].astype(str).str.strip()
+    df["location_hint"] = df["Branch Name"].map(_extract_location)
+    df["state"] = df["Region"].map(_region_state)
+
+    # The `address` column is what the geocoder concatenates with state + Malaysia.
+    # Use "<Branch name cleaned> <location hint>" so Google can lock onto the
+    # business even when branch and hint overlap.
+    df["address"] = df.apply(
+        lambda r: (r["name"] + ", " + r["location_hint"]).strip(", "),
+        axis=1,
+    )
+
+    df = df.reset_index(drop=True)
+
+    def _brand_for(branch: str, entity: str) -> str:
+        """Two-pass: detect on branch name first (most specific), then entity
+        legal name (catches e.g. entity='PMG PHARMACY SDN BHD', branch='PR').
+        Last fallback: first word of the entity, preserving short ACRONYMS."""
+        hit = detect_brand_from_name(branch, default="")
+        if hit:
+            return hit
+        hit = detect_brand_from_name(entity, default="")
+        if hit:
+            return hit
+        first = (entity or "").split()[0] if entity else "Independent"
+        # 'PMG' stays 'PMG', 'AM' stays 'AM'; longer words get title-cased.
+        return first if first.isupper() and len(first) <= 5 else first.title()
+
+    out = pd.DataFrame({
+        "pharmacy_id": [
+            "PMG" + hashlib.md5(f"{n}|{c}".encode()).hexdigest()[:10]
+            for n, c in zip(df["name"], df["chain"])
+        ],
+        "name":    df["name"].values,
+        "address": df["address"].values,
+        "state":   df["state"].values,
+        "brand":   [_brand_for(n, c) for n, c in zip(df["name"], df["chain"])],
+        "source":  "PMG",
+    })
+    return out.reset_index(drop=True)
 
 
 # --------------------------------------------------------------------------------------

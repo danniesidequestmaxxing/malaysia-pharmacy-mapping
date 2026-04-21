@@ -50,6 +50,7 @@ from data_pipeline import (
 )
 from local_sources import (
     parse_kmz,
+    parse_pmg_excel,
     merge_pharmacy_sources,
     compute_worldpop_per_district,
     compute_worldpop_per_polygons,
@@ -105,6 +106,7 @@ GEO_CATCHMENT = "Pharmacy Catchment (Voronoi)"
 # does not need access to the 17 GB WorldPop TIF or the raw NPRA PDF.
 LOCAL_KMZ_PATH = "data/source/Project Pharma.kmz"
 LOCAL_NPRA_GEOCODED_CSV = "data/pharmacies_npra_geocoded.csv"
+LOCAL_PMG_GEOCODED_CSV = "data/pharmacies_pmg_geocoded.csv"
 LOCAL_WORLDPOP_PER_DISTRICT = "data/worldpop_per_district.csv"
 LOCAL_WORLDPOP_PER_MUKIM = "data/worldpop_per_mukim.csv"
 LOCAL_WORLDPOP_PER_ZONE = "data/worldpop_per_zone.csv"
@@ -124,12 +126,19 @@ def load_pharmacies(data_source: str,
         if Path(LOCAL_NPRA_GEOCODED_CSV).exists():
             npra = pd.read_csv(LOCAL_NPRA_GEOCODED_CSV)
             npra["source"] = npra.get("source", "NPRA").fillna("NPRA")
+            # Brand column exists in newer CSVs; back-compat: default to "NPRA".
             npra["brand"] = npra.get("brand", "NPRA").fillna("NPRA")
             sources.append(npra)
+        if Path(LOCAL_PMG_GEOCODED_CSV).exists():
+            pmg = pd.read_csv(LOCAL_PMG_GEOCODED_CSV)
+            pmg["source"] = pmg.get("source", "PMG").fillna("PMG")
+            pmg["brand"] = pmg.get("brand", "PMG").fillna("PMG")
+            sources.append(pmg)
         if not sources:
             st.error(
-                f"No local pharmacy sources found — place KMZ at {LOCAL_KMZ_PATH} "
-                f"and/or run `python geocode_npra.py` to produce {LOCAL_NPRA_GEOCODED_CSV}."
+                f"No local pharmacy sources found — place KMZ at {LOCAL_KMZ_PATH}, "
+                f"run `python geocode_npra.py` for {LOCAL_NPRA_GEOCODED_CSV}, "
+                f"and `python geocode_pmg.py` for {LOCAL_PMG_GEOCODED_CSV}."
             )
             st.stop()
         return merge_pharmacy_sources(*sources)
@@ -306,8 +315,8 @@ data_source = st.sidebar.radio(
 
 if data_source == DATA_SOURCE_LOCAL:
     st.sidebar.success(
-        "✅ Using authoritative sources: NPRA Senarai Premis (594 pharmacies) "
-        "+ Project Pharma chain KMZ (957 pharmacies) + WorldPop 2020 population."
+        "✅ Authoritative sources: Project Pharma chain KMZ (957) + NPRA "
+        "Senarai Premis PDF (594) + PMG Outlets Excel (187) + WorldPop 2020."
     )
 elif data_source == DATA_SOURCE_LIVE:
     st.sidebar.info(
@@ -585,13 +594,37 @@ folium.GeoJson(
 # Pharmacy markers (clustered for performance). Colour by brand when we have
 # that signal (Local mode), fall back to a single navy marker otherwise.
 BRAND_COLORS = {
-    "CARiNG":      "#2e7d32",  # green
-    "Guardian":    "#1a237e",  # dark blue
-    "Watsons":     "#c62828",  # red
-    "Alpro":       "#6a1b9a",  # purple
-    "Independent": "#455a64",  # slate
-    "NPRA":        "#ef6c00",  # orange (NPRA-only, no KMZ match)
-    "Other":       "#1f4e79",
+    # KMZ chains (matches the folder colours from Project Pharma.kmz)
+    "Caring":            "#2e7d32",  # green
+    "Alpro":             "#6a1b9a",  # purple
+    "BIG Pharmacy":      "#c62828",  # red
+    "Healthlane":        "#546e7a",  # slate
+    "Sunway Multicare":  "#1a237e",  # dark blue
+    "AA Pharmacy":       "#f9a825",  # yellow
+    # KMZ sub-brands nested under Caring / Healthlane
+    "Georgetown":        "#66bb6a",  # light green
+    "Wellings":          "#388e3c",  # dark green
+    "Straits":           "#78909c",  # light slate
+    # Chains that appear in NPRA / PMG but not in the Project Pharma KMZ
+    "Guardian":          "#0d47a1",  # navy
+    "Watsons":           "#d32f2f",  # dark red
+    "PMG":               "#00695c",  # teal
+    "AM PM":             "#ad1457",  # crimson
+    "Nazen":             "#5d4037",  # brown
+    "Siang":             "#e65100",  # deep orange
+    "Alliance":          "#4527a0",  # indigo
+    "Constant":          "#7b1fa2",  # magenta
+    "Be Pharmacy":       "#0277bd",  # cyan
+    "MediQ":             "#2e7d32",
+    "Rx":                "#1565c0",
+    "Mega Kulim":        "#6d4c41",
+    "Rejoice":           "#bf360c",
+    "Farmasi":           "#455a64",
+    "KS":                "#37474f",
+    # Catch-alls
+    "NPRA":              "#ef6c00",  # orange — NPRA row without chain match
+    "Independent":       "#455a64",  # slate — generic independent
+    "Other":             "#1f4e79",
 }
 
 cluster = MarkerCluster(name="Pharmacies").add_to(m)

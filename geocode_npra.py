@@ -31,6 +31,7 @@ from local_sources import (
     geocode_addresses,           # Nominatim
     geocode_addresses_google,    # Google
     _load_google_api_key,
+    detect_brand_from_name,
 )
 
 
@@ -91,7 +92,12 @@ def main() -> int:
     lookup = geo.set_index("_addr_key")[lookup_cols]
     enriched = keyed.merge(lookup, left_on="_addr_key", right_index=True, how="left")
     enriched = enriched.drop(columns=["_addr_key"])
-    enriched["brand"] = "NPRA"
+    # Detect the chain from the pharmacy name (e.g. 'Caring Pharmacy Sdn Bhd
+    # - Bangsar Village' -> 'Caring').  Default to 'NPRA' so rows without a
+    # recognised chain still get a distinct colour on the map.
+    enriched["brand"] = enriched["name"].map(
+        lambda n: detect_brand_from_name(n, default="NPRA")
+    )
 
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     enriched.to_csv(args.out, index=False)
