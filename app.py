@@ -345,15 +345,19 @@ pharmacies_joined, metrics, enriched_geojson = build_metrics(pharmacies, geo_ctx
 st.sidebar.markdown("---")
 st.sidebar.subheader("🔎 Filters")
 
-# State filter — always available because we stamp state via ADM2 regardless
-# of the chosen geography.
-all_states = sorted(pharmacies_joined["state"].dropna().unique())
+# Build the full (state, district) universe from the base ADM2 layer so the
+# filter lists include polygons with *zero* pharmacies (e.g. remote daerah) —
+# otherwise you can't zoom into an underserved district because it's been
+# filtered out of the widget.
+_base_props = [f["properties"] for f in geo_ctx["base_geojson"]["features"]]
+_all_state_district_pairs = pd.DataFrame(_base_props)
+all_states = sorted(_all_state_district_pairs["state"].dropna().unique())
 selected_states = st.sidebar.multiselect("State (Negeri)", all_states, default=all_states)
 
-# District filter — cascades from states. Always available for the same reason.
 districts_in_states = sorted(
-    pharmacies_joined.loc[pharmacies_joined["state"].isin(selected_states),
-                          "district"].dropna().unique()
+    _all_state_district_pairs.loc[
+        _all_state_district_pairs["state"].isin(selected_states), "district"
+    ].dropna().unique()
 )
 selected_districts = st.sidebar.multiselect(
     "District (Daerah)", districts_in_states, default=districts_in_states
@@ -492,6 +496,7 @@ folium.Choropleth(
     nan_fill_color="lightgray",
     legend_name={
         "pop_per_pharmacy": "Population per Pharmacy",
+        "pharmacies_per_1000": "Pharmacies per 1,000 residents",
         "pharmacies_per_100k": "Pharmacies per 100k",
         "population": "Population",
     }[metric_choice],
