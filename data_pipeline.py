@@ -334,18 +334,31 @@ def load_malaysia_mukim_geojson(
                 best_area, best_idx = inter, idx
         return names[best_idx] if best_idx is not None else None
 
+    # geoBoundaries ADM3 dissolves every same-named mukim into a single
+    # MultiPolygon — so e.g. "MUKIM PULAI" in Kedah, Perak, and Johor all
+    # share one geometry with 4 disconnected parts spanning 480 km.  Without
+    # decomposition, representative_point() picks ONE parent and WorldPop
+    # aggregation pools cells from ALL parts into one row.  Split every
+    # MultiPolygon into its component Polygons and stamp each independently.
+    from shapely.geometry import MultiPolygon
     out_features = []
     for feat in adm3["features"]:
         geom = shape(feat["geometry"])
-        out_features.append({
-            "type": "Feature",
-            "geometry": feat["geometry"],
-            "properties": {
-                "mukim":    feat["properties"].get("shapeName"),
-                "district": _parent(geom, district_tree, district_polys, district_names),
-                "state":    _parent(geom, state_tree, state_polys, state_names),
-            },
-        })
+        mukim_name = feat["properties"].get("shapeName")
+        if isinstance(geom, MultiPolygon):
+            parts = [(p, p.__geo_interface__) for p in geom.geoms]
+        else:
+            parts = [(geom, feat["geometry"])]
+        for part_geom, part_geojson in parts:
+            out_features.append({
+                "type": "Feature",
+                "geometry": part_geojson,
+                "properties": {
+                    "mukim":    mukim_name,
+                    "district": _parent(part_geom, district_tree, district_polys, district_names),
+                    "state":    _parent(part_geom, state_tree, state_polys, state_names),
+                },
+            })
 
     out = {"type": "FeatureCollection", "features": out_features}
     cache_path.write_text(json.dumps(out), encoding="utf-8")

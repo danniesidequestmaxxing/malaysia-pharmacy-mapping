@@ -973,7 +973,17 @@ def compute_worldpop_per_polygons(
 
     out = pd.DataFrame({key: [p.get(key) for p in props] for key in id_properties})
     out["population"] = totals.round().astype(int)
+    # If two features share the same identity tuple (e.g. decomposed Multi-
+    # Polygon parts that land in the same parent district), sum them so the
+    # downstream merge doesn't see duplicate keys.
+    before = len(out)
+    out = out.groupby(list(id_properties), as_index=False, dropna=False).agg(
+        {"population": "sum"}
+    )
+    dedup = before - len(out)
     if verbose:
+        if dedup:
+            print(f"  collapsed {dedup} rows with identical identity tuples")
         print(f"  done. {unmatched:,} cells outside all polygons. "
               f"Total pop: {int(out['population'].sum()):,}")
     cache_path.parent.mkdir(parents=True, exist_ok=True)
