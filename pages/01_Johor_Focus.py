@@ -348,8 +348,13 @@ folium.GeoJson(
     ),
 ).add_to(m)
 
-# Pharmacy markers — classic teardrop pins coloured by brand.
-cluster = MarkerCluster(name="Pharmacies").add_to(m)
+# Pharmacy markers — render each as a cluster-styled "1" bubble to match
+# the visual language of the 2+ cluster counts (same yellow/green/orange
+# scale Leaflet.markercluster uses by default).
+cluster = MarkerCluster(
+    name="Pharmacies",
+    options={"singleMarkerMode": True, "showCoverageOnHover": False},
+).add_to(m)
 for _, row in pharmacies_f.iterrows():
     make_pharmacy_marker(row).add_to(cluster)
 
