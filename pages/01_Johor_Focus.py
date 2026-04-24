@@ -51,9 +51,10 @@ JB_ZOOM = 11
 GEO_SUBMUKIM = "Sub-Mukim Grid — 1 km cells (JB+Kulai belt)"
 
 # Urban mukim to slice further.  Match is case-insensitive.
-# Note that JB city centre is "Bandar Johor Bahru" in geoBoundaries ADM3 —
-# it's a Bandar (township), not a Mukim proper, but we include it here
-# because it's where the pharmacy density peak actually sits.
+# geoBoundaries ADM3 carves town centres into their own "Bandar …"
+# polygons nested inside the surrounding mukim, so we include both the
+# Mukim and the Bandar explicitly — otherwise the Bandar leaves a
+# visible hole in the grid (e.g. Kulai town inside Mukim Kulai).
 SUBMUKIM_TARGETS = (
     "Mukim Tebrau",
     "Mukim Plentong",
@@ -62,11 +63,12 @@ SUBMUKIM_TARGETS = (
     "Mukim Senai",
     "Mukim Kulai",
     "Bandar Johor Bahru",
+    "Bandar Kulai",
 )
 
 # Bump this whenever the target set or cell size changes so old caches
 # are invalidated.
-SUBMUKIM_CACHE_KEY = "v2_7mukim_1km"
+SUBMUKIM_CACHE_KEY = "v3_8mukim_1km"
 
 
 # ==============================================================================
