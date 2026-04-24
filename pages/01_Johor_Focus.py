@@ -139,29 +139,50 @@ def _build_grid(mukim_gj: dict, target_names: Sequence[str],
 
 @st.cache_data(show_spinner="Building sub-mukim grid...")
 def _cached_submukim(cache_key: str, cell_deg: float) -> dict:
+    """Use the committed pre-built grid GeoJSON when available (much faster
+    on Streamlit Cloud first load); fall back to rebuilding from scratch."""
+    grid_path = Path("data/submukim_grid_johor.geojson")
+    if grid_path.exists():
+        return json.loads(grid_path.read_text(encoding="utf-8"))
     mukim_gj = normalize_geojson_names(load_malaysia_mukim_geojson())
     return _build_grid(mukim_gj, SUBMUKIM_TARGETS, cell_deg)
 
 
 @st.cache_data(show_spinner="Aggregating WorldPop to grid cells...")
 def _cached_grid_population(grid_cache_key: str) -> pd.DataFrame:
+    """Return per-cell population.  Order of preference:
+       1. Pre-computed CSV committed to the repo (works on Streamlit Cloud).
+       2. Re-aggregate from the 543 MB raw WorldPop CSV (local dev only).
+       3. Zero-population fallback — keeps the map rendering even when
+          neither of the above is reachable.
+    """
     grid = _cached_submukim(SUBMUKIM_CACHE_KEY, 0.009)
     cache_path = f"data/worldpop_per_submukim_{grid_cache_key}.csv"
-    if not Path(LOCAL_WORLDPOP_RAW_CSV).exists():
-        # Fallback for deploys without the 543 MB raw CSV — zero pop.
-        return pd.DataFrame({
-            "cell_id": [f["properties"]["cell_id"] for f in grid["features"]],
-            "parent_mukim": [f["properties"]["parent_mukim"] for f in grid["features"]],
-            "district": [f["properties"]["district"] for f in grid["features"]],
-            "state": [f["properties"]["state"] for f in grid["features"]],
-            "population": 0,
-        })
-    return compute_worldpop_per_polygons(
-        csv_path=LOCAL_WORLDPOP_RAW_CSV,
-        polygons_geojson=grid,
-        cache_path=cache_path,
-        id_properties=["cell_id", "parent_mukim", "district", "state"],
+
+    if Path(cache_path).exists():
+        return pd.read_csv(cache_path)
+
+    if Path(LOCAL_WORLDPOP_RAW_CSV).exists():
+        return compute_worldpop_per_polygons(
+            csv_path=LOCAL_WORLDPOP_RAW_CSV,
+            polygons_geojson=grid,
+            cache_path=cache_path,
+            id_properties=["cell_id", "parent_mukim", "district", "state"],
+        )
+
+    # Final fallback — neither cache nor raw raster.  Zero pop per cell so
+    # the choropleth still renders; the KPI will show "0" obviously.
+    st.warning(
+        f"`{cache_path}` is missing from this deploy, and the raw WorldPop "
+        "CSV isn't available either — population metrics will show as 0."
     )
+    return pd.DataFrame({
+        "cell_id": [f["properties"]["cell_id"] for f in grid["features"]],
+        "parent_mukim": [f["properties"]["parent_mukim"] for f in grid["features"]],
+        "district": [f["properties"]["district"] for f in grid["features"]],
+        "state": [f["properties"]["state"] for f in grid["features"]],
+        "population": 0,
+    })
 
 
 # ==============================================================================
