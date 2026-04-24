@@ -65,6 +65,45 @@ MAP_TILE_PROVIDERS: dict = {
     "OpenStreetMap":           {"builtin": "openstreetmap"},
 }
 
+# Folium's built-in Marker-icon palette is a fixed set of named colours:
+#   red, darkred, lightred, orange, beige, green, darkgreen, lightgreen,
+#   blue, darkblue, cadetblue, lightblue, purple, darkpurple, pink,
+#   gray, lightgray, black, white.
+# BRAND_COLORS below are hex (used on CircleMarker and the Plotly bar chart);
+# BRAND_ICON_COLORS maps each chain to the closest member of the palette
+# above so that the classic Google-Maps-style pin marker still renders
+# recognisable per-brand colours.
+BRAND_ICON_COLORS = {
+    "Caring":            "darkgreen",
+    "Alpro":             "darkpurple",
+    "BIG Pharmacy":      "red",
+    "Healthlane":        "cadetblue",
+    "Sunway Multicare":  "darkblue",
+    "AA Pharmacy":       "orange",
+    "Georgetown":        "green",
+    "Wellings":          "darkgreen",
+    "Straits":           "cadetblue",
+    "Guardian":          "darkblue",
+    "Guardian Retail":   "lightblue",
+    "Watsons":           "red",
+    "PMG":               "darkgreen",
+    "AM PM":             "darkred",
+    "Nazen":             "beige",
+    "Siang":             "orange",
+    "Alliance":          "purple",
+    "Constant":          "purple",
+    "Be Pharmacy":       "blue",
+    "MediQ":             "darkgreen",
+    "Rx":                "blue",
+    "Mega Kulim":        "beige",
+    "Rejoice":           "darkred",
+    "Farmasi":           "cadetblue",
+    "KS":                "gray",
+    "NPRA":              "orange",
+    "Independent":       "gray",
+    "Other":             "darkblue",
+}
+
 # Pharmacy chain → marker colour.  Kept here so pages stay visually consistent.
 BRAND_COLORS = {
     "Caring":            "#2e7d32",
@@ -304,6 +343,38 @@ def build_metrics(pharmacies: pd.DataFrame, geo_ctx: dict):
         geo_ctx["geojson"], metrics, on=geo_ctx["join_keys"]
     )
     return with_all, metrics, enriched
+
+
+# --------------------------------------------------------------------------------------
+# Pharmacy markers — classic Leaflet/Google-Maps-style pin (teardrop)
+# --------------------------------------------------------------------------------------
+
+def make_pharmacy_marker(row, *, popup_extras: dict | None = None):
+    """Build a folium.Marker with a coloured pin matching the row's brand.
+
+    Uses folium.Icon (the stock Leaflet teardrop) coloured from the
+    BRAND_ICON_COLORS palette, and a small 'plus' glyph so it reads as a
+    health/pharmacy pin from a distance.
+    """
+    import folium
+    brand = row.get("brand", "Other") or "Other"
+    icon_color = BRAND_ICON_COLORS.get(brand, "darkblue")
+
+    popup_html = (
+        f"<b>{row['name']}</b><br>"
+        f"Brand: {brand}<br>"
+        f"District: {row.get('district', '—')}<br>"
+        f"Source: {row.get('source', '—')}"
+    )
+    for k, v in (popup_extras or {}).items():
+        popup_html += f"<br>{k}: {v}"
+
+    return folium.Marker(
+        location=[row["latitude"], row["longitude"]],
+        tooltip=f"{row['name']} ({brand})",
+        popup=folium.Popup(popup_html, max_width=300),
+        icon=folium.Icon(color=icon_color, icon="plus", prefix="fa"),
+    )
 
 
 # --------------------------------------------------------------------------------------

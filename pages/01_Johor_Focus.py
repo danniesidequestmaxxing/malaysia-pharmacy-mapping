@@ -28,6 +28,7 @@ from dashboard_core import (
     DATA_SOURCE_LOCAL, GEO_DISTRICT, GEO_MUKIM,
     LOCAL_WORLDPOP_RAW_CSV,
     load_pharmacies, load_geography, build_metrics, choropleth_bins,
+    make_pharmacy_marker,
 )
 from data_pipeline import (
     stamp_polygon_props, compute_polygon_metrics,
@@ -347,22 +348,10 @@ folium.GeoJson(
     ),
 ).add_to(m)
 
-# Pharmacy markers
+# Pharmacy markers — classic teardrop pins coloured by brand.
 cluster = MarkerCluster(name="Pharmacies").add_to(m)
 for _, row in pharmacies_f.iterrows():
-    brand = row.get("brand", "Other") or "Other"
-    color = BRAND_COLORS.get(brand, "#1f4e79")
-    folium.CircleMarker(
-        location=[row["latitude"], row["longitude"]],
-        radius=3, weight=1, color=color, fill=True, fill_color=color, fill_opacity=0.85,
-        popup=folium.Popup(
-            f"<b>{row['name']}</b><br>"
-            f"Brand: {brand}<br>"
-            f"District: {row.get('district','—')}<br>"
-            f"Source: {row.get('source','—')}",
-            max_width=280,
-        ),
-    ).add_to(cluster)
+    make_pharmacy_marker(row).add_to(cluster)
 
 folium.LayerControl(collapsed=False).add_to(m)
 st_folium(m, height=640, use_container_width=True, returned_objects=[])

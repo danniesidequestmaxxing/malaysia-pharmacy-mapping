@@ -26,6 +26,7 @@ from dashboard_core import (
     DATA_SOURCE_LOCAL, DATA_SOURCE_LIVE, DATA_SOURCE_MOCK, DATA_SOURCE_CUSTOM,
     GEO_DISTRICT, GEO_MUKIM, GEO_ZONE, GEO_CATCHMENT,
     load_pharmacies, load_geography, build_metrics, choropleth_bins,
+    make_pharmacy_marker,
 )
 
 # --------------------------------------------------------------------------------------
@@ -293,59 +294,11 @@ folium.GeoJson(
     ),
 ).add_to(m)
 
-# Pharmacy markers (clustered for performance). Colour by brand when we have
-# that signal (Local mode), fall back to a single navy marker otherwise.
-BRAND_COLORS = {
-    # KMZ chains (matches the folder colours from Project Pharma.kmz)
-    "Caring":            "#2e7d32",  # green
-    "Alpro":             "#6a1b9a",  # purple
-    "BIG Pharmacy":      "#c62828",  # red
-    "Healthlane":        "#546e7a",  # slate
-    "Sunway Multicare":  "#1a237e",  # dark blue
-    "AA Pharmacy":       "#f9a825",  # yellow
-    # KMZ sub-brands nested under Caring / Healthlane
-    "Georgetown":        "#66bb6a",  # light green
-    "Wellings":          "#388e3c",  # dark green
-    "Straits":           "#78909c",  # light slate
-    # Chains that appear in NPRA / PMG but not in the Project Pharma KMZ
-    "Guardian":          "#0d47a1",  # navy — pharmacy-licensed
-    "Guardian Retail":   "#64b5f6",  # light blue — H&B retail only
-    "Watsons":           "#d32f2f",  # dark red
-    "PMG":               "#00695c",  # teal
-    "AM PM":             "#ad1457",  # crimson
-    "Nazen":             "#5d4037",  # brown
-    "Siang":             "#e65100",  # deep orange
-    "Alliance":          "#4527a0",  # indigo
-    "Constant":          "#7b1fa2",  # magenta
-    "Be Pharmacy":       "#0277bd",  # cyan
-    "MediQ":             "#2e7d32",
-    "Rx":                "#1565c0",
-    "Mega Kulim":        "#6d4c41",
-    "Rejoice":           "#bf360c",
-    "Farmasi":           "#455a64",
-    "KS":                "#37474f",
-    # Catch-alls
-    "NPRA":              "#ef6c00",  # orange — NPRA row without chain match
-    "Independent":       "#455a64",  # slate — generic independent
-    "Other":             "#1f4e79",
-}
-
+# Pharmacy markers (clustered for performance).  Teardrop pins coloured
+# by brand via the BRAND_ICON_COLORS palette in dashboard_core.
 cluster = MarkerCluster(name="Pharmacies").add_to(m)
 for _, row in pharmacies_f.iterrows():
-    brand = row.get("brand", "Other") or "Other"
-    color = BRAND_COLORS.get(brand, "#1f4e79")
-    folium.CircleMarker(
-        location=[row["latitude"], row["longitude"]],
-        radius=3, weight=1, color=color, fill=True, fill_color=color, fill_opacity=0.85,
-        popup=folium.Popup(
-            f"<b>{row['name']}</b><br>"
-            f"Brand: {brand}<br>"
-            f"Source: {row.get('source','—')}<br>"
-            f"District: {row.get('district','—')}<br>"
-            f"State: {row.get('state','—')}",
-            max_width=280,
-        ),
-    ).add_to(cluster)
+    make_pharmacy_marker(row).add_to(cluster)
 
 folium.LayerControl(collapsed=False).add_to(m)
 st_folium(m, height=620, use_container_width=True, returned_objects=[])
