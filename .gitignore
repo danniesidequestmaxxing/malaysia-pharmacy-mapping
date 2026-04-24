@@ -52,3 +52,5 @@ Thumbs.db
 !data/pharmacies_guardian.csv
 !data/pharmacies_watsons.csv
 !data/source/Watson_Outlets_Malaysia.xlsx
+!data/worldpop_per_submukim_v1_6mukim_1km.csv
+!data/submukim_grid_johor.geojson
