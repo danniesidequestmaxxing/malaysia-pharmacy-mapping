@@ -165,21 +165,23 @@ def parse_scraped_store_csv(
     path: str | Path,
     source_label: str,
     default_brand: str,
+    pharmacy_only: bool = True,
 ) -> pd.DataFrame:
     """Ingest a web-scraped store-locator CSV (e.g. Watsons, Guardian)
     into the canonical pharmacy schema.
 
     Expected input columns (any order, extras ignored):
         store_number, name, address, postcode, city, state, phone,
-        latitude, longitude
+        latitude, longitude, has_pharmacy
 
     The loader is tolerant: it accepts `lat` / `lng` / `long` / `lon`
-    column aliases and fills `state` from the address tail if the column
-    is blank.  Rows without a resolvable address are dropped.
+    column aliases, fills `state` from the address tail if blank, and
+    drops rows without a resolvable address or coordinates.
 
-    `source_label` populates the `source` column ("Watsons-Web", "Guardian-Web").
-    `default_brand` is applied to every row — override per-row via a
-    `brand` column in the CSV if you need fine-grained chains.
+    `pharmacy_only=True` (default) filters to rows where `has_pharmacy`
+    is truthy. Important for Guardian, where most stores are retail-only
+    health-and-beauty shops without a licensed pharmacist on site.
+    Set to False to include every store row.
     """
     df = pd.read_csv(path)
     df.columns = [str(c).strip().lower().replace(" ", "_") for c in df.columns]
@@ -194,6 +196,19 @@ def parse_scraped_store_csv(
     df["address"] = df.get("address", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
     df["phone"] = df.get("phone", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
     df["state"] = df.get("state", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
+
+    # Filter to licensed-pharmacy rows when the flag exists.  Accept True,
+    # "true", "yes", "1", and falsy variants like False/"false"/"no"/"0"/"".
+    if pharmacy_only and "has_pharmacy" in df.columns:
+        pharm_mask = df["has_pharmacy"].astype(str).str.lower().isin(
+            {"true", "yes", "1", "y", "pharmacy"}
+        )
+        kept = int(pharm_mask.sum())
+        dropped = len(df) - kept
+        if dropped:
+            print(f"  [{source_label}] filtered to pharmacy-licensed: "
+                  f"{kept} kept, {dropped} retail-only dropped")
+        df = df[pharm_mask].copy()
 
     # Keep rows with at least a name and (address or coords).
     has_name = df["name"].str.len() > 0
@@ -726,33 +741,55 @@ def geocode_addresses(
 
 def merge_pharmacy_sources(
     *dfs: pd.DataFrame,
-    coord_precision: int = 4,     # ~11m at the equator; enough to collapse duplicates
+    coord_precision: int = 4,     # ~11m; catches exact-coord duplicates
+    brand_coord_precision: int = 3,   # ~110m; catches same-chain-same-mall
 ) -> pd.DataFrame:
-    """Union multiple pharmacy DataFrames, drop rows missing lat/lon, dedupe.
+    """Union multiple pharmacy DataFrames, drop missing lat/lon, dedupe.
 
-    Deduplication key: lowercased first word of name + rounded lat + rounded lon.
-    That absorbs minor spelling / suffix differences between sources
-    (e.g. 'Sunlight Pharmacy Sdn Bhd' vs 'Sunlight Pharmacy (KK)').
+    Two-pass dedup:
+
+      1. Exact-location: first-word-of-name + rounded(lat, 4dp) + lon.
+         Catches identical rows / minor spelling variants at the same spot.
+
+      2. Brand-aware: same chain brand + rounded(lat, 3dp) + rounded(lon, 3dp).
+         Catches the NPRA↔Guardian-Web↔KMZ overlap where the same Guardian
+         store has different names in each source ('Guardian Pharmacy
+         (Putrajaya)' vs 'ALAMANDA SHOPPING CENTRE' at the same coords).
+         Only fires for branded chains — "Independent" / "NPRA" rows skip
+         this pass so two different indie pharmacies in the same block
+         aren't collapsed.
     """
     merged = pd.concat([d for d in dfs if d is not None and len(d) > 0],
                        ignore_index=True, sort=False)
-    # Ensure canonical columns exist.
     for c in ["pharmacy_id", "name", "address", "brand", "source",
               "latitude", "longitude"]:
         if c not in merged.columns:
             merged[c] = "" if c not in ("latitude", "longitude") else np.nan
 
     merged = merged.dropna(subset=["latitude", "longitude"]).copy()
-    merged["_dedup_key"] = (
-        merged["name"].fillna("").str.lower().str.split().str[0].fillna("") + "|" +
-        merged["latitude"].round(coord_precision).astype(str) + "|" +
-        merged["longitude"].round(coord_precision).astype(str)
-    )
-    # Keep first occurrence (KMZ preferred over NPRA if listed first in dfs).
-    merged = merged.drop_duplicates(subset="_dedup_key", keep="first")
-    merged = merged.drop(columns=["_dedup_key"])
 
-    # Fill any blank brand labels with "Other" so the map legend is clean.
+    # Pass 1 — exact-location + name-prefix dedup.
+    merged["_k1"] = (
+        merged["name"].fillna("").str.lower().str.split().str[0].fillna("") + "|"
+        + merged["latitude"].round(coord_precision).astype(str) + "|"
+        + merged["longitude"].round(coord_precision).astype(str)
+    )
+    merged = merged.drop_duplicates(subset="_k1", keep="first")
+
+    # Pass 2 — brand + coarser coord dedup. Skip generic "Independent"/"NPRA"
+    # labels so we don't accidentally collapse two distinct indies nearby.
+    BRANDED = merged["brand"].notna() & ~merged["brand"].isin({"Independent", "NPRA", "Other", ""})
+    merged["_k2"] = np.where(
+        BRANDED,
+        merged["brand"].fillna("").str.lower() + "|"
+        + merged["latitude"].round(brand_coord_precision).astype(str) + "|"
+        + merged["longitude"].round(brand_coord_precision).astype(str),
+        # Use the row's own pharmacy_id as its k2 so it can't collide.
+        merged["pharmacy_id"].astype(str),
+    )
+    merged = merged.drop_duplicates(subset="_k2", keep="first")
+    merged = merged.drop(columns=["_k1", "_k2"])
+
     merged["brand"] = merged["brand"].replace("", "Other").fillna("Other")
     return merged.reset_index(drop=True)
 
