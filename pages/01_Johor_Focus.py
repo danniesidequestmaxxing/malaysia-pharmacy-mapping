@@ -49,7 +49,10 @@ JB_ZOOM = 11
 
 GEO_SUBMUKIM = "Sub-Mukim Grid — 1 km cells (JB+Kulai belt)"
 
-# The six urban mukim the user wants sliced further. Match case-insensitive.
+# Urban mukim to slice further.  Match is case-insensitive.
+# Note that JB city centre is "Bandar Johor Bahru" in geoBoundaries ADM3 —
+# it's a Bandar (township), not a Mukim proper, but we include it here
+# because it's where the pharmacy density peak actually sits.
 SUBMUKIM_TARGETS = (
     "Mukim Tebrau",
     "Mukim Plentong",
@@ -57,11 +60,12 @@ SUBMUKIM_TARGETS = (
     "Mukim Kota Tinggi",
     "Mukim Senai",
     "Mukim Kulai",
+    "Bandar Johor Bahru",
 )
 
-# Cache for the grid + per-cell population — bumps up if you change cell size
-# or target set so old caches are invalidated.
-SUBMUKIM_CACHE_KEY = "v1_6mukim_1km"
+# Bump this whenever the target set or cell size changes so old caches
+# are invalidated.
+SUBMUKIM_CACHE_KEY = "v2_7mukim_1km"
 
 
 # ==============================================================================
@@ -166,8 +170,8 @@ def _cached_grid_population(grid_cache_key: str) -> pd.DataFrame:
 st.sidebar.title("🔍 Johor Focus")
 st.sidebar.info(
     "All metrics filtered to Johor state. Switch to **Sub-Mukim Grid** for "
-    "1 km resolution inside the Tebrau / Plentong / Pulai / Kota Tinggi / "
-    "Senai / Kulai belt."
+    "1 km resolution across the Bandar JB / Tebrau / Plentong / Pulai / "
+    "Kota Tinggi / Senai / Kulai belt."
 )
 
 geography = st.sidebar.radio(
@@ -409,16 +413,17 @@ with right:
 with st.expander("ℹ️ Notes on the Sub-Mukim Grid"):
     st.markdown(
         f"""
-The Sub-Mukim Grid divides **six urban mukim** — Tebrau, Plentong, Pulai,
-Kota Tinggi, Senai, and Kulai — into **~1 km square cells** (0.009° per side)
-clipped to each mukim's geoBoundaries ADM3 outline.  Each cell is stamped
-with its containing mukim and gets its own WorldPop 2020 population sum,
-which means you can see intra-mukim coverage gaps (e.g. quiet suburbs inside
-Mukim Pulai vs the UTM-Skudai cluster, or the Senai airport area vs Kulai
-town core).
+The Sub-Mukim Grid divides the **seven most urban units** in southern Johor
+— Bandar Johor Bahru (city centre), Mukim Tebrau, Plentong, Pulai,
+Kota Tinggi, Senai, and Kulai — into **~1 km square cells** (0.009° per
+side) clipped to each unit's geoBoundaries ADM3 outline. Each cell is
+stamped with its containing mukim and gets its own WorldPop 2020
+population sum, which surfaces intra-mukim coverage gaps (e.g. dense CBD
+blocks around Bandar JB vs suburbs, or UTM-Skudai cluster vs western
+Mukim Pulai, or the Senai airport area vs Kulai town core).
 
-For districts outside the six-mukim belt, stick with the **Mukim** geography
-— there are ~80 Johor mukim in total, most of which are rural and don't
-warrant sub-division.
+For districts outside this belt, stick with the **Mukim** geography — there
+are ~80 Johor mukim in total, most of which are rural and don't warrant
+sub-division.
 """
     )
