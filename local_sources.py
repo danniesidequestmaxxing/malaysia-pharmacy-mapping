@@ -161,6 +161,67 @@ def parse_kmz(path: str | Path) -> pd.DataFrame:
 # PMG Excel — Pharmacy, Medical & Dental Clinics branch list
 # --------------------------------------------------------------------------------------
 
+def parse_scraped_store_csv(
+    path: str | Path,
+    source_label: str,
+    default_brand: str,
+) -> pd.DataFrame:
+    """Ingest a web-scraped store-locator CSV (e.g. Watsons, Guardian)
+    into the canonical pharmacy schema.
+
+    Expected input columns (any order, extras ignored):
+        store_number, name, address, postcode, city, state, phone,
+        latitude, longitude
+
+    The loader is tolerant: it accepts `lat` / `lng` / `long` / `lon`
+    column aliases and fills `state` from the address tail if the column
+    is blank.  Rows without a resolvable address are dropped.
+
+    `source_label` populates the `source` column ("Watsons-Web", "Guardian-Web").
+    `default_brand` is applied to every row — override per-row via a
+    `brand` column in the CSV if you need fine-grained chains.
+    """
+    df = pd.read_csv(path)
+    df.columns = [str(c).strip().lower().replace(" ", "_") for c in df.columns]
+
+    # Coord column aliases.
+    for col_src, col_dst in [("lat", "latitude"), ("lng", "longitude"),
+                              ("long", "longitude"), ("lon", "longitude")]:
+        if col_src in df.columns and col_dst not in df.columns:
+            df[col_dst] = df[col_src]
+
+    df["name"] = df.get("name", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
+    df["address"] = df.get("address", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
+    df["phone"] = df.get("phone", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
+    df["state"] = df.get("state", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
+
+    # Keep rows with at least a name and (address or coords).
+    has_name = df["name"].str.len() > 0
+    has_loc = (
+        df["address"].str.len() > 0
+        | df.get("latitude", pd.Series([np.nan] * len(df))).notna()
+    )
+    df = df[has_name & has_loc].copy()
+
+    # Build canonical output.
+    out = pd.DataFrame({
+        "pharmacy_id": [
+            f"{source_label[:3].upper()}" + hashlib.md5(
+                f"{n}|{a}".encode()).hexdigest()[:10]
+            for n, a in zip(df["name"], df["address"])
+        ],
+        "name":       df["name"].values,
+        "address":    df["address"].values,
+        "phone":      df["phone"].values,
+        "state":      df["state"].values,
+        "latitude":   pd.to_numeric(df.get("latitude"), errors="coerce").values,
+        "longitude":  pd.to_numeric(df.get("longitude"), errors="coerce").values,
+        "brand":      [detect_brand_from_name(n, default=default_brand) for n in df["name"]],
+        "source":     source_label,
+    })
+    return out.reset_index(drop=True)
+
+
 def parse_pmg_excel(path: str | Path,
                     segment_filter: str = "pharmacy") -> pd.DataFrame:
     """Parse the PMG 'outlets' Excel into the canonical pharmacy schema.

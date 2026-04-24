@@ -51,6 +51,7 @@ from data_pipeline import (
 from local_sources import (
     parse_kmz,
     parse_pmg_excel,
+    parse_scraped_store_csv,
     merge_pharmacy_sources,
     compute_worldpop_per_district,
     compute_worldpop_per_polygons,
@@ -107,6 +108,11 @@ GEO_CATCHMENT = "Pharmacy Catchment (Voronoi)"
 LOCAL_KMZ_PATH = "data/source/Project Pharma.kmz"
 LOCAL_NPRA_GEOCODED_CSV = "data/pharmacies_npra_geocoded.csv"
 LOCAL_PMG_GEOCODED_CSV = "data/pharmacies_pmg_geocoded.csv"
+# Optional web-scraped store locators.  Drop the CSVs in these paths
+# (Claude-in-Chrome output) and they'll be auto-merged on next reload.
+# Schema: store_number, name, address, postcode, city, state, phone, latitude, longitude
+LOCAL_WATSONS_CSV = "data/pharmacies_watsons.csv"
+LOCAL_GUARDIAN_CSV = "data/pharmacies_guardian.csv"
 LOCAL_WORLDPOP_PER_DISTRICT = "data/worldpop_per_district.csv"
 LOCAL_WORLDPOP_PER_MUKIM = "data/worldpop_per_mukim.csv"
 LOCAL_WORLDPOP_PER_ZONE = "data/worldpop_per_zone.csv"
@@ -134,6 +140,14 @@ def load_pharmacies(data_source: str,
             pmg["source"] = pmg.get("source", "PMG").fillna("PMG")
             pmg["brand"] = pmg.get("brand", "PMG").fillna("PMG")
             sources.append(pmg)
+        # Optional web-scraped locators (Watsons / Guardian).  These are only
+        # picked up if the CSV exists — produced by Claude-in-Chrome runs.
+        if Path(LOCAL_WATSONS_CSV).exists():
+            sources.append(parse_scraped_store_csv(
+                LOCAL_WATSONS_CSV, source_label="Watsons-Web", default_brand="Watsons"))
+        if Path(LOCAL_GUARDIAN_CSV).exists():
+            sources.append(parse_scraped_store_csv(
+                LOCAL_GUARDIAN_CSV, source_label="Guardian-Web", default_brand="Guardian"))
         if not sources:
             st.error(
                 f"No local pharmacy sources found — place KMZ at {LOCAL_KMZ_PATH}, "
