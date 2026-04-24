@@ -146,8 +146,16 @@ def load_pharmacies(data_source: str,
             sources.append(parse_scraped_store_csv(
                 LOCAL_WATSONS_CSV, source_label="Watsons-Web", default_brand="Watsons"))
         if Path(LOCAL_GUARDIAN_CSV).exists():
+            # Include ALL Guardian stores — retail-only ones get the
+            # "Guardian Retail" brand so they're toggleable via the
+            # brand filter without polluting the "licensed pharmacy" slice.
             sources.append(parse_scraped_store_csv(
-                LOCAL_GUARDIAN_CSV, source_label="Guardian-Web", default_brand="Guardian"))
+                LOCAL_GUARDIAN_CSV,
+                source_label="Guardian-Web",
+                default_brand="Guardian",
+                pharmacy_only=False,
+                retail_brand_suffix=" Retail",
+            ))
         if not sources:
             st.error(
                 f"No local pharmacy sources found — place KMZ at {LOCAL_KMZ_PATH}, "
@@ -620,7 +628,8 @@ BRAND_COLORS = {
     "Wellings":          "#388e3c",  # dark green
     "Straits":           "#78909c",  # light slate
     # Chains that appear in NPRA / PMG but not in the Project Pharma KMZ
-    "Guardian":          "#0d47a1",  # navy
+    "Guardian":          "#0d47a1",  # navy — pharmacy-licensed
+    "Guardian Retail":   "#64b5f6",  # light blue — H&B retail only
     "Watsons":           "#d32f2f",  # dark red
     "PMG":               "#00695c",  # teal
     "AM PM":             "#ad1457",  # crimson

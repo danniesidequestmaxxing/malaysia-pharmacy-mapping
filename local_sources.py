@@ -246,6 +246,7 @@ def parse_scraped_store_csv(
     source_label: str,
     default_brand: str,
     pharmacy_only: bool = True,
+    retail_brand_suffix: str = " Retail",
 ) -> pd.DataFrame:
     """Ingest a web-scraped store-locator CSV (e.g. Watsons, Guardian)
     into the canonical pharmacy schema.
@@ -259,9 +260,13 @@ def parse_scraped_store_csv(
     drops rows without a resolvable address or coordinates.
 
     `pharmacy_only=True` (default) filters to rows where `has_pharmacy`
-    is truthy. Important for Guardian, where most stores are retail-only
-    health-and-beauty shops without a licensed pharmacist on site.
-    Set to False to include every store row.
+    is truthy.  Set to False to include every store row.
+
+    When `pharmacy_only=False` AND the CSV has a `has_pharmacy` column,
+    retail-only rows have `retail_brand_suffix` appended to the brand
+    (e.g. "Guardian" for licensed pharmacy, "Guardian Retail" for H&B
+    stores without a pharmacist).  Lets you filter them in/out via the
+    dashboard brand selector without losing the distinction.
     """
     df = pd.read_csv(path)
     df.columns = [str(c).strip().lower().replace(" ", "_") for c in df.columns]
@@ -277,18 +282,23 @@ def parse_scraped_store_csv(
     df["phone"] = df.get("phone", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
     df["state"] = df.get("state", pd.Series([""] * len(df))).fillna("").astype(str).str.strip()
 
-    # Filter to licensed-pharmacy rows when the flag exists.  Accept True,
-    # "true", "yes", "1", and falsy variants like False/"false"/"no"/"0"/"".
-    if pharmacy_only and "has_pharmacy" in df.columns:
-        pharm_mask = df["has_pharmacy"].astype(str).str.lower().isin(
+    # Compute the pharmacy-licensed flag once, if the column exists.
+    has_pharm_col = "has_pharmacy" in df.columns
+    if has_pharm_col:
+        is_pharm = df["has_pharmacy"].astype(str).str.lower().isin(
             {"true", "yes", "1", "y", "pharmacy"}
         )
-        kept = int(pharm_mask.sum())
+    else:
+        is_pharm = pd.Series([True] * len(df), index=df.index)
+
+    if pharmacy_only and has_pharm_col:
+        kept = int(is_pharm.sum())
         dropped = len(df) - kept
         if dropped:
             print(f"  [{source_label}] filtered to pharmacy-licensed: "
                   f"{kept} kept, {dropped} retail-only dropped")
-        df = df[pharm_mask].copy()
+        df = df[is_pharm].copy()
+        is_pharm = is_pharm[is_pharm]
 
     # Keep rows with at least a name and (address or coords).
     has_name = df["name"].str.len() > 0
@@ -298,7 +308,17 @@ def parse_scraped_store_csv(
     )
     df = df[has_name & has_loc].copy()
 
-    # Build canonical output.
+    # Resolve the per-row brand.  Priority: name-based chain detection,
+    # then `default_brand` — tag retail-only rows with the suffix so they
+    # render distinctly on the map and in the brand filter.
+    is_pharm_aligned = is_pharm.reindex(df.index, fill_value=True).values
+    brands = []
+    for n, is_p in zip(df["name"], is_pharm_aligned):
+        b = detect_brand_from_name(n, default=default_brand)
+        if not is_p and retail_brand_suffix and has_pharm_col:
+            b = default_brand + retail_brand_suffix
+        brands.append(b)
+
     out = pd.DataFrame({
         "pharmacy_id": [
             f"{source_label[:3].upper()}" + hashlib.md5(
@@ -311,7 +331,7 @@ def parse_scraped_store_csv(
         "state":      df["state"].values,
         "latitude":   pd.to_numeric(df.get("latitude"), errors="coerce").values,
         "longitude":  pd.to_numeric(df.get("longitude"), errors="coerce").values,
-        "brand":      [detect_brand_from_name(n, default=default_brand) for n in df["name"]],
+        "brand":      brands,
         "source":     source_label,
     })
     return out.reset_index(drop=True)
