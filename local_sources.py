@@ -161,6 +161,86 @@ def parse_kmz(path: str | Path) -> pd.DataFrame:
 # PMG Excel — Pharmacy, Medical & Dental Clinics branch list
 # --------------------------------------------------------------------------------------
 
+# --------------------------------------------------------------------------------------
+# Watsons Excel — 850 outlet branches
+# --------------------------------------------------------------------------------------
+
+# Malaysian state suffixes, longest first so "Negeri Sembilan" matches before "Sembilan".
+_MY_STATE_SUFFIXES = [
+    "Wilayah Persekutuan Kuala Lumpur", "Wilayah Persekutuan Labuan",
+    "Wilayah Persekutuan Putrajaya",
+    "Negeri Sembilan", "N. Sembilan", "N.Sembilan",  # common abbreviations
+    "W.P. Kuala Lumpur", "W.P. Labuan", "W.P. Putrajaya",
+    "Kuala Lumpur", "Pulau Pinang",
+    "Terengganu", "Selangor", "Sarawak", "Putrajaya", "Perlis", "Penang",
+    "Pahang", "Melaka", "Malacca", "Labuan", "Kelantan", "Kedah", "Johor",
+    "Sabah", "Perak",
+]
+_STATE_RE = re.compile(
+    r"(?i)(?<![A-Za-z])(" + "|".join(re.escape(s) for s in _MY_STATE_SUFFIXES) + r")\s*\.?\s*[\\}f|Q|g|i|A-Za-z]?\s*$"
+)
+
+
+def _extract_state_from_address(address: str) -> str:
+    """Peel a Malaysian state name off the tail of an address string.
+    Returns '' if no known state suffix matches.  Tolerant of:
+      * 'N.Sembilan' / 'N. Sembilan' abbreviations
+      * missing space before state ('PraiPulau Pinang')
+      * stray trailing OCR characters ('Johor Q', 'Kuala Lumpur f')
+    """
+    if not isinstance(address, str):
+        return ""
+    t = address.strip().rstrip(".")
+    # Strip a trailing stray single character (OCR artifact).
+    t = re.sub(r"\s+[A-Za-z{}\\|@]\s*$", "", t)
+    m = _STATE_RE.search(t)
+    if not m:
+        # Last-resort: search without requiring a left-edge boundary (handles
+        # 'Seberang PraiPulau Pinang' where state runs into the preceding word).
+        m = re.search(r"(?i)(" + "|".join(re.escape(s) for s in _MY_STATE_SUFFIXES) + r")\s*$", t)
+        if not m:
+            return ""
+    raw = m.group(1)
+    # Canonicalise the abbreviated forms back to the full name.
+    canon = {"n.sembilan": "Negeri Sembilan", "n. sembilan": "Negeri Sembilan"}
+    return canon.get(raw.lower(), " ".join(w.capitalize() for w in raw.split()))
+
+
+def parse_watsons_excel(path: str | Path) -> pd.DataFrame:
+    """Parse the Watsons Malaysia outlets Excel (Outlet Name / Address /
+    Postcode) into the canonical pharmacy schema.  State is derived from
+    the address tail via the known-state-suffix regex; no lat/lon yet —
+    `geocode_addresses_google` fills those in.
+    """
+    df = pd.read_excel(path, sheet_name=0)
+    df.columns = [str(c).strip() for c in df.columns]
+    df = df.rename(columns={"Outlet Name": "outlet", "Address": "address",
+                            "Postcode": "postcode"})
+    df = df.dropna(subset=["outlet", "address"]).copy()
+
+    # The Excel has all-caps outlet names (e.g. "1 MONT KIARA").  Title-case
+    # them for the map popup, but keep the raw WATSONS prefix from the
+    # address so chain detection works cleanly.
+    df["name"] = ("Watsons " + df["outlet"].astype(str).str.strip().str.title()).str[:120]
+    df["address"] = df["address"].astype(str).str.strip()
+    df["state"] = df["address"].map(_extract_state_from_address)
+    df["postcode"] = df["postcode"].astype(str).str.strip().str.replace(r"\.0$", "", regex=True)
+
+    out = pd.DataFrame({
+        "pharmacy_id": [
+            "WAT" + hashlib.md5(f"{o}|{a}".encode()).hexdigest()[:10]
+            for o, a in zip(df["outlet"], df["address"])
+        ],
+        "name":       df["name"].values,
+        "address":    df["address"].values,
+        "state":      df["state"].values,
+        "postcode":   df["postcode"].values,
+        "brand":      "Watsons",
+        "source":     "Watsons",
+    })
+    return out.reset_index(drop=True)
+
+
 def parse_scraped_store_csv(
     path: str | Path,
     source_label: str,
@@ -537,7 +617,8 @@ def _geocode_one_google(query: str, api_key: str, timeout: int = 20) -> Optional
 
     Uses `components=country:MY` to bias results to Malaysia, and `region=my`
     for ccTLD hints. Errors (over-quota, invalid key, etc.) raise so the
-    caller can decide whether to bail or continue.
+    caller can decide whether to bail or continue — but the raised message
+    is scrubbed of the key so debug logs / tracebacks don't leak it.
     """
     params = {
         "address": query,
@@ -545,8 +626,14 @@ def _geocode_one_google(query: str, api_key: str, timeout: int = 20) -> Optional
         "components": "country:MY",
         "region": "my",
     }
-    r = requests.get(GOOGLE_GEOCODE_ENDPOINT, params=params, timeout=timeout)
-    r.raise_for_status()
+    try:
+        r = requests.get(GOOGLE_GEOCODE_ENDPOINT, params=params, timeout=timeout)
+        r.raise_for_status()
+    except requests.HTTPError as e:
+        # Scrub the key from the error URL before re-raising so logs stay clean.
+        raise RuntimeError(f"Google Geocoding HTTP {e.response.status_code}") from None
+    except requests.RequestException as e:
+        raise RuntimeError(f"Google Geocoding network error: {type(e).__name__}") from None
     payload = r.json()
     status = payload.get("status")
     if status == "ZERO_RESULTS":

@@ -50,3 +50,5 @@ Thumbs.db
 .env.*
 !.env.example
 !data/pharmacies_guardian.csv
+!data/pharmacies_watsons.csv
+!data/source/Watson_Outlets_Malaysia.xlsx
