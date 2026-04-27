@@ -34,6 +34,29 @@ CONFIG = {
         "1 km WorldPop population; the rest of the state distributes the "
         "per-mukim WorldPop total uniformly across cells."
     ),
+    # Optional grid subset — restricting to the 8 high-resolution mukim
+    # drops the rendered cell count from ~20k to ~1.7k, which is much
+    # snappier in the browser. 5 km neighborhood metrics on the subset
+    # cells still account for surrounding cells outside the belt.
+    "grid_subset": {
+        "label": "JB urban belt only (faster)",
+        "default": False,
+        "match_key": "parent_mukim",
+        "values": (
+            "Mukim Tebrau", "Mukim Plentong", "Mukim Pulai",
+            "Mukim Kota Tinggi", "Mukim Senai", "Mukim Kulai",
+            "Bandar Johor Bahru", "Bandar Kulai",
+        ),
+        "center": [1.55, 103.7],
+        "zoom": 11,
+        "help": (
+            "Restrict the grid view to the 8 mukim around Johor Bahru — "
+            "Bandar JB, Tebrau, Plentong, Pulai, Senai, Kulai, Kota Tinggi, "
+            "and Bandar Kulai. The rest of the state is hidden but the "
+            "5 km neighborhood metrics for visible cells still include "
+            "population and pharmacies from neighbouring mukim."
+        ),
+    },
 }
 
 

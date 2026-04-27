@@ -732,6 +732,22 @@ def render_metro_focus(config: dict) -> None:
         "Geography", [GEO_DISTRICT, GEO_MUKIM, grid_geo_key], index=2,
     )
     on_grid = (geography == grid_geo_key)
+
+    # Optional grid subset checkbox — for state-wide grids that are slow to
+    # render, the metro can declare a faster default (e.g. JB urban belt).
+    grid_subset_cfg = config.get("grid_subset") if on_grid else None
+    subset_active = False
+    if grid_subset_cfg:
+        subset_active = st.sidebar.checkbox(
+            grid_subset_cfg.get("label", "Restrict grid to focus area"),
+            value=grid_subset_cfg.get("default", False),
+            help=grid_subset_cfg.get(
+                "help",
+                "Restrict the grid view to a smaller area for faster "
+                "rendering. Pharmacy markers and 5 km neighborhood metrics "
+                "still use the full pharmacy + population dataset.",
+            ),
+        )
     if on_grid:
         # On the grid view the 5 km neighborhood metrics are the headline
         # signal — promote them above the per-cell variants and drop the
@@ -860,6 +876,25 @@ def render_metro_focus(config: dict) -> None:
         )
         enriched_geojson = _inject_neighborhood_props(enriched_geojson, neighborhood)
 
+    # Apply the optional grid subset filter (e.g. JB urban belt only) AFTER
+    # the 5 km neighborhood metrics are computed — neighborhood values stay
+    # accurate at the subset boundary because the cached population_5km
+    # already includes contributions from cells outside the subset.
+    if subset_active and grid_subset_cfg:
+        match_key = grid_subset_cfg.get("match_key", "parent_mukim")
+        wanted = set(grid_subset_cfg.get("values", ()))
+        enriched_geojson = {
+            "type": "FeatureCollection",
+            "features": [
+                f for f in enriched_geojson["features"]
+                if f["properties"].get(match_key) in wanted
+            ],
+        }
+        if match_key in metrics.columns:
+            metrics = metrics[metrics[match_key].isin(wanted)].copy()
+        if match_key in pharmacies_f.columns:
+            pharmacies_f = pharmacies_f[pharmacies_f[match_key].isin(wanted)].copy()
+
     # ---- Header + KPIs ----
     st.title(f"{config.get('icon','🗺️')} {config['name']} Pharmacy Access")
     st.caption(config.get("intro", ""))
@@ -908,6 +943,9 @@ def render_metro_focus(config: dict) -> None:
 
     center = config["sub_center"] if geography == grid_geo_key else config["center"]
     zoom = config["sub_zoom"] if geography == grid_geo_key else config["zoom"]
+    if subset_active and grid_subset_cfg:
+        center = grid_subset_cfg.get("center", center)
+        zoom = grid_subset_cfg.get("zoom", zoom)
 
     provider = MAP_TILE_PROVIDERS[basemap_name]
     if "builtin" in provider:
