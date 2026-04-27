@@ -1,4 +1,4 @@
-streamlit>=1.32
+streamlit>=1.35  # st.dataframe row-selection (`on_select`) used by the grid ranker
 folium>=0.16
 streamlit-folium>=0.20
 pandas>=2.1
