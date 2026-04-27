@@ -442,6 +442,180 @@ def _inject_neighborhood_props(geojson: dict, neighborhood: pd.DataFrame) -> dic
 
 
 # --------------------------------------------------------------------------------------
+# Grid-cell ranker: interactive top-N by metric, with row selection + CSV export.
+# --------------------------------------------------------------------------------------
+
+# Cells with population below this threshold are excluded from the ranker —
+# they're already masked gray on the choropleth and only inflate "worst
+# access" lists artificially (a 1 km cell with 12 residents tells us nothing
+# about 5 km neighborhood access).
+_RANKER_MIN_CELL_POP = 100
+
+# Metric → (display label, plotly tick format, dataframe format string).
+_RANKER_METRICS = {
+    "population_5km":          ("Population within 5 km",        ",.0f", "{:,.0f}"),
+    "pharmacies_5km":          ("Pharmacies within 5 km",        ",.0f", "{:,.0f}"),
+    "chain_share_5km":         ("5 km Chain Share (%)",          ".0f",  "{:.0f}%"),
+    "pop_per_pharmacy_5km":    ("5 km Pop / Pharmacy",           ",.0f", "{:,.0f}"),
+    "pharmacies_per_1000_5km": ("5 km Pharmacies / 1,000",       ".3f",  "{:.3f}"),
+    "population":              ("Cell Population",               ",.0f", "{:,.0f}"),
+}
+
+# Columns shown in the ranker table (in this order). Anything missing from the
+# metrics frame is silently skipped.
+_RANKER_TABLE_COLS = [
+    "cell_id", "parent_mukim", "district",
+    "population", "population_5km",
+    "pharmacies_5km", "chain_5km", "independent_5km", "chain_share_5km",
+    "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
+]
+
+
+def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict) -> None:
+    """Top-N grid cells by chosen metric, with row selection + CSV export."""
+    st.subheader("📊 Grid cells — pick top N by metric")
+
+    ctrl1, ctrl2, ctrl3 = st.columns([2, 1, 2])
+    metric_keys = [k for k in _RANKER_METRICS if k in metrics.columns]
+    rank_by = ctrl1.selectbox(
+        "Rank by", metric_keys,
+        format_func=lambda k: _RANKER_METRICS[k][0],
+        index=metric_keys.index("population_5km") if "population_5km" in metric_keys else 0,
+        key="grid_rank_by",
+    )
+    direction = ctrl2.radio(
+        "Show", ["Most", "Least"], horizontal=True, key="grid_direction",
+    )
+    top_n = ctrl3.select_slider(
+        "Top N", options=[10, 20, 50, 100, 200], value=20, key="grid_top_n",
+    )
+
+    excluded_low_pop = int((metrics["population"] < _RANKER_MIN_CELL_POP).sum())
+    eligible = metrics[metrics["population"] >= _RANKER_MIN_CELL_POP].copy()
+    ranked = eligible.dropna(subset=[rank_by]).sort_values(
+        rank_by, ascending=(direction == "Least")
+    ).head(top_n).reset_index(drop=True)
+
+    if excluded_low_pop:
+        st.caption(
+            f"Excluding {excluded_low_pop:,} cells with population < "
+            f"{_RANKER_MIN_CELL_POP} from the ranking."
+        )
+    if ranked.empty:
+        st.info("No eligible cells for the current filters.")
+        return
+
+    label, tickfmt, _ = _RANKER_METRICS[rank_by]
+
+    left, right = st.columns([3, 2])
+    with left:
+        fig = px.bar(
+            ranked, x=rank_by, y=label_key,
+            orientation="h", height=540,
+            hover_data={
+                "parent_mukim": True, "district": True,
+                "population": ":,.0f", "population_5km": ":,.0f",
+                "pharmacies_5km": True, "chain_5km": True,
+                "independent_5km": True,
+            },
+            labels={rank_by: label, label_key: ""},
+        )
+        fig.update_layout(
+            yaxis={
+                "categoryorder": "array",
+                "categoryarray": ranked[label_key].tolist()[::-1],
+            },
+            margin=dict(l=10, r=10, t=10, b=10),
+        )
+        fig.update_xaxes(tickformat=tickfmt)
+        st.plotly_chart(fig, use_container_width=True)
+        st.caption(
+            f"Top {len(ranked)} cells by **{label}** "
+            f"({'highest' if direction == 'Most' else 'lowest'} first)."
+        )
+
+    with right:
+        st.subheader("📋 Ranked cells — click rows to select")
+        cols = [c for c in _RANKER_TABLE_COLS if c in ranked.columns]
+        fmt = {
+            "population": "{:,.0f}", "population_5km": "{:,.0f}",
+            "pharmacies_5km": "{:,.0f}",
+            "chain_5km": "{:,.0f}", "independent_5km": "{:,.0f}",
+            "chain_share_5km": "{:.0f}%",
+            "pop_per_pharmacy_5km": "{:,.0f}",
+            "pharmacies_per_1000_5km": "{:.3f}",
+        }
+        try:
+            event = st.dataframe(
+                ranked[cols].style.format(fmt, na_rep="—"),
+                use_container_width=True, height=540, hide_index=True,
+                on_select="rerun", selection_mode="multi-row",
+                key="grid_ranker_table",
+            )
+            chosen_rows = list(event.selection.rows) if event and event.selection else []
+        except TypeError:
+            # Streamlit < 1.35 — fall back to a non-selectable table.
+            st.dataframe(
+                ranked[cols].style.format(fmt, na_rep="—"),
+                use_container_width=True, height=540, hide_index=True,
+            )
+            chosen_rows = []
+
+        export_df = ranked.iloc[chosen_rows] if chosen_rows else ranked
+        export_label = (
+            f"📥 Download {len(export_df)} selected cell(s) as CSV"
+            if chosen_rows else
+            f"📥 Download all {len(export_df)} ranked cells as CSV"
+        )
+        st.download_button(
+            label=export_label,
+            data=export_df[cols].to_csv(index=False).encode("utf-8"),
+            file_name=(
+                f"{config['cache_key']}_{rank_by}_{direction.lower()}"
+                f"_top{top_n}.csv"
+            ),
+            mime="text/csv",
+            key="grid_ranker_download",
+        )
+
+
+def _render_polygon_table(metrics: pd.DataFrame, label_key: str,
+                           scope_label: str) -> None:
+    """Original district / mukim view: bar chart on the left, table on the right."""
+    left, right = st.columns([3, 2])
+    with left:
+        st.subheader(f"📊 {scope_label} — worst-access first")
+        chart_df = (metrics.dropna(subset=["pop_per_pharmacy"])
+                           .sort_values("pop_per_pharmacy", ascending=False)
+                           .head(25))
+        color_col = "district" if "district" in chart_df.columns else (
+            "parent_mukim" if "parent_mukim" in chart_df.columns else None
+        )
+        fig = px.bar(
+            chart_df, x="pop_per_pharmacy", y=label_key,
+            color=color_col, orientation="h", height=520,
+            labels={"pop_per_pharmacy": "Population per Pharmacy", label_key: ""},
+        )
+        fig.update_layout(yaxis={"categoryorder": "total ascending"},
+                          margin=dict(l=10, r=10, t=10, b=10))
+        st.plotly_chart(fig, use_container_width=True)
+    with right:
+        st.subheader(f"📋 {scope_label} table")
+        sorted_metrics = metrics.sort_values("pop_per_pharmacy", ascending=False)
+        fmt = {
+            "population": "{:,.0f}",
+            "pharmacy_count": "{:,.0f}",
+            "pop_per_pharmacy": "{:,.0f}",
+            "pharmacies_per_100k": "{:.2f}",
+            "pharmacies_per_1000": "{:.3f}",
+        }
+        st.dataframe(
+            sorted_metrics.reset_index(drop=True).style.format(fmt),
+            use_container_width=True, height=520,
+        )
+
+
+# --------------------------------------------------------------------------------------
 # Page renderer
 # --------------------------------------------------------------------------------------
 
@@ -579,9 +753,19 @@ def render_metro_focus(config: dict) -> None:
         )
         metrics = metrics.merge(neighborhood, on="cell_id", how="left")
         # Cells outside the cached grid (shouldn't happen) get safe defaults.
-        for col, fill in [("population_5km", 0.0), ("pharmacies_5km", 0)]:
+        for col, fill in [
+            ("population_5km", 0.0), ("pharmacies_5km", 0),
+            ("chain_5km", 0), ("independent_5km", 0),
+        ]:
             if col in metrics.columns:
                 metrics[col] = metrics[col].fillna(fill)
+        # Numeric chain-share column for ranking / table — the geojson props
+        # carry the formatted string version for tooltips.
+        metrics["chain_share_5km"] = np.where(
+            metrics["pharmacies_5km"] > 0,
+            metrics["chain_5km"] / metrics["pharmacies_5km"] * 100,
+            np.nan,
+        )
         enriched_geojson = _inject_neighborhood_props(enriched_geojson, neighborhood)
 
     # ---- Header + KPIs ----
@@ -749,117 +933,7 @@ def render_metro_focus(config: dict) -> None:
     st_folium(m, height=640, use_container_width=True, returned_objects=[])
 
     # ---- Table + chart ----
-    left, right = st.columns([3, 2])
-    with left:
-        st.subheader(f"📊 {scope_label} — worst-access first")
-
-        if on_grid:
-            # Surface zero-pharmacy cells FIRST (ranked by population within
-            # 5 km), then served cells ranked by Population per Pharmacy
-            # within 5 km.  The bar's x-axis uses the 5 km ratio; for
-            # unserved cells we substitute population_5km so the bar still
-            # carries scale information.
-            df = metrics.copy()
-            df["unserved_5km"] = df["pharmacies_5km"] == 0
-            df["access_status"] = np.where(
-                df["unserved_5km"],
-                "No pharmacy in 5 km",
-                "Has pharmacy in 5 km",
-            )
-            df["worst_access_value"] = np.where(
-                df["unserved_5km"],
-                df["population_5km"],
-                df["pop_per_pharmacy_5km"],
-            )
-            chart_df = df.sort_values(
-                ["unserved_5km", "worst_access_value"],
-                ascending=[False, False],
-            ).head(25)
-            fig = px.bar(
-                chart_df, x="worst_access_value", y=label_key,
-                color="access_status",
-                color_discrete_map={
-                    "No pharmacy in 5 km": "#c62828",
-                    "Has pharmacy in 5 km": "#ef6c00",
-                },
-                orientation="h", height=520,
-                hover_data={
-                    "population_5km": ":,.0f",
-                    "pharmacies_5km": True,
-                    "pop_per_pharmacy_5km": ":,.0f",
-                    "worst_access_value": False,
-                },
-                labels={
-                    "worst_access_value":
-                        "Pop / Pharmacy (5 km) — or population if 0 pharmacies",
-                    label_key: "",
-                    "access_status": "",
-                },
-            )
-            # Worst-access at the top: bar values mix two units (ratio for
-            # served cells, raw population for unserved), so we can't rely on
-            # `total ascending` — pin the y-axis order to our explicit ranking.
-            fig.update_layout(
-                yaxis={"categoryorder": "array",
-                       "categoryarray": chart_df[label_key].tolist()[::-1]},
-                margin=dict(l=10, r=10, t=10, b=10),
-                legend=dict(orientation="h", y=1.06),
-            )
-            st.plotly_chart(fig, use_container_width=True)
-            st.caption(
-                "Red bars are cells with **zero pharmacies within 5 km** — "
-                "ranked by the population that has no nearby access."
-            )
-        else:
-            chart_df = (metrics.dropna(subset=["pop_per_pharmacy"])
-                               .sort_values("pop_per_pharmacy", ascending=False)
-                               .head(25))
-            color_col = "district" if "district" in chart_df.columns else (
-                "parent_mukim" if "parent_mukim" in chart_df.columns else None
-            )
-            fig = px.bar(
-                chart_df, x="pop_per_pharmacy", y=label_key,
-                color=color_col, orientation="h", height=520,
-                labels={"pop_per_pharmacy": "Population per Pharmacy", label_key: ""},
-            )
-            fig.update_layout(yaxis={"categoryorder": "total ascending"},
-                              margin=dict(l=10, r=10, t=10, b=10))
-            st.plotly_chart(fig, use_container_width=True)
-    with right:
-        st.subheader(f"📋 {scope_label} table")
-        if on_grid:
-            sorted_metrics = metrics.assign(
-                _unserved=metrics["pharmacies_5km"] == 0,
-                _rank=np.where(
-                    metrics["pharmacies_5km"] == 0,
-                    metrics["population_5km"],
-                    metrics["pop_per_pharmacy_5km"],
-                ),
-            ).sort_values(["_unserved", "_rank"], ascending=[False, False]) \
-             .drop(columns=["_unserved", "_rank"])
-            fmt = {
-                "population": "{:,.0f}",
-                "pharmacy_count": "{:,.0f}",
-                "pop_per_pharmacy": "{:,.0f}",
-                "pharmacies_per_100k": "{:.2f}",
-                "pharmacies_per_1000": "{:.3f}",
-                "population_5km": "{:,.0f}",
-                "pharmacies_5km": "{:,.0f}",
-                "pop_per_pharmacy_5km": "{:,.0f}",
-                "pharmacies_per_1000_5km": "{:.3f}",
-            }
-        else:
-            sorted_metrics = metrics.sort_values(
-                "pop_per_pharmacy", ascending=False
-            )
-            fmt = {
-                "population": "{:,.0f}",
-                "pharmacy_count": "{:,.0f}",
-                "pop_per_pharmacy": "{:,.0f}",
-                "pharmacies_per_100k": "{:.2f}",
-                "pharmacies_per_1000": "{:.3f}",
-            }
-        st.dataframe(
-            sorted_metrics.reset_index(drop=True).style.format(fmt),
-            use_container_width=True, height=520,
-        )
+    if on_grid:
+        _render_grid_ranker(metrics, label_key, config)
+    else:
+        _render_polygon_table(metrics, label_key, scope_label)
