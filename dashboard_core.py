@@ -424,10 +424,10 @@ def choropleth_bins(metric: str, series: pd.Series) -> list | None:
             return base
         return base + [float(np.ceil(hi))]
 
-    if metric == "pop_per_pharmacy":
+    if metric in ("pop_per_pharmacy", "pop_per_pharmacy_5km"):
         base = [0, 3000, 5000, 10000, 20000, 50000]
         return _cap(base, 50000) if hi <= 50000 else base + [int(np.ceil(hi / 1000) * 1000)]
-    if metric == "pharmacies_per_1000":
+    if metric in ("pharmacies_per_1000", "pharmacies_per_1000_5km"):
         return _cap([0.0, 0.05, 0.1, 0.2, 0.3, 0.5, 1.0], 1.0)
     if metric == "pharmacies_per_100k":
         return _cap([0.0, 5.0, 10.0, 20.0, 30.0, 50.0, 100.0], 100.0)
