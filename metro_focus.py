@@ -815,7 +815,20 @@ def render_metro_focus(config: dict) -> None:
     selected_brands = st.sidebar.multiselect(
         "Brand / Chain", brand_options, default=brand_options,
     )
-    pharmacies_f = pharmacies_joined[pharmacies_joined["brand"].isin(selected_brands)].copy()
+
+    # Source filter — lets users isolate one ingestion (e.g. only the
+    # google_places sweep) without losing the brand split.
+    source_options = sorted(pharmacies_joined["source"].dropna().unique())
+    selected_sources = st.sidebar.multiselect(
+        "Data source", source_options, default=source_options,
+        help="Each pharmacy carries a `source` tag from its ingestion path "
+             "(NPRA / KMZ / Watsons-Web / Guardian-Web / PMG / google_places).",
+    )
+
+    pharmacies_f = pharmacies_joined[
+        pharmacies_joined["brand"].isin(selected_brands)
+        & pharmacies_joined["source"].isin(selected_sources)
+    ].copy()
     metrics, enriched_geojson = rebuild_metrics_from_joined_pharmacies(
         pharmacies_f, geo_ctx
     )
