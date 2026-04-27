@@ -345,7 +345,6 @@ def build_metrics(pharmacies: pd.DataFrame, geo_ctx: dict):
     return with_all, metrics, enriched
 
 
-@st.cache_data(show_spinner=False)
 def rebuild_metrics_from_joined_pharmacies(
     pharmacies_with_keys: pd.DataFrame,
     geo_ctx: dict,
