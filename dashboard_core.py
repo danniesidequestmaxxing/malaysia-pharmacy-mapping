@@ -438,11 +438,13 @@ def choropleth_bins(metric: str, series: pd.Series) -> list | None:
         base = [0, 3000, 5000, 10000, 20000, 50000]
         return _cap(base, 50000) if hi <= 50000 else base + [int(np.ceil(hi / 1000) * 1000)]
     if metric == "pop_per_pharmacy_5km":
-        # 5 km neighborhood ratios sit an order of magnitude above the per-cell
-        # version (e.g. 30k–120k typical). Spread the bin edges evenly across
-        # that range so the legend ticks don't pile up at the low end.
-        base = [0, 5000, 15000, 30000, 50000, 75000]
-        return _cap(base, 75000) if hi <= 75000 else base + [int(np.ceil(hi / 5000) * 5000)]
+        # Even-width 15k bins so the legend tick labels sit at equal
+        # intervals (0 / 15k / 30k / 45k / 60k / 75k / cap) and don't
+        # overlap at the low end. We lose some fine-grain differentiation
+        # under 15k, but practically every cell in that band is already
+        # green-good — the meaningful colour spectrum is 15k → cap.
+        base = [0, 15000, 30000, 45000, 60000, 75000]
+        return _cap(base, 75000) if hi <= 75000 else base + [int(np.ceil(hi / 15000) * 15000)]
     if metric in ("pharmacies_per_1000", "pharmacies_per_1000_5km"):
         return _cap([0.0, 0.05, 0.1, 0.2, 0.3, 0.5, 1.0], 1.0)
     if metric == "pharmacies_per_100k":
