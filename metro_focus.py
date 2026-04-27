@@ -588,7 +588,18 @@ def render_metro_focus(config: dict) -> None:
             subdomains=provider["subdomains"], max_zoom=provider["max_zoom"],
         ).add_to(m)
 
-    bins = choropleth_bins(metric_choice, metrics[metric_choice])
+    # On the grid view, cells with very small own-cell populations skew every
+    # metric (tiny denominators in the per-1k ratio, jumpy pop-per-pharmacy,
+    # etc.).  Drop them from the choropleth data so they fall through to
+    # `nan_fill_color` and read as visually inert grey, regardless of which
+    # metric is selected.  Threshold = 1,000 residents inside the cell.
+    LOW_POP_THRESHOLD = 1_000
+    if on_grid:
+        choro_metrics = metrics[metrics["population"] >= LOW_POP_THRESHOLD]
+    else:
+        choro_metrics = metrics
+
+    bins = choropleth_bins(metric_choice, choro_metrics[metric_choice])
     kw = {"threshold_scale": bins} if bins and len(bins) >= 3 else {}
     # "Population per Pharmacy" (own-cell or 5 km) is a higher-is-worse ratio
     # → red ramp; everything else is higher-is-better → green ramp.
@@ -604,7 +615,7 @@ def render_metro_focus(config: dict) -> None:
         "population": "Cell Population" if on_grid else "Population",
     }
     folium.Choropleth(
-        geo_data=enriched_geojson, data=metrics,
+        geo_data=enriched_geojson, data=choro_metrics,
         columns=[label_key, metric_choice],
         key_on=f"feature.properties.{label_key}",
         fill_color=fill_color,
