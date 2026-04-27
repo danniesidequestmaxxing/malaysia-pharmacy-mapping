@@ -1,1 +1,109 @@
 pharmacy_id,name,brand,address,latitude,longitude,source
+ChIJVR5KAKxz2jERUP4G7gkSL6o,ALPRO Pharmacy Bandar Baru Uda - Minute Consult,Alpro,"25, Jalan Padi Ria, Bandar Baru Uda, 81200 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.4999105,103.717891,google_places
+ChIJySlMNCJz2jERSxZsQ8H7qeA,ALPRO Pharmacy Bukit Indah,Alpro,"67, Jalan Indah 15/2, Taman Bukit Indah, 79100 Iskandar Puteri, Johor Darul Ta'zim, Malaysia",1.4810541,103.65725599999999,google_places
+ChIJaTiS8YJv2jERbJ3QAR2b4fA,ALPRO Pharmacy Dato Onn - Minute Consult,Alpro,"41, Jln Perjiranan 15/1, Bandar Dato Onn, 81100 Johor Bahru, Johor, Malaysia",1.5701032,103.7438073,google_places
+ChIJWzHowwI7zjERsMYFBhgeGAw,ALPRO Pharmacy Gemas,Alpro,"6, Jalan Mahkamah, Gemas, 73400 Gemas, Negeri Sembilan, Malaysia",2.5814082,102.6113357,google_places
+ChIJfcFx9K650TER5YDGxZwHC3w,ALPRO Pharmacy Jalan Pesta - Minute Consult,Alpro,"No. 29-13 & 29, 15, Jln Pesta 1/2, Kg. Kenangan Tun Dr Ismail, 84000 Muar, Johor Darul Ta'zim, Malaysia",2.0489698,102.5844779,google_places
+ChIJta4hbbFt0DEROqqF4MydqJQ,ALPRO Pharmacy Kluang,Alpro,"7, Jalan Manggis, Kampung Masjid Lama, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0365018999999998,103.3196954,google_places
+ChIJV-SJjh5h2jERyWXVNNcn0zU,ALPRO Pharmacy Kota Tinggi - Minute Consult,Alpro,"16, Jalan Niaga 1, Pusat Perdagangan Kota Tinggi, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.7303354,103.9017887,google_places
+ChIJkYjP6QTZzzERzfPTBKBrSrY,ALPRO Pharmacy Labis,Alpro,"No. 108, Ground Floor, Taman Bintang Jaya, Jln Segamat, Kampung Paya Merah, 85300 Labis, Johor Darul Ta'zim, Malaysia",2.3983376,103.0186751,google_places
+ChIJ96YtpiZc0DERutfKo2dJZaA,ALPRO Pharmacy Parit Raja - Minute Consult,Alpro,"No. 3, Susur, Jln Kluang, Pusat Perniagaan, 86400 Parit Raja, Johor, Malaysia",1.8648768,103.1113864,google_places
+ChIJE3djuQ-50TERIl2FSFwSzSU,ALPRO PHARMACY PEKAN MUAR,Alpro,"No. 33-2, Ground Floor, Jalan Ali, Pekan Muar, 84000 Muar, Johor Darul Ta'zim, Malaysia",2.0460195999999997,102.5679747,google_places
+ChIJn5BkPaZj0DERyTY9UjKmdos,ALPRO Pharmacy Simpang Renggam - Minute Consult,Alpro,"Lot 2, 4, Jln Kasih 1, Taman Kasih, 86200 Simpang Renggam, Johor Darul Ta'zim, Malaysia",1.8309157999999999,103.3081527,google_places
+ChIJ95Mo_dNQ0DERNwSwJxGVJ4U,ALPRO Pharmacy Taman Flora - Minute Consult,Alpro,"30, Jalan Flora Utama 4, Taman Flora Utama, 83000 Batu Pahat, Johor Darul Ta'zim, Malaysia",1.8659637999999998,102.9500151,google_places
+ChIJRywPsi9s0DERDvVLBPus7Ug,ALPRO Pharmacy Taman Intan - Minute Consult,Alpro,"10, G-1, Jalan Intan 2/2, Taman Intan, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0186243,103.30308699999999,google_places
+ChIJEZo0k9dQ0DERz66L13Qh2aw,ALPRO Pharmacy Taman Maju - Minute Consult,Alpro,"No. 2 & 4, Jalan Maju Timur, Taman Maju, 83000 Batu Pahat, Johor Darul Ta'zim, Malaysia",1.8674571999999998,102.9432394,google_places
+ChIJcWnuBW9v2jERj6QPQGgKF3Y,ALPRO Pharmacy Taman Mount Austin -,Alpro,"No. 43, Jalan Austin Heights 3, Taman Mount Austin, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.560643,103.7801499,google_places
+ChIJYWizTRxE0DERhzSNL6KvSNk,ALPRO Pharmacy Yong Peng,Alpro,"20, Jalan Bayan, Taman Sembrong Barat, 83700 Yong Peng, Johor Darul Ta'zim, Malaysia",2.0104326,103.0664889,google_places
+ChIJYcgy_titzzER9ATx6RAjCIo,ALSYIFAA FARMASI BANDAR TUN RAZAK,Other,"No.SP-08,Gerai, Sri Perdana, 26900 Bandar Tun Abdul Razak, Pahang, Malaysia",2.9055087,102.8910633,google_places
+ChIJ6QiHJvtLxTER2YxUHuuM6bE,ALSYIFAA FARMASI MERSING,Other,"No 6, Jalan Sri Mersing 1, Pusat Perdagangan Sri Mersing, 86800 Mersing, Johor Darul Ta'zim, Malaysia",2.4391297,103.8332075,google_places
+ChIJrctjWvNn0DERc0oYt1aqHp4,AM PM Pharmacy (Ayer Hitam),AM PM,"LOT 571, JALAN JOHOR, GROUND & 1ST FLOOR, 86100 Ayer Hitam, Johor Darul Ta'zim, Malaysia",1.9173506999999996,103.18029089999999,google_places
+ChIJEdhR-Lxt0DERaH0Us7ZCX_M,AM PM Pharmacy (Kluang Baru),AM PM,"505, Jalan Mersing, Taman Kluang Baru, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0372591,103.33214900000002,google_places
+ChIJORhJQF1h2jERB-xjMynRdFI,AM PM Pharmacy (Kota Tinggi),AM PM,"10, Jln Langsat 3, Taman Kota Jaya, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.7359555,103.88995709999999,google_places
+ChIJL8PmlpRLxTEREGRcP3hCGBk,AM PM Pharmacy (Mersing),AM PM,"53, Jalan Sulaiman, Bandar Tepian Sungai, 86800 Mersing, Johor Darul Ta'zim, Malaysia",2.4313843,103.83565109999999,google_places
+ChIJvd5Vr4lu2jERIp6UEShtsi0,AM PM Pharmacy (Mount Austin),AM PM,"23, Jln Austin Height 8/8, Taman Mount Austin, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.5646792999999999,103.77749449999999,google_places
+ChIJJ6ZlZu_TzzERYZ5SkgG-pAk,AMN Health Bandar Putra (Kedai Produk Kesihatan),Other,"24, Jln Putra 1/5, Bandar Putra, 85000 Segamat District, Johor, Malaysia",2.4966505999999997,102.8664551,google_places
+ChIJB-i3aj7TzzER3AfuMahF2Yo,Bahau Pharmacy Sdn Bhd,Other,"37 & 38, Jalan Genuang, Bandar Seberang, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5054593,102.8182822,google_places
+ChIJH_J3lxkb2jER55nivLabKZo,Beecroft Animal Specialist & Emergency Hospital,Other,"991E Alexandra Rd, #01-27, Singapore 119973",1.2733771,103.8026774,google_places
+ChIJsyheMpRy2jERBC4vZ_GnA1g,BIG Pharmacy Bandar Baru Uda (Rehab Flagship Store),BIG Pharmacy,"Pusat, 6, Jalan Padi Emas 4/1, Bandar Tampoi, 81200 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.4990111,103.70993299999999,google_places
+ChIJXxbYVkpz2jEROM5JKp_rF7Y,BIG Pharmacy Bukit Indah,BIG Pharmacy,"83, Jalan Indah 15/2, Taman Bukit Indah, 79100 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.4804353,103.6570758,google_places
+ChIJC1yEAAxR0DERF9J5ZlvNB1E,BIG Pharmacy Bukit Pasir,BIG Pharmacy,"9, Jalan Kundang, Taman Bukit Pasir, 83000 Batu Pahat, Johor Darul Ta'zim, Malaysia",1.8668077999999997,102.9397621,google_places
+ChIJI-8TvyIL2jER0AnjUpmW5Q0,BIG Pharmacy Gelang Patah,BIG Pharmacy,"No 10, Dataran Nusa Ria, Jln Nusaria 11/5, Taman Nusantara, 79200 Iskandar Puteri, Johor Darul Ta'zim, Malaysia",1.45925,103.5836075,google_places
+ChIJ0_Kp-Z650TER-2pDguBsmeY,BIG Pharmacy Jalan Ali Muar,BIG Pharmacy,"No 31, 5, Jalan Ali, Pekan Muar, 84000 Muar, Johor Darul Ta'zim, Malaysia",2.0465165,102.5687234,google_places
+ChIJeUz6qsIS2jERTF23WnQLEio,BIG Pharmacy Jalan Trus (Rehab Flagship Store),BIG Pharmacy,"No 107 & 107A, 108 &108A, Jalan Trus, Bandar Johor Bahru, 80000 Johor Bahru, Johor, Malaysia",1.4587173,103.7637513,google_places
+ChIJW37V_oRg2jERdHjeTVetbKE,BIG Pharmacy Kipmall Kota Tinggi,BIG Pharmacy,"S46-51, Kipmall Kota Tinggi, 1, Jalan Maju, Taman Mawai Jaya, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.7339731999999999,103.906264,google_places
+ChIJxWEVE7fORygRKa-AZOeGeFQ,Big Pharmacy Kluang,BIG Pharmacy,"NO 9, 10, Jln Dato Teoh Siew Khor, Kampung Masjid Lama, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0312967,103.3198984,google_places
+ChIJv1cYY2xt2jERG9gfwo3gDqg,BIG Pharmacy Larkin Perdana,BIG Pharmacy,"18G, Susur Larkin Perdana 2, Persiaran Larkin Perdana, Taman Larkin Perdana, 80350 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.5014653,103.74877149999999,google_places
+ChIJ63AdNrhLxTERc6jzVkxIc24,BIG Pharmacy Mersing,BIG Pharmacy,"59, Jalan Sulaiman, Bandar Tepian Sungai, 86800 Mersing, Johor Darul Ta'zim, Malaysia",2.4315599,103.8360795,google_places
+ChIJ8VGnEYZu2jERi7Prka9E4Nw,BIG Pharmacy Mount Austin,BIG Pharmacy,"67, Jalan Austin Heights 3, Taman Mount Austin, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.561351,103.7798358,google_places
+ChIJXay8Nhhh2jER2IO7YlGPJQQ,BIG PHARMACY PEKAN KOTA TINGGI,BIG Pharmacy,"44 & 46, Jalan Jaafar, Bandar Kota Tinggi, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.7284852000000002,103.9006363,google_places
+ChIJX4NFTkPTzzERZi0u6bw0XdM,BIG Pharmacy Segamat,BIG Pharmacy,"82, Jalan Pee Kang Hai, Felda Medoi, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5051012,102.8273054,google_places
+ChIJ26vhp8tj0DEReK1y3JkAJH4,BIG Pharmacy Simpang Renggam,BIG Pharmacy,"No.57, Jalan Bintang Ria 2, Taman Bintang Ria, 86200 Simpang Renggam, Johor Darul Ta'zim, Malaysia",1.8295838,103.3078393,google_places
+ChIJsYXP8nFu2jERdgY-Arm87qA,BIG Pharmacy Taman Daya,BIG Pharmacy,"46, Jalan Sagu 8, Taman Daya, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.5451312,103.7626294,google_places
+ChIJC8VajIRt0DER6Q3s1U0vBq8,Big Pharmacy Taman Intan Kluang,BIG Pharmacy,"7, Jalan Intan 2/2, Taman Intan, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0186876,103.30321239999999,google_places
+ChIJ8Y4EhL9t0DERwH9OFv19JGU,BIG Pharmacy Taman Sri Tengah Kluang,BIG Pharmacy,"1 (ARAS BAWAH, Jln Cengkih, Taman Sri Tengah, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0535297999999997,103.3520539,google_places
+ChIJV8cf1yxz2jERbXMxhLLQyVk,BIG Pharmacy Taman Sutera Utama,BIG Pharmacy,"38 GF, Jalan Sutera Tanjung 8/4, Taman Sutera Utama, 81300 Skudai, Johor Darul Ta'zim, Malaysia",1.5166853000000002,103.66828369999999,google_places
+ChIJfyuJir0tzjERjIt3oRmfHwk,BIG Pharmacy Taman Yayasan Segamat,BIG Pharmacy,"7 & 8, Jalan Bistari 1/1, Taman Yayasan, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5457438,102.79116400000001,google_places
+ChIJH7GdfBDb0TEROFMVMhVae3M,BIG Pharmacy Tangkak,BIG Pharmacy,"No. 41A & 42, Jalan Solok, Kampung Padang Lalang, 84900 Tangkak, Johor Darul Ta'zim, Malaysia",2.2656927000000002,102.5397648,google_places
+ChIJQcAZEpBg2jERS61p4Jph3QA,Caremart Pharmacy Sdn Bhd,Other,"Jalan Niaga 2, Pusat Perdagangan Kota Tinggi, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.7293155999999998,103.9011321,google_places
+ChIJA-so0Am50TER5Tc5eBLnXcQ,"CARiNG Pharmacy Jalan Pesta, Muar",Caring,"29-29, G Floor, Jln Pesta 1/2, Taman Kampung Kenanga Tun Dr Ismail, 84000 Muar, Johor Darul Ta'zim, Malaysia",2.0489752,102.5839452,google_places
+ChIJf7JvK7wL2jERCro0kierj7U,"CARiNG Pharmacy | Eco Botanic, Johor",Caring,"18, Jalan Eko Botani 3/2, Taman Eko Botani, 79100 Iskandar Puteri, Johor Darul Ta'zim, Malaysia",1.4405930999999998,103.618364,google_places
+ChIJSZZv4k9t0DERuB6P0Xzdvj4,"CARiNG Pharmacy | Jalan Manggis, Kluang",Caring,"No. 11A, G Floor, Jalan Manggis, Kampung Masjid Lama, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0364926999999997,103.31980680000001,google_places
+ChIJfXUSk4B02jERM5O3SN0xQeE,"CARiNG Pharmacy | Taman Mutiara Mas, Skudai",Caring,"9, Jln Mutiara 1/2, Mutiara Rini, 81300 Skudai, Johor Darul Ta'zim, Malaysia",1.5144895999999999,103.63237,google_places
+ChIJNRmLpTtv0DERZWMgeqKbO-s,"CARiNG Pharmacy | Taman Tasik Indah, Kluang",Caring,"No. 130, Tingkat Bawah, Jalan Tasik Indah 1/4, Taman, Persiaran Tasik Indah, Taman Tasik Indah, 86000 Kluang, Johor Darul Ta'zim, Malaysia",1.9942926,103.2955897,google_places
+ChIJb4TyqvvTzzERcPhzQhu5ccE,"CARiNG Pharmacy | Wisma Centrepoint, Segamat",Caring,"149, G Floor, Wisma Centrepoint, Jalan Dato, Jalan Sia Her Yam, Kampung Abdullah, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5039998999999997,102.822687,google_places
+ChIJP4YXunQZ2jEReO8rLrVUh4k,Essentials Pharmacy,Other,"101 Upper Cross St, #01-23, People's Park Centre, Singapore 058357",1.2853519,103.84397249999999,google_places
+ChIJ18yXDfmB2jERWjDy4jWPPE4,Farmasi Al-Arif Bandar Tenggara,Other,"No. 68, Jalan Anggerik 3/1, Taman Anggerik Tenggara, 81440 Bandar Tenggara, Johor Darul Ta'zim, Malaysia",1.8437724,103.62135819999999,google_places
+ChIJcweSe_Vh2jERRIkHcyW_aKg,Farmasi Al-Arif Kota Tinggi,Other,"30, Jln Langsat 3, Taman Kota Jaya, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.735285,103.8899951,google_places
+ChIJ1SU1wEQ5zjERcTAlHoVFJRM,Farmasi Al-Arif Pasir Besar,Other,"No. Lot 4739 Bazar MARA, Kampung Pasir Besar, 73420 Gemas, Negeri Sembilan, Malaysia",2.6543617,102.5333349,google_places
+ChIJFQfYr-RZ0DERa3_azwc1_fM,FARMASI BIRUNI Taman Universiti Batu Pahat,Other,"No. 12, Jalan Universiti 2, Bandar Universiti, 86400 Parit Raja, Johor Darul Ta'zim, Malaysia",1.8507181999999998,103.07493389999999,google_places
+ChIJMVM9JqfTzzERZKaZsfcQajI,Farmasi Eco Cahaya Sdn Bhd,Other,"55, Jalan Putra 2/23, Bandar Putra, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.4988725,102.8535586,google_places
+ChIJMb9dd8AL2jERSwMfbGk9Jfg,Farmasi Friska Medini,Other,"S-03-01, Pusat Komersil Visi Medini, 2, Persiaran Medini, 79250 Iskandar Puteri, Johor Darul Ta'zim, Malaysia",1.4171665999999998,103.6225162,google_places
+ChIJWRMFryYI0DERvHhuPlmuiVg,Farmasi Kahang,Other,"No.2 Jalan Kahang, Jln Muhibbah, Taman Kahang, 86000 Kluang, Johor, Malaysia",2.2143545,103.5385149,google_places
+ChIJESKenr-B2jERyzHztzNP4Ck,Farmasi Murni @ Bandar Tenggara,Other,"99-13, Jln Anggerik 4/1, Taman Anggerik Tenggara, 81440 Bandar Tenggara, Johor, Malaysia",1.8411621999999999,103.6236467,google_places
+ChIJXXLyZSlR0DERu0eZ5g-xvFk,Farmasi Murni @ Batu Pahat,Other,"3 & 4, Jalan Kundang, Taman Bukit Pasir, 83000 Batu Pahat, Johor Darul Ta'zim, Malaysia",1.8663318000000002,102.93950579999999,google_places
+ChIJN5Q1dyZc0DERLeqlP_cHztQ,Farmasi Murni @ Parit Raja,Other,"5, Jalan Kristal, Taman Kristal, 86400 Parit Raja, Johor Darul Ta'zim, Malaysia",1.8655369000000002,103.11355929999999,google_places
+ChIJ3QKbhDJj0DERoRwBPaMrrwE,Farmasi Murni @ Simpang Renggam,Other,"15, Jalan Bintang Ria 1, Taman, Jalan Bintang Ria, Kampung Simpang Renggam, 86200 Simpang Renggam, Johor, Malaysia",1.829977,103.3085095,google_places
+ChIJ_Raa6piB2jERsMSWHcR8E1Y,FARMASI NUR ATIQAH,Other,"NO 12, Jln Indah 9, Taman Sayong Indah, 81440 Bandar Tenggara, Johor Darul Ta'zim, Malaysia",1.8489655999999999,103.6261287,google_places
+ChIJFUdyDu_TzzERwJ-fBj8FP_Q,Farmasi Segamat,Other,"34, Jalan Genuang Perdana, Bandar Segamat Baru, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.4899868,102.8470473,google_places
+ChIJF4lBO7Ft0DERPRoo2SkZ0uo,"Farmasi Sri Ledang Sdn. Bhd. - Jalan Sentol Satu, Kluang",Other,"G6-G8, Jalan Sentol Satu, Kampung Masjid Lama, 86000 Kluang, Johor Darul Ta'zim, Malaysia",2.0358578,103.31984700000001,google_places
+ChIJY_LU4ZtLxTERr6Gf_uqFs48,Farmasi Sutera,Other,"23-B, Jalan Sulaiman, Mersing Kechil, 86800 Mersing, Johor Darul Ta'zim, Malaysia",2.4311791,103.8367155,google_places
+ChIJt5r-2OfTzzEROdGIw8PHias,FARMASI YAYASAN (JALAN PEMUDA),Other,"122, Jalan Susur Pemuda 1, Kampung Tengah, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5222764,102.8057338,google_places
+ChIJK4BigyAX2jEREWaZBscqNlI,Gaia Vets Singapore (Jalan Besar),Other,"415 Jln Besar, Singapore 209016",1.3139779,103.85995609999999,google_places
+ChIJRxMPUCTTzzER4NaBON0Q0nA,Green Pharma,Other,"15, Jalan Utama 2/1, Taman Utama, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5083539999999998,102.82067819999999,google_places
+ChIJG1Q5ycRW0DERNdBWoYX2_is,Guardian,Guardian,"NO 37, 37-1, 37-2 GROUND FLOOR, 37, Jln Rahmat, Kampung Pegawai, 83000 Batu Pahat, Johor Darul Ta'zim, Malaysia",1.8483425999999998,102.9318479,google_places
+ChIJ25Qe5iVc0DER-_pMTgDL_QM,Guardian,Guardian,"LOT NO 1 & 2 GROUND FLOOR, Jalan Cempaka 2, Taman Bunga Cempaka Biru, 86400 Parit Raja, Johor Darul Ta'zim, Malaysia",1.8655966000000002,103.1151189,google_places
+ChIJj_dnrZ1LxTER18zByfn1BAE,Guardian,Guardian,"BLOCK E LOT NO 451,GROUND FLOOR, Jln Ismail, Mersing Kechil, 84000 Muar, Johor Darul Ta'zim, Malaysia",2.4298378,103.83695709999999,google_places
+ChIJQ_PKpjzTzzERjbvmzmM3D5k,GUARDIAN (SIA HER YAM),Guardian,"NO. 154, Jalan Sia Her Yam, Kampung Abdullah, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5045129999999998,102.8232521,google_places
+ChIJ23nWhakZ2jERWwp4USTQJk4,Guardian Bugis MRT,Guardian,"220 Victoria St, #B1-01, Singapore 188022",1.299434,103.8558681,google_places
+ChIJjYrZNCEZ2jERtCLFDNcT4p0,Guardian Health & Beauty + Pharmacy – Chinatown Point (Click & Collect),Guardian,"133 New Bridge Rd, #B1 - 34, Singapore 059413",1.2854971,103.84495470000002,google_places
+ChIJ__EU0QUZ2jERYsYlwNpYpVU,Guardian Health & Beauty + Pharmacy – Marina Bay Sands (Click & Collect),Guardian,"2 Bayfront Ave, B2-49 The Shoppes at Marina Bay Sands, Singapore 018972",1.2860236,103.85990939999999,google_places
+ChIJBW3xw3wZ2jERlW8DNOTQJLI,Guardian Health & Beauty + Pharmacy – Paragon (Click & Collect),Guardian,"290 Orchard Rd, #B1-20 / 24 Paragon, Singapore 238859",1.303596,103.8358686,google_places
+ChIJwU9PiAW50TERNJx5FOm03iY,"GUARDIAN JALAN ALI, MUAR",Guardian,"NO 31-1 & 31-2, GROUND FLOOR, Jalan Ali, Pekan Muar, 84000 Muar, Johor Darul Ta'zim, Malaysia",2.0464089999999997,102.5685682,google_places
+ChIJc0FkfuLTzzERDlXb-Z41iug,Guardian U-Sentral Segamat,Guardian,"Lot S15, S13A & S13, 2, Jalan Utama 3, Taman Bandar Utama, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5127308,102.8219086,google_places
+ChIJ6eaYmrgpzjERn0Wdux-jH-o,Health Lane Family Pharmacy Jementah,Other,"No 2 GF, 1, Jln Pelangi, Taman Pelangi, 85200 Jementah, Johor Darul Ta'zim, Malaysia",2.4294241,102.6782678,google_places
+ChIJT5ItGE3ZzzERxqWaHEIMXJM,Health Lane Family Pharmacy Labis,Other,"No. 132A, Ground Floor, Jln Segamat, Taman Bintang Jaya, 85300 Labis, Johor Darul Ta'zim, Malaysia",2.3995127,103.0183728,google_places
+ChIJh9i1yrHTzzERtnzPEd8h93Y,Health Lane Family Pharmacy Segamat,Other,"33, Jalan Kekwa Segamat, Kampung Abdullah, 85000 Johor, Malaysia",2.5034582,102.8231771,google_places
+ChIJE32FheZF0DERf-Xu6qviMWA,Health Lane Family Pharmacy Yong Peng,Other,"22, Jalan Kota, Taman Kota, 83700 Yong Peng, Johor Darul Ta'zim, Malaysia",2.0140143999999998,103.070633,google_places
+ChIJE_r5sKUpzjER9cckkeqv0K4,Hopewell Pharmacy,Other,"12, Jln Ayu 1, Taman Molek, 85200 Jementah, Johor Darul Ta'zim, Malaysia",2.4325015999999997,102.6812448,google_places
+ChIJfZKBTsYZ2jERih6xti5VxD8,Mustafa Singapore,Other,"272 Serangoon Rd, Singapore 218104",1.3103913,103.85443529999999,google_places
+ChIJ0321R9wZ2jER0lpf7rtQCrs,National Skin Centre,Other,"1 Mandalay Rd, Singapore 308205",1.3197375000000002,103.84902269999999,google_places
+ChIJKTlRR75y2jER8TRPnLFjVkg,Pet Paradise Clinic,Other,"4, Jalan Padi Emas 2, Bandar Baru Uda, 81200 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.4952052,103.70969769999999,google_places
+ChIJ658R-4Rg2jERRVsXFouckcw,Rancak Pharmacy Sdn Bhd (Kota Tinggi),Other,"3, Jalan Maju 1, Taman Mawai Jaya, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.732743,103.90617999999999,google_places
+ChIJk_8B7W8Z2jERa0ABg3yw7Nk,SGH Block 3 Outpatient Pharmacy,Other,"Blk 3, Level 1, Singapore General Hospital, Outram Rd, Singapore 169608",1.2784392,103.8342048,google_places
+ChIJuaWN_jGB2jERgjOCH4JFFEs,Sri Tanjung Anggerik,Other,"35, Jln Anggerik 4/1, 81000 Bandar Tenggara, Johor, Malaysia",1.8403760000000002,103.624439,google_places
+ChIJn7CW8ZtLxTERvV2XZrSevLE,STF Medic Enterprise,Other,"No.29, Tingkat Bawah, Jalan Abu Bakar, Mersing Kechil, 86800 Mersing, Johor Darul Ta'zim, Malaysia",2.4310088999999997,103.83643819999999,google_places
+ChIJIRbieklh2jER2E8fABAE2qc,SUNWAY MULTICARE PHARMACY KOTA TINGGI,Sunway Multicare,"29, Jalan Niaga Utama, Pusat Perdagangan Kota Tinggi, 81900 Kota Tinggi, Johor Darul Ta'zim, Malaysia",1.7286557999999999,103.90098719999999,google_places
+ChIJayb4rJ3TzzERRcexA1_clUU,Sunway Multicare Pharmacy Segamat,Sunway Multicare,"Ground Floor, 62 I, Jalan Genuang, Bandar Seberang, 85000 Segamat, Johor Darul Ta'zim, Malaysia",2.5032704,102.8209302,google_places
+ChIJl_rwbYZu2jEROB4Bym3DMlU,Watsons Austin Height,Watsons,"25 Ground Floor, Jalan Austin Heights 3, Taman Mount Austin, 81100 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.5600886999999999,103.7805118,google_places
+ChIJvSc_pbFQ0DER0627YD-67RQ,Watsons Batu Pahat Mall (Pharmacy),Watsons,"Lot G51 & G52 Ground Floor, Batu Pahat Mall, Jln Kluang, 83000 Batu Pahat, Johor Darul Ta'zim, Malaysia",1.8638484000000002,102.9620825,google_places
+ChIJWbOawLoZ2jER_7jTZYKb1Ks,Watsons Bugis Junction +Pharmacy + GNC (Click & Collect),Watsons,"200 Victoria St, #02 - 29 / 30 / 31 / 32 / 33 / 33A, Singapore 188021",1.2990594,103.8553451,google_places
+ChIJb6_EwY0Z2jERVy2ypl_dUbg,Watsons ION Orchard +Pharmacy + GNC (Click & Collect),Watsons,"2 Orchard Turn, #B4-12 Ion Orchard, Singapore 238801",1.3044586,103.8316523,google_places
+ChIJA3ID-cRW0DERuJ-RDr25Gdc,Watsons Jalan Rahmat,Watsons,"No. 31-2 & 31-3, Ground Floor, Jalan Rahmat, Kampung Pegawai, 83000 Batu Pahat, Johor, Malaysia",1.8492106000000001,102.929318,google_places
+ChIJo0Z6688Z2jERO-NKHFmbQRw,Watsons Marina Bay Sands +Pharmacy + GNC (Click & Collect),Watsons,"2 Bayfront Avenue #B2-01B The Shoppes At Marina Bay Sands, Singapore 018972",1.2825034,103.857889,google_places
+ChIJp4zYJ6QZ2jERx3B7VySnGtE,Watsons Raffles City +Pharmacy + GNC (Click & Collect),Watsons,"252 N Bridge Rd, #B1-42 Raffles City, Singapore 179103",1.2938722,103.8531338,google_places
+ChIJFSfg8ZEZ2jER3J5Nc34Geh0,"Watsons Takashimaya S.C, Ngee Ann City +Pharmacy + GNC (Click & Collect)",Watsons,"391 Orchard Rd, #B2-06 / 07 / 08 / 09 / 10, Singapore 238872",1.3025830999999999,103.83427139999999,google_places
+ChIJZXiY7ftz2jER0M1c2t-XYRo,Well Pharmacy Bukit Indah,Other,"36, Jalan Indah 8/15, Taman Bukit Indah, 79100 Iskandar Puteri, Johor Darul Ta'zim, Malaysia",1.4781088999999998,103.6502414,google_places
+ChIJifpzYlwL2jERA2JFFXbbWUE,Well Pharmacy Eco Botanic,Other,"36, Jalan Eko Botani 3/2, Taman Eko Botani, 79100 Iskandar Puteri, Johor Darul Ta'zim, Malaysia",1.4401884,103.61887089999999,google_places
+ChIJ7ZLiZnlz2jEROkQqFHTNM00,Well Pharmacy Mutiara Rini,Other,"93, Jalan Utama 34 Taman Mutiara Rini Skudai, Mutiara Rini, 81300 Johor Bahru, Johor Darul Ta'zim, Malaysia",1.5228582,103.63567119999999,google_places
+ChIJr81bX5xLxTERJMd7ZUv0f-8,Yuen Sen For Medicine Shop,Other,"33, Jalan Abu Bakar, Mersing Kechil, 86800 Mersing, Johor Darul Ta'zim, Malaysia",2.4310001999999997,103.83629590000001,google_places
