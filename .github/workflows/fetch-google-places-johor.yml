@@ -1,0 +1,75 @@
+name: Fetch Google Places — Johor pharmacies
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Run mode — 'sanity' costs ~$0.20, 'full' costs ~$25"
+        required: true
+        default: "sanity"
+        type: choice
+        options:
+          - sanity
+          - full
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas shapely
+
+      - name: Sanity / Full sweep
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: |
+          if [ -z "$GOOGLE_MAPS_API_KEY" ]; then
+            echo "::error::Repo secret GOOGLE_MAPS_API_KEY is not set."
+            echo "Add it at: Settings → Secrets and variables → Actions → New repository secret"
+            exit 1
+          fi
+          if [ "${{ inputs.mode }}" = "sanity" ]; then
+            echo "Running sanity check (~\$0.20)"
+            python scripts/fetch_google_places_johor.py \
+              --skip-text --spacing-km 50 --radius-km 50
+          else
+            echo "Running full sweep (~\$25)"
+            python scripts/fetch_google_places_johor.py
+          fi
+
+      - name: Show summary
+        run: |
+          echo "Output CSV row count:"
+          wc -l data/pharmacies_google_johor.csv
+          echo
+          echo "Top brands by count:"
+          tail -n +2 data/pharmacies_google_johor.csv \
+            | awk -F',' '{print $3}' | sort | uniq -c | sort -rn | head -20
+
+      - name: Commit + push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/pharmacies_google_johor.csv
+          if git diff --cached --quiet; then
+            echo "No changes — script returned the same set as the existing CSV."
+            exit 0
+          fi
+          ROWS=$(($(wc -l < data/pharmacies_google_johor.csv) - 1))
+          git commit -m "Pharmacies: Google Places sweep for Johor (mode=${{ inputs.mode }}, $ROWS rows)"
+          git push
