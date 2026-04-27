@@ -382,17 +382,19 @@ def compute_neighborhood_metrics(metro_key: str, grid_path: str, pop_path: str,
 
 
 def _inject_neighborhood_props(geojson: dict, neighborhood: pd.DataFrame) -> dict:
-    """Stamp the 5 km metrics onto each feature's `properties` so the Folium
-    GeoJsonTooltip can read them directly."""
-    if neighborhood.empty:
-        return geojson
-    lookup = neighborhood.set_index("cell_id").to_dict(orient="index")
+    """Stamp the 5 km metrics onto every feature's `properties` so the Folium
+    GeoJsonTooltip can read them directly.  Cells missing from the lookup
+    still get the keys (with safe defaults) — otherwise the tooltip's
+    first-feature schema sniff can silently drop the 5 km block whenever
+    feature[0] happens to be a degenerate / lookup-miss cell."""
+    lookup = (
+        {} if neighborhood.empty
+        else neighborhood.set_index("cell_id").to_dict(orient="index")
+    )
     out = json.loads(json.dumps(geojson))
     for feat in out["features"]:
         cid = feat["properties"].get("cell_id")
-        n = lookup.get(cid)
-        if not n:
-            continue
+        n = lookup.get(cid) or {}
         feat["properties"]["population_5km"] = int(round(n.get("population_5km", 0) or 0))
         feat["properties"]["pharmacies_5km"] = int(n.get("pharmacies_5km", 0) or 0)
         ratio = n.get("pop_per_pharmacy_5km")
@@ -652,7 +654,12 @@ def render_metro_focus(config: dict) -> None:
         "pop_per_pharmacy_5km": "5 km Pop / Pharmacy:",
         "pharmacies_per_1000_5km": "5 km Pharmacies / 1,000:",
     }
-    sample = enriched_geojson["features"][0]["properties"] if enriched_geojson["features"] else {}
+    # Union the property keys across all features — checking only feature[0]
+    # silently drops fields whenever the first cell happens to lack one (e.g.
+    # a degenerate-geometry cell that misses the 5 km neighborhood join).
+    sample: set[str] = set()
+    for feat in enriched_geojson["features"]:
+        sample.update(feat.get("properties", {}).keys())
     seen, tooltip_fields = set(), []
     for f in candidates:
         if f not in seen and f in sample:
