@@ -23,6 +23,7 @@ from typing import Sequence
 
 import folium
 from folium.plugins import MarkerCluster
+import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -227,6 +228,185 @@ def _cached_grid_population(metro_key: str, pop_cache_path: str,
 
 
 # --------------------------------------------------------------------------------------
+# 5 km neighborhood metrics (grid view only)
+# --------------------------------------------------------------------------------------
+#
+# For each grid cell we expose four extra access metrics built from the cells
+# *and* pharmacies within a 5 km radius of the cell's representative point:
+#
+#   population_5km           sum of cell populations whose centroid is ≤ 5 km away
+#   pharmacies_5km           count of pharmacies whose lat/lon is ≤ 5 km away
+#   pop_per_pharmacy_5km     population_5km / pharmacies_5km (NaN if zero pharmacies)
+#   pharmacies_per_1000_5km  pharmacies_5km / population_5km × 1,000
+#
+# Distance is computed with an equirectangular projection anchored at the
+# metro's mean cell latitude — well within sub-percent error at Malaysia's
+# 1°-7°N latitude band, and avoids pulling in scipy/sklearn.
+
+NEIGHBORHOOD_RADIUS_KM = 5.0
+_KM_PER_DEG_LAT = 111.32
+
+
+def _project_xy(lons: np.ndarray, lats: np.ndarray, ref_lat_rad: float) -> np.ndarray:
+    """Equirectangular projection to local kilometres around `ref_lat_rad`."""
+    km_per_deg_lon = _KM_PER_DEG_LAT * float(np.cos(ref_lat_rad))
+    return np.column_stack([lons * km_per_deg_lon, lats * _KM_PER_DEG_LAT])
+
+
+def _grid_cell_centroids(grid: dict) -> pd.DataFrame:
+    """Per-cell representative point. One row per feature."""
+    rows = []
+    for f in grid["features"]:
+        geom = shape(f["geometry"])
+        rp = geom.representative_point()
+        rows.append({
+            "cell_id": f["properties"]["cell_id"],
+            "lon": float(rp.x),
+            "lat": float(rp.y),
+        })
+    return pd.DataFrame(rows)
+
+
+@st.cache_data(show_spinner="Aggregating population within 5 km of each cell...")
+def _cached_population_5km(metro_key: str, grid_path: str, pop_path: str,
+                           radius_km: float = NEIGHBORHOOD_RADIUS_KM) -> pd.DataFrame:
+    """Cell→cell aggregate that depends only on the static grid + WorldPop CSV.
+
+    Cached by `metro_key` so it's computed once per page deploy and reused
+    across reruns regardless of the user's brand filter.
+    """
+    grid = json.loads(Path(grid_path).read_text(encoding="utf-8"))
+    centroids = _grid_cell_centroids(grid)
+
+    pop = pd.read_csv(pop_path)[["cell_id", "population"]] \
+        if Path(pop_path).exists() else pd.DataFrame(
+            {"cell_id": centroids["cell_id"], "population": 0})
+    df = centroids.merge(pop, on="cell_id", how="left")
+    df["population"] = df["population"].fillna(0).astype(float)
+
+    if df.empty:
+        return pd.DataFrame(columns=["cell_id", "population_5km"])
+
+    ref_lat_rad = float(np.deg2rad(df["lat"].mean()))
+    xy = _project_xy(df["lon"].to_numpy(), df["lat"].to_numpy(), ref_lat_rad)
+    pops = df["population"].to_numpy()
+
+    n = len(df)
+    pop_5km = np.zeros(n, dtype=float)
+    r2 = float(radius_km) ** 2
+
+    # Chunked broadcasting keeps peak memory bounded on the larger grids
+    # (Klang Valley has ~8.7 k cells → an n×n matrix would be ~610 MB at f64).
+    chunk = 200
+    for start in range(0, n, chunk):
+        end = min(start + chunk, n)
+        dx = xy[start:end, 0:1] - xy[None, :, 0]
+        dy = xy[start:end, 1:2] - xy[None, :, 1]
+        d2 = dx * dx + dy * dy
+        mask = d2 <= r2
+        pop_5km[start:end] = mask @ pops
+
+    return pd.DataFrame({
+        "cell_id": df["cell_id"].to_numpy(),
+        "lon": df["lon"].to_numpy(),
+        "lat": df["lat"].to_numpy(),
+        "population_5km": pop_5km,
+    })
+
+
+def _pharmacies_within_5km(centroids: pd.DataFrame,
+                            pharmacies: pd.DataFrame,
+                            radius_km: float = NEIGHBORHOOD_RADIUS_KM
+                            ) -> pd.Series:
+    """Per-cell pharmacy count within `radius_km`. Re-runs on every brand
+    filter change — fast enough that caching is unnecessary."""
+    if centroids.empty:
+        return pd.Series(dtype=int)
+    valid = pharmacies.dropna(subset=["latitude", "longitude"])
+    n = len(centroids)
+    if valid.empty:
+        return pd.Series(np.zeros(n, dtype=int), index=centroids["cell_id"].to_numpy())
+
+    ref_lat_rad = float(np.deg2rad(centroids["lat"].mean()))
+    cell_xy = _project_xy(centroids["lon"].to_numpy(),
+                           centroids["lat"].to_numpy(), ref_lat_rad)
+    pharm_xy = _project_xy(valid["longitude"].to_numpy(),
+                            valid["latitude"].to_numpy(), ref_lat_rad)
+
+    counts = np.zeros(n, dtype=int)
+    r2 = float(radius_km) ** 2
+    chunk = 500
+    for start in range(0, n, chunk):
+        end = min(start + chunk, n)
+        dx = cell_xy[start:end, 0:1] - pharm_xy[None, :, 0]
+        dy = cell_xy[start:end, 1:2] - pharm_xy[None, :, 1]
+        d2 = dx * dx + dy * dy
+        counts[start:end] = (d2 <= r2).sum(axis=1)
+
+    return pd.Series(counts, index=centroids["cell_id"].to_numpy(), name="pharmacies_5km")
+
+
+def compute_neighborhood_metrics(metro_key: str, grid_path: str, pop_path: str,
+                                  pharmacies: pd.DataFrame,
+                                  radius_km: float = NEIGHBORHOOD_RADIUS_KM
+                                  ) -> pd.DataFrame:
+    """Build the per-cell 5 km neighborhood frame.
+
+    Output columns: `cell_id, population_5km, pharmacies_5km,
+    pop_per_pharmacy_5km, pharmacies_per_1000_5km`.
+    """
+    pop_df = _cached_population_5km(metro_key, grid_path, pop_path, radius_km)
+    if pop_df.empty:
+        return pd.DataFrame(columns=[
+            "cell_id", "population_5km", "pharmacies_5km",
+            "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
+        ])
+
+    pharm_counts = _pharmacies_within_5km(
+        pop_df[["cell_id", "lon", "lat"]], pharmacies, radius_km
+    )
+    out = pop_df[["cell_id", "population_5km"]].copy()
+    out["pharmacies_5km"] = (
+        out["cell_id"].map(pharm_counts).fillna(0).astype(int)
+    )
+    out["pop_per_pharmacy_5km"] = np.where(
+        out["pharmacies_5km"] > 0,
+        out["population_5km"] / out["pharmacies_5km"],
+        np.nan,
+    )
+    pop_safe = out["population_5km"].replace(0, np.nan)
+    out["pharmacies_per_1000_5km"] = (
+        out["pharmacies_5km"] / pop_safe * 1_000
+    )
+    return out
+
+
+def _inject_neighborhood_props(geojson: dict, neighborhood: pd.DataFrame) -> dict:
+    """Stamp the 5 km metrics onto each feature's `properties` so the Folium
+    GeoJsonTooltip can read them directly."""
+    if neighborhood.empty:
+        return geojson
+    lookup = neighborhood.set_index("cell_id").to_dict(orient="index")
+    out = json.loads(json.dumps(geojson))
+    for feat in out["features"]:
+        cid = feat["properties"].get("cell_id")
+        n = lookup.get(cid)
+        if not n:
+            continue
+        feat["properties"]["population_5km"] = int(round(n.get("population_5km", 0) or 0))
+        feat["properties"]["pharmacies_5km"] = int(n.get("pharmacies_5km", 0) or 0)
+        ratio = n.get("pop_per_pharmacy_5km")
+        feat["properties"]["pop_per_pharmacy_5km"] = (
+            f"1 : {int(ratio):,}" if pd.notna(ratio) else "No pharmacy in 5 km"
+        )
+        per_1k = n.get("pharmacies_per_1000_5km")
+        feat["properties"]["pharmacies_per_1000_5km"] = (
+            round(float(per_1k), 3) if pd.notna(per_1k) else 0.0
+        )
+    return out
+
+
+# --------------------------------------------------------------------------------------
 # Page renderer
 # --------------------------------------------------------------------------------------
 
@@ -263,16 +443,29 @@ def render_metro_focus(config: dict) -> None:
     geography = st.sidebar.radio(
         "Geography", [GEO_DISTRICT, GEO_MUKIM, grid_geo_key], index=2,
     )
+    on_grid = (geography == grid_geo_key)
+    metric_options = [
+        "pop_per_pharmacy", "pharmacies_per_1000", "pharmacies_per_100k", "population",
+    ]
+    if on_grid:
+        # 5 km neighborhood metrics — only meaningful on the grid view, where
+        # each cell is small enough that the radius captures real intra-cell
+        # variation.
+        metric_options = [
+            "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
+        ] + metric_options
+    metric_labels = {
+        "pop_per_pharmacy": "Population per Pharmacy (lower = better)",
+        "pharmacies_per_1000": "Pharmacies per 1,000 residents",
+        "pharmacies_per_100k": "Pharmacies per 100k",
+        "population": "Total Population",
+        "pop_per_pharmacy_5km": "Population per Pharmacy within 5 km",
+        "pharmacies_per_1000_5km": "Pharmacies per 1,000 residents within 5 km",
+    }
     metric_choice = st.sidebar.radio(
-        "Choropleth metric",
-        ["pop_per_pharmacy", "pharmacies_per_1000", "pharmacies_per_100k", "population"],
-        index=1,
-        format_func=lambda x: {
-            "pop_per_pharmacy": "Population per Pharmacy (lower = better)",
-            "pharmacies_per_1000": "Pharmacies per 1,000 residents",
-            "pharmacies_per_100k": "Pharmacies per 100k",
-            "population": "Total Population",
-        }[x],
+        "Choropleth metric", metric_options,
+        index=0 if on_grid else 1,
+        format_func=lambda x: metric_labels[x],
     )
     basemap_name = st.sidebar.selectbox("Basemap", list(MAP_TILE_PROVIDERS), index=0)
 
@@ -329,6 +522,23 @@ def render_metro_focus(config: dict) -> None:
         pharmacies_f, geo_ctx
     )
 
+    # 5 km neighborhood metrics — computed only for the grid view.  The cell
+    # population aggregate is cached per metro; the pharmacy-radius pass
+    # re-runs on every brand-filter change.
+    if on_grid:
+        neighborhood = compute_neighborhood_metrics(
+            metro_key=config["cache_key"],
+            grid_path=config["grid_path"],
+            pop_path=config["pop_path"],
+            pharmacies=pharmacies_f,
+        )
+        metrics = metrics.merge(neighborhood, on="cell_id", how="left")
+        # Cells outside the cached grid (shouldn't happen) get safe defaults.
+        for col, fill in [("population_5km", 0.0), ("pharmacies_5km", 0)]:
+            if col in metrics.columns:
+                metrics[col] = metrics[col].fillna(fill)
+        enriched_geojson = _inject_neighborhood_props(enriched_geojson, neighborhood)
+
     # ---- Header + KPIs ----
     st.title(f"{config.get('icon','🗺️')} {config['name']} Pharmacy Access")
     st.caption(config.get("intro", ""))
@@ -370,18 +580,28 @@ def render_metro_focus(config: dict) -> None:
 
     bins = choropleth_bins(metric_choice, metrics[metric_choice])
     kw = {"threshold_scale": bins} if bins and len(bins) >= 3 else {}
+    # "Population per Pharmacy" (own-cell or 5 km) is a higher-is-worse ratio
+    # → red ramp; everything else is higher-is-better → green ramp.
+    fill_color = (
+        "YlOrRd"
+        if metric_choice in ("pop_per_pharmacy", "pop_per_pharmacy_5km")
+        else "YlGnBu"
+    )
+    legend_names = {
+        "pop_per_pharmacy": "Population per Pharmacy (lower = better)",
+        "pharmacies_per_1000": "Pharmacies per 1,000 residents",
+        "pharmacies_per_100k": "Pharmacies per 100k",
+        "population": "Population",
+        "pop_per_pharmacy_5km": "Population per Pharmacy within 5 km (lower = better)",
+        "pharmacies_per_1000_5km": "Pharmacies per 1,000 residents within 5 km",
+    }
     folium.Choropleth(
         geo_data=enriched_geojson, data=metrics,
         columns=[label_key, metric_choice],
         key_on=f"feature.properties.{label_key}",
-        fill_color="YlOrRd" if metric_choice == "pop_per_pharmacy" else "YlGnBu",
+        fill_color=fill_color,
         fill_opacity=0.65, line_opacity=0.4, nan_fill_color="lightgray",
-        legend_name={
-            "pop_per_pharmacy": "Population per Pharmacy (lower = better)",
-            "pharmacies_per_1000": "Pharmacies per 1,000 residents",
-            "pharmacies_per_100k": "Pharmacies per 100k",
-            "population": "Population",
-        }[metric_choice],
+        legend_name=legend_names[metric_choice],
         name="Choropleth", **kw,
     ).add_to(m)
 
@@ -394,12 +614,23 @@ def render_metro_focus(config: dict) -> None:
     if geography == grid_geo_key:
         candidates += ["parent_mukim", "district", "state"]
     candidates += ["population", "pharmacy_count", "pop_per_pharmacy", "pharmacies_per_1000"]
+    if on_grid:
+        # Within-cell population stays unchanged; the 5 km block adds the
+        # neighborhood context the user asked for.
+        candidates += [
+            "population_5km", "pharmacies_5km",
+            "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
+        ]
     aliases = {
         "cell_id": "Grid Cell:", "parent_mukim": "Mukim:",
         "mukim": "Mukim:", "district": "District:", "state": "State:",
         "population": "Population:", "pharmacy_count": "Pharmacies:",
         "pop_per_pharmacy": "Pop / Pharmacy:",
         "pharmacies_per_1000": "Pharmacies / 1,000:",
+        "population_5km": "Population within 5 km:",
+        "pharmacies_5km": "Pharmacies within 5 km:",
+        "pop_per_pharmacy_5km": "Pop / Pharmacy (5 km):",
+        "pharmacies_per_1000_5km": "Pharmacies / 1,000 (5 km):",
     }
     sample = enriched_geojson["features"][0]["properties"] if enriched_geojson["features"] else {}
     seen, tooltip_fields = set(), []
@@ -432,31 +663,114 @@ def render_metro_focus(config: dict) -> None:
     left, right = st.columns([3, 2])
     with left:
         st.subheader(f"📊 {scope_label} — worst-access first")
-        chart_df = (metrics.dropna(subset=["pop_per_pharmacy"])
-                           .sort_values("pop_per_pharmacy", ascending=False)
-                           .head(25))
-        color_col = "district" if "district" in chart_df.columns else (
-            "parent_mukim" if "parent_mukim" in chart_df.columns else None
-        )
-        fig = px.bar(
-            chart_df, x="pop_per_pharmacy", y=label_key,
-            color=color_col, orientation="h", height=520,
-            labels={"pop_per_pharmacy": "Population per Pharmacy", label_key: ""},
-        )
-        fig.update_layout(yaxis={"categoryorder": "total ascending"},
-                          margin=dict(l=10, r=10, t=10, b=10))
-        st.plotly_chart(fig, use_container_width=True)
+
+        if on_grid:
+            # Surface zero-pharmacy cells FIRST (ranked by population within
+            # 5 km), then served cells ranked by Population per Pharmacy
+            # within 5 km.  The bar's x-axis uses the 5 km ratio; for
+            # unserved cells we substitute population_5km so the bar still
+            # carries scale information.
+            df = metrics.copy()
+            df["unserved_5km"] = df["pharmacies_5km"] == 0
+            df["access_status"] = np.where(
+                df["unserved_5km"],
+                "No pharmacy in 5 km",
+                "Has pharmacy in 5 km",
+            )
+            df["worst_access_value"] = np.where(
+                df["unserved_5km"],
+                df["population_5km"],
+                df["pop_per_pharmacy_5km"],
+            )
+            chart_df = df.sort_values(
+                ["unserved_5km", "worst_access_value"],
+                ascending=[False, False],
+            ).head(25)
+            fig = px.bar(
+                chart_df, x="worst_access_value", y=label_key,
+                color="access_status",
+                color_discrete_map={
+                    "No pharmacy in 5 km": "#c62828",
+                    "Has pharmacy in 5 km": "#ef6c00",
+                },
+                orientation="h", height=520,
+                hover_data={
+                    "population_5km": ":,.0f",
+                    "pharmacies_5km": True,
+                    "pop_per_pharmacy_5km": ":,.0f",
+                    "worst_access_value": False,
+                },
+                labels={
+                    "worst_access_value":
+                        "Pop / Pharmacy (5 km) — or population if 0 pharmacies",
+                    label_key: "",
+                    "access_status": "",
+                },
+            )
+            # Worst-access at the top: bar values mix two units (ratio for
+            # served cells, raw population for unserved), so we can't rely on
+            # `total ascending` — pin the y-axis order to our explicit ranking.
+            fig.update_layout(
+                yaxis={"categoryorder": "array",
+                       "categoryarray": chart_df[label_key].tolist()[::-1]},
+                margin=dict(l=10, r=10, t=10, b=10),
+                legend=dict(orientation="h", y=1.06),
+            )
+            st.plotly_chart(fig, use_container_width=True)
+            st.caption(
+                "Red bars are cells with **zero pharmacies within 5 km** — "
+                "ranked by the population that has no nearby access."
+            )
+        else:
+            chart_df = (metrics.dropna(subset=["pop_per_pharmacy"])
+                               .sort_values("pop_per_pharmacy", ascending=False)
+                               .head(25))
+            color_col = "district" if "district" in chart_df.columns else (
+                "parent_mukim" if "parent_mukim" in chart_df.columns else None
+            )
+            fig = px.bar(
+                chart_df, x="pop_per_pharmacy", y=label_key,
+                color=color_col, orientation="h", height=520,
+                labels={"pop_per_pharmacy": "Population per Pharmacy", label_key: ""},
+            )
+            fig.update_layout(yaxis={"categoryorder": "total ascending"},
+                              margin=dict(l=10, r=10, t=10, b=10))
+            st.plotly_chart(fig, use_container_width=True)
     with right:
         st.subheader(f"📋 {scope_label} table")
+        if on_grid:
+            sorted_metrics = metrics.assign(
+                _unserved=metrics["pharmacies_5km"] == 0,
+                _rank=np.where(
+                    metrics["pharmacies_5km"] == 0,
+                    metrics["population_5km"],
+                    metrics["pop_per_pharmacy_5km"],
+                ),
+            ).sort_values(["_unserved", "_rank"], ascending=[False, False]) \
+             .drop(columns=["_unserved", "_rank"])
+            fmt = {
+                "population": "{:,.0f}",
+                "pharmacy_count": "{:,.0f}",
+                "pop_per_pharmacy": "{:,.0f}",
+                "pharmacies_per_100k": "{:.2f}",
+                "pharmacies_per_1000": "{:.3f}",
+                "population_5km": "{:,.0f}",
+                "pharmacies_5km": "{:,.0f}",
+                "pop_per_pharmacy_5km": "{:,.0f}",
+                "pharmacies_per_1000_5km": "{:.3f}",
+            }
+        else:
+            sorted_metrics = metrics.sort_values(
+                "pop_per_pharmacy", ascending=False
+            )
+            fmt = {
+                "population": "{:,.0f}",
+                "pharmacy_count": "{:,.0f}",
+                "pop_per_pharmacy": "{:,.0f}",
+                "pharmacies_per_100k": "{:.2f}",
+                "pharmacies_per_1000": "{:.3f}",
+            }
         st.dataframe(
-            metrics.sort_values("pop_per_pharmacy", ascending=False)
-                   .reset_index(drop=True)
-                   .style.format({
-                       "population": "{:,.0f}",
-                       "pharmacy_count": "{:,.0f}",
-                       "pop_per_pharmacy": "{:,.0f}",
-                       "pharmacies_per_100k": "{:.2f}",
-                       "pharmacies_per_1000": "{:.3f}",
-                   }),
+            sorted_metrics.reset_index(drop=True).style.format(fmt),
             use_container_width=True, height=520,
         )
