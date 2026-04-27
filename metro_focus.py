@@ -246,6 +246,15 @@ def _cached_grid_population(metro_key: str, pop_cache_path: str,
 NEIGHBORHOOD_RADIUS_KM = 5.0
 _KM_PER_DEG_LAT = 111.32
 
+# Brands counted as "chain" pharmacies for the chain/independent split.
+# Anything else (kedai ubat, hospital pharmacies, single-outlet operators)
+# is treated as independent.
+CHAIN_BRANDS = frozenset({
+    "AA Pharmacy", "AM PM", "Alpro", "BIG Pharmacy", "Caring",
+    "Guardian", "Guardian Retail", "Healthlane", "PMG",
+    "Sunway Multicare", "Watsons",
+})
+
 
 def _project_xy(lons: np.ndarray, lats: np.ndarray, ref_lat_rad: float) -> np.ndarray:
     """Equirectangular projection to local kilometres around `ref_lat_rad`."""
@@ -317,15 +326,22 @@ def _cached_population_5km(metro_key: str, grid_path: str, pop_path: str,
 def _pharmacies_within_5km(centroids: pd.DataFrame,
                             pharmacies: pd.DataFrame,
                             radius_km: float = NEIGHBORHOOD_RADIUS_KM
-                            ) -> pd.Series:
-    """Per-cell pharmacy count within `radius_km`. Re-runs on every brand
-    filter change — fast enough that caching is unnecessary."""
+                            ) -> pd.DataFrame:
+    """Per-cell counts of total / chain / independent pharmacies within
+    `radius_km`. Re-runs on every brand filter change — fast enough that
+    caching is unnecessary."""
+    cols = ["cell_id", "pharmacies_5km", "chain_5km", "independent_5km"]
     if centroids.empty:
-        return pd.Series(dtype=int)
+        return pd.DataFrame(columns=cols)
     valid = pharmacies.dropna(subset=["latitude", "longitude"])
     n = len(centroids)
     if valid.empty:
-        return pd.Series(np.zeros(n, dtype=int), index=centroids["cell_id"].to_numpy())
+        return pd.DataFrame({
+            "cell_id": centroids["cell_id"].to_numpy(),
+            "pharmacies_5km": 0, "chain_5km": 0, "independent_5km": 0,
+        })
+
+    is_chain = valid["brand"].fillna("").isin(CHAIN_BRANDS).to_numpy()
 
     ref_lat_rad = float(np.deg2rad(centroids["lat"].mean()))
     cell_xy = _project_xy(centroids["lon"].to_numpy(),
@@ -333,17 +349,24 @@ def _pharmacies_within_5km(centroids: pd.DataFrame,
     pharm_xy = _project_xy(valid["longitude"].to_numpy(),
                             valid["latitude"].to_numpy(), ref_lat_rad)
 
-    counts = np.zeros(n, dtype=int)
+    total = np.zeros(n, dtype=int)
+    chain = np.zeros(n, dtype=int)
     r2 = float(radius_km) ** 2
     chunk = 500
     for start in range(0, n, chunk):
         end = min(start + chunk, n)
         dx = cell_xy[start:end, 0:1] - pharm_xy[None, :, 0]
         dy = cell_xy[start:end, 1:2] - pharm_xy[None, :, 1]
-        d2 = dx * dx + dy * dy
-        counts[start:end] = (d2 <= r2).sum(axis=1)
+        mask = (dx * dx + dy * dy) <= r2
+        total[start:end] = mask.sum(axis=1)
+        chain[start:end] = (mask & is_chain[None, :]).sum(axis=1)
 
-    return pd.Series(counts, index=centroids["cell_id"].to_numpy(), name="pharmacies_5km")
+    return pd.DataFrame({
+        "cell_id": centroids["cell_id"].to_numpy(),
+        "pharmacies_5km": total,
+        "chain_5km": chain,
+        "independent_5km": total - chain,
+    })
 
 
 def compute_neighborhood_metrics(metro_key: str, grid_path: str, pop_path: str,
@@ -352,23 +375,25 @@ def compute_neighborhood_metrics(metro_key: str, grid_path: str, pop_path: str,
                                   ) -> pd.DataFrame:
     """Build the per-cell 5 km neighborhood frame.
 
-    Output columns: `cell_id, population_5km, pharmacies_5km,
-    pop_per_pharmacy_5km, pharmacies_per_1000_5km`.
+    Output columns: `cell_id, population_5km, pharmacies_5km, chain_5km,
+    independent_5km, pop_per_pharmacy_5km, pharmacies_per_1000_5km`.
     """
     pop_df = _cached_population_5km(metro_key, grid_path, pop_path, radius_km)
     if pop_df.empty:
         return pd.DataFrame(columns=[
             "cell_id", "population_5km", "pharmacies_5km",
+            "chain_5km", "independent_5km",
             "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
         ])
 
     pharm_counts = _pharmacies_within_5km(
         pop_df[["cell_id", "lon", "lat"]], pharmacies, radius_km
     )
-    out = pop_df[["cell_id", "population_5km"]].copy()
-    out["pharmacies_5km"] = (
-        out["cell_id"].map(pharm_counts).fillna(0).astype(int)
+    out = pop_df[["cell_id", "population_5km"]].merge(
+        pharm_counts, on="cell_id", how="left"
     )
+    for col in ("pharmacies_5km", "chain_5km", "independent_5km"):
+        out[col] = out[col].fillna(0).astype(int)
     out["pop_per_pharmacy_5km"] = np.where(
         out["pharmacies_5km"] > 0,
         out["population_5km"] / out["pharmacies_5km"],
@@ -395,6 +420,16 @@ def _inject_neighborhood_props(geojson: dict, neighborhood: pd.DataFrame) -> dic
             continue
         feat["properties"]["population_5km"] = int(round(n.get("population_5km", 0) or 0))
         feat["properties"]["pharmacies_5km"] = int(n.get("pharmacies_5km", 0) or 0)
+        chain = int(n.get("chain_5km", 0) or 0)
+        indep = int(n.get("independent_5km", 0) or 0)
+        feat["properties"]["chain_independent_5km"] = (
+            f"{chain} chain : {indep} indep"
+            if (chain + indep) > 0 else "No pharmacy in 5 km"
+        )
+        feat["properties"]["chain_share_5km"] = (
+            f"{round(chain / (chain + indep) * 100)}%"
+            if (chain + indep) > 0 else "—"
+        )
         ratio = n.get("pop_per_pharmacy_5km")
         feat["properties"]["pop_per_pharmacy_5km"] = (
             f"1 : {int(ratio):,}" if pd.notna(ratio) else "No pharmacy in 5 km"
@@ -662,6 +697,7 @@ def render_metro_focus(config: dict) -> None:
     if on_grid:
         candidates += [
             "population_5km", "pharmacies_5km",
+            "chain_independent_5km", "chain_share_5km",
             "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
             "population",
         ]
@@ -678,6 +714,8 @@ def render_metro_focus(config: dict) -> None:
         "pharmacies_per_1000": "Pharmacies / 1,000:",
         "population_5km": "Population within 5 km:",
         "pharmacies_5km": "Pharmacies within 5 km:",
+        "chain_independent_5km": "5 km Chain : Independent:",
+        "chain_share_5km": "5 km Chain Share:",
         "pop_per_pharmacy_5km": "5 km Pop / Pharmacy:",
         "pharmacies_per_1000_5km": "5 km Pharmacies / 1,000:",
     }
