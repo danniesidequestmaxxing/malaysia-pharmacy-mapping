@@ -590,14 +590,19 @@ def render_metro_focus(config: dict) -> None:
 
     bins = choropleth_bins(metric_choice, metrics[metric_choice])
     kw = {"threshold_scale": bins} if bins and len(bins) >= 3 else {}
-    # Diverging green↔red so "good" reads green and "bad" reads red regardless
-    # of which direction the metric runs. `RdYlGn_r` reverses the palette so
-    # low values → green for lower-is-better ratios. `population` is a
-    # magnitude (not access quality) so it stays on a neutral sequential ramp.
+    # All ratio choropleths use the reversed RdYlGn ramp so the legend reads
+    # green→red left-to-right. Lower-is-better metrics (pop_per_pharmacy*) get
+    # green at the low end naturally; pharmacies_per_1000* is plotted in the
+    # same direction so the two ratio metrics have matching legends. Magnitude
+    # metrics (population) stay on a neutral sequential ramp.
     lower_is_better = metric_choice in ("pop_per_pharmacy", "pop_per_pharmacy_5km")
+    ratio_metric = metric_choice in (
+        "pop_per_pharmacy", "pop_per_pharmacy_5km",
+        "pharmacies_per_1000", "pharmacies_per_1000_5km",
+    )
     if metric_choice == "population":
         fill_color = "YlGnBu"
-    elif lower_is_better:
+    elif ratio_metric:
         fill_color = "RdYlGn_r"
     else:
         fill_color = "RdYlGn"
@@ -620,6 +625,27 @@ def render_metro_focus(config: dict) -> None:
         legend_name=legend_names[metric_choice],
         name="Choropleth", **kw,
     ).add_to(m)
+
+    # Mask cells whose own population is below the noise threshold — at 1 km
+    # resolution clipped fragments of mukim boundaries can land with single-
+    # digit populations that produce wildly skewed ratios. Render them gray
+    # over the choropleth so they read as "not enough signal" rather than as
+    # genuine outliers.
+    LOW_POP_THRESHOLD = 100
+    low_pop_features = [
+        f for f in enriched_geojson["features"]
+        if (f["properties"].get("population") or 0) < LOW_POP_THRESHOLD
+    ]
+    if low_pop_features:
+        folium.GeoJson(
+            {"type": "FeatureCollection", "features": low_pop_features},
+            name="Low-population cells (masked)",
+            style_function=lambda _: {
+                "fillColor": "#bdbdbd", "fillOpacity": 0.65,
+                "color": "#888", "weight": 0.4,
+            },
+            control=False,
+        ).add_to(m)
 
     # Tooltip fields dynamic per geography. Order is: location info →
     # neighborhood (5 km) block on grid view → own-cell block. Putting 5 km
