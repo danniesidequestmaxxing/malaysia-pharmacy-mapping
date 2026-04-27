@@ -70,6 +70,12 @@ compute_worldpop_per_district(
     load_malaysia_districts_geojson(),
     force_refresh=True)
 "
+
+# Pull pharmacies from Google Places API (New) for Johor and write
+# data/pharmacies_google_johor.csv (loaded automatically by load_pharmacies).
+# Cost: ~$25 in Places API calls. Requires Places API enabled in your GCP
+# project on the same key already used for Geocoding.
+python scripts/fetch_google_places_johor.py
 ```
 
 ### Caveats
