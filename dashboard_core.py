@@ -154,6 +154,7 @@ LOCAL_NPRA_GEOCODED_CSV = "data/pharmacies_npra_geocoded.csv"
 LOCAL_PMG_GEOCODED_CSV = "data/pharmacies_pmg_geocoded.csv"
 LOCAL_WATSONS_CSV = "data/pharmacies_watsons.csv"
 LOCAL_GUARDIAN_CSV = "data/pharmacies_guardian.csv"
+LOCAL_GOOGLE_PLACES_JOHOR_CSV = "data/pharmacies_google_johor.csv"
 LOCAL_WORLDPOP_PER_DISTRICT = "data/worldpop_per_district.csv"
 LOCAL_WORLDPOP_PER_MUKIM = "data/worldpop_per_mukim.csv"
 LOCAL_WORLDPOP_PER_ZONE = "data/worldpop_per_zone.csv"
@@ -195,6 +196,15 @@ def load_pharmacies(data_source: str,
                 pharmacy_only=False,
                 retail_brand_suffix=" Retail",
             ))
+        if Path(LOCAL_GOOGLE_PLACES_JOHOR_CSV).exists():
+            gpl = pd.read_csv(LOCAL_GOOGLE_PLACES_JOHOR_CSV)
+            # The CSV is already in our standard schema (see
+            # `scripts/fetch_google_places_johor.py`); no parsing needed.
+            # Brand defaults to "Other" so unmatched names land as
+            # independents in the chain/independent metric.
+            gpl["source"] = gpl.get("source", "Google Places").fillna("Google Places")
+            gpl["brand"] = gpl.get("brand", "Other").fillna("Other")
+            sources.append(gpl)
         if not sources:
             st.error(
                 f"No local pharmacy sources found — place the KMZ at {LOCAL_KMZ_PATH}, "
