@@ -471,8 +471,22 @@ _RANKER_TABLE_COLS = [
 ]
 
 
-def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict) -> None:
-    """Top-N grid cells by chosen metric, with row selection + CSV export."""
+def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict,
+                         focus_state_key: str | None = None,
+                         map_html_provider=None) -> None:
+    """Top-N grid cells by chosen metric, with row selection, "show on map"
+    focus mode, and CSV / HTML-map exports.
+
+    Parameters
+    ----------
+    focus_state_key
+        Streamlit session-state key that holds the list of cell_ids the map
+        is focused on. Buttons in this section read / write it.
+    map_html_provider
+        Zero-arg callable returning the standalone Folium HTML for the
+        currently rendered map. Called lazily — only if the user clicks
+        the map download button.
+    """
     st.subheader("📊 Grid cells — pick top N by metric")
 
     ctrl1, ctrl2, ctrl3 = st.columns([2, 1, 2])
@@ -545,12 +559,15 @@ def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict) -> 
             "pop_per_pharmacy_5km": "{:,.0f}",
             "pharmacies_per_1000_5km": "{:.3f}",
         }
+        # Reset row selection when the ranker params change — otherwise stale
+        # row indices point at different cells under the new ranking.
+        table_key = f"grid_ranker_table__{rank_by}__{direction}__{top_n}"
         try:
             event = st.dataframe(
                 ranked[cols].style.format(fmt, na_rep="—"),
                 use_container_width=True, height=540, hide_index=True,
                 on_select="rerun", selection_mode="multi-row",
-                key="grid_ranker_table",
+                key=table_key,
             )
             chosen_rows = list(event.selection.rows) if event and event.selection else []
         except TypeError:
@@ -561,21 +578,61 @@ def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict) -> 
             )
             chosen_rows = []
 
-        export_df = ranked.iloc[chosen_rows] if chosen_rows else ranked
-        export_label = (
-            f"📥 Download {len(export_df)} selected cell(s) as CSV"
-            if chosen_rows else
-            f"📥 Download all {len(export_df)} ranked cells as CSV"
-        )
-        st.download_button(
-            label=export_label,
-            data=export_df[cols].to_csv(index=False).encode("utf-8"),
-            file_name=(
-                f"{config['cache_key']}_{rank_by}_{direction.lower()}"
-                f"_top{top_n}.csv"
-            ),
-            mime="text/csv",
-            key="grid_ranker_download",
+    chosen_cell_ids = (
+        ranked.iloc[chosen_rows]["cell_id"].tolist() if chosen_rows else []
+    )
+    focus_active = bool(
+        focus_state_key and st.session_state.get(focus_state_key)
+    )
+
+    # ---- Action buttons: focus the map on the selection / reset to default ----
+    st.markdown("---")
+    btn1, btn2, _spacer = st.columns([2, 2, 6])
+    if btn1.button(
+        f"🎯 Show {len(chosen_cell_ids)} selected on map",
+        disabled=not chosen_cell_ids or focus_state_key is None,
+        key="grid_show_on_map",
+        use_container_width=True,
+    ):
+        st.session_state[focus_state_key] = chosen_cell_ids
+        st.rerun()
+    if btn2.button(
+        "↺ Reset map",
+        disabled=not focus_active,
+        key="grid_reset_map",
+        use_container_width=True,
+    ):
+        st.session_state.pop(focus_state_key, None)
+        st.rerun()
+
+    # ---- Downloads: CSV + HTML map ----
+    export_df = ranked.iloc[chosen_rows] if chosen_rows else ranked
+    csv_label = (
+        f"📥 Download {len(export_df)} selected cell(s) — CSV"
+        if chosen_rows else
+        f"📥 Download all {len(export_df)} ranked cells — CSV"
+    )
+    dl1, dl2 = st.columns(2)
+    dl1.download_button(
+        label=csv_label,
+        data=export_df[cols].to_csv(index=False).encode("utf-8"),
+        file_name=(
+            f"{config['cache_key']}_{rank_by}_{direction.lower()}"
+            f"_top{top_n}.csv"
+        ),
+        mime="text/csv",
+        key="grid_ranker_csv",
+        use_container_width=True,
+    )
+    if map_html_provider is not None:
+        suffix = "focus" if focus_active else "all"
+        dl2.download_button(
+            label=f"🗺️ Download current map — HTML ({suffix})",
+            data=map_html_provider(),
+            file_name=f"{config['cache_key']}_map_{suffix}.html",
+            mime="text/html",
+            key="grid_ranker_map_html",
+            use_container_width=True,
         )
 
 
@@ -793,6 +850,27 @@ def render_metro_focus(config: dict) -> None:
 
     # ---- Map ----
     st.subheader("🗺️ Map")
+
+    # Focus mode: when the user picks cells in the grid ranker and clicks
+    # "Show selected on map", we filter the geojson down to just those
+    # cells so the choropleth + tooltip + gray mask all render as a focused
+    # subset. Pharmacy markers are kept for context.
+    focus_state_key = f"{config['cache_key']}_focus_cells"
+    focus_cells = st.session_state.get(focus_state_key) if on_grid else None
+    if focus_cells:
+        focus_set = set(focus_cells)
+        enriched_geojson = {
+            "type": "FeatureCollection",
+            "features": [
+                f for f in enriched_geojson["features"]
+                if f["properties"].get("cell_id") in focus_set
+            ],
+        }
+        st.info(
+            f"🎯 Map focused on **{len(focus_cells)} cell(s)** picked from the "
+            "ranker below. Use the **Reset map** button to show all cells."
+        )
+
     center = config["sub_center"] if geography == grid_geo_key else config["center"]
     zoom = config["sub_zoom"] if geography == grid_geo_key else config["zoom"]
 
@@ -934,6 +1012,15 @@ def render_metro_focus(config: dict) -> None:
 
     # ---- Table + chart ----
     if on_grid:
-        _render_grid_ranker(metrics, label_key, config)
+        # Render the standalone HTML once, lazily — it's only shipped via the
+        # download button and we don't want to pay for it when the user never
+        # exports the map.
+        def _render_map_html() -> bytes:
+            return m.get_root().render().encode("utf-8")
+        _render_grid_ranker(
+            metrics, label_key, config,
+            focus_state_key=focus_state_key,
+            map_html_provider=_render_map_html,
+        )
     else:
         _render_polygon_table(metrics, label_key, scope_label)
