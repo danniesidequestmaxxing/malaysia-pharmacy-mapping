@@ -444,22 +444,32 @@ def render_metro_focus(config: dict) -> None:
         "Geography", [GEO_DISTRICT, GEO_MUKIM, grid_geo_key], index=2,
     )
     on_grid = (geography == grid_geo_key)
-    metric_options = [
-        "pop_per_pharmacy", "pharmacies_per_1000", "pharmacies_per_100k", "population",
-    ]
     if on_grid:
-        # 5 km neighborhood metrics — only meaningful on the grid view, where
-        # each cell is small enough that the radius captures real intra-cell
-        # variation.
+        # On the grid view the 5 km neighborhood metrics are the headline
+        # signal — promote them above the per-cell variants and drop the
+        # `per 100k` ratio (redundant at 1 km cell scale).
         metric_options = [
             "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
-        ] + metric_options
+            "pop_per_pharmacy", "pharmacies_per_1000", "population",
+        ]
+    else:
+        metric_options = [
+            "pop_per_pharmacy", "pharmacies_per_1000", "pharmacies_per_100k", "population",
+        ]
     metric_labels = {
-        "pop_per_pharmacy": "Population per Pharmacy (lower = better)",
-        "pharmacies_per_1000": "Pharmacies per 1,000 residents",
+        # On the grid the per-cell variants get the explicit "inside the cell"
+        # qualifier so they read clearly next to the 5 km options.
+        "pop_per_pharmacy": (
+            "Population per Pharmacy inside the cell (lower = better)"
+            if on_grid else "Population per Pharmacy (lower = better)"
+        ),
+        "pharmacies_per_1000": (
+            "Pharmacies per 1,000 residents inside the cell"
+            if on_grid else "Pharmacies per 1,000 residents"
+        ),
         "pharmacies_per_100k": "Pharmacies per 100k",
-        "population": "Total Population",
-        "pop_per_pharmacy_5km": "Population per Pharmacy within 5 km",
+        "population": "Cell Population" if on_grid else "Total Population",
+        "pop_per_pharmacy_5km": "Population per Pharmacy within 5 km (lower = better)",
         "pharmacies_per_1000_5km": "Pharmacies per 1,000 residents within 5 km",
     }
     metric_choice = st.sidebar.radio(
@@ -587,13 +597,11 @@ def render_metro_focus(config: dict) -> None:
         if metric_choice in ("pop_per_pharmacy", "pop_per_pharmacy_5km")
         else "YlGnBu"
     )
+    # Reuse the metric-radio labels for the choropleth legend so the two
+    # always agree (and inherit the on-grid "inside the cell" qualifiers).
     legend_names = {
-        "pop_per_pharmacy": "Population per Pharmacy (lower = better)",
-        "pharmacies_per_1000": "Pharmacies per 1,000 residents",
-        "pharmacies_per_100k": "Pharmacies per 100k",
-        "population": "Population",
-        "pop_per_pharmacy_5km": "Population per Pharmacy within 5 km (lower = better)",
-        "pharmacies_per_1000_5km": "Pharmacies per 1,000 residents within 5 km",
+        **metric_labels,
+        "population": "Cell Population" if on_grid else "Population",
     }
     folium.Choropleth(
         geo_data=enriched_geojson, data=metrics,
@@ -605,7 +613,10 @@ def render_metro_focus(config: dict) -> None:
         name="Choropleth", **kw,
     ).add_to(m)
 
-    # Tooltip fields dynamic per geography.
+    # Tooltip fields dynamic per geography. Order is: location info →
+    # neighborhood (5 km) block on grid view → own-cell block. Putting 5 km
+    # ahead of the cell totals keeps the headline access metric front-and-
+    # centre when hovering.
     candidates = [label_key]
     if "district" in geo_ctx["join_keys"] and "district" not in candidates:
         candidates.append("district")
@@ -613,14 +624,12 @@ def render_metro_focus(config: dict) -> None:
         candidates.append("state")
     if geography == grid_geo_key:
         candidates += ["parent_mukim", "district", "state"]
-    candidates += ["population", "pharmacy_count", "pop_per_pharmacy", "pharmacies_per_1000"]
     if on_grid:
-        # Within-cell population stays unchanged; the 5 km block adds the
-        # neighborhood context the user asked for.
         candidates += [
             "population_5km", "pharmacies_5km",
             "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
         ]
+    candidates += ["population", "pharmacy_count", "pop_per_pharmacy", "pharmacies_per_1000"]
     aliases = {
         "cell_id": "Grid Cell:", "parent_mukim": "Mukim:",
         "mukim": "Mukim:", "district": "District:", "state": "State:",
@@ -629,8 +638,8 @@ def render_metro_focus(config: dict) -> None:
         "pharmacies_per_1000": "Pharmacies / 1,000:",
         "population_5km": "Population within 5 km:",
         "pharmacies_5km": "Pharmacies within 5 km:",
-        "pop_per_pharmacy_5km": "Pop / Pharmacy (5 km):",
-        "pharmacies_per_1000_5km": "Pharmacies / 1,000 (5 km):",
+        "pop_per_pharmacy_5km": "5 km Pop / Pharmacy:",
+        "pharmacies_per_1000_5km": "5 km Pharmacies / 1,000:",
     }
     sample = enriched_geojson["features"][0]["properties"] if enriched_geojson["features"] else {}
     seen, tooltip_fields = set(), []
