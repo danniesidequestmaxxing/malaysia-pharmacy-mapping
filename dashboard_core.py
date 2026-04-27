@@ -424,9 +424,15 @@ def choropleth_bins(metric: str, series: pd.Series) -> list | None:
             return base
         return base + [float(np.ceil(hi))]
 
-    if metric in ("pop_per_pharmacy", "pop_per_pharmacy_5km"):
+    if metric == "pop_per_pharmacy":
         base = [0, 3000, 5000, 10000, 20000, 50000]
         return _cap(base, 50000) if hi <= 50000 else base + [int(np.ceil(hi / 1000) * 1000)]
+    if metric == "pop_per_pharmacy_5km":
+        # 5 km neighborhood ratios sit an order of magnitude above the per-cell
+        # version (e.g. 30k–120k typical). Spread the bin edges evenly across
+        # that range so the legend ticks don't pile up at the low end.
+        base = [0, 5000, 15000, 30000, 50000, 75000]
+        return _cap(base, 75000) if hi <= 75000 else base + [int(np.ceil(hi / 5000) * 5000)]
     if metric in ("pharmacies_per_1000", "pharmacies_per_1000_5km"):
         return _cap([0.0, 0.05, 0.1, 0.2, 0.3, 0.5, 1.0], 1.0)
     if metric == "pharmacies_per_100k":
