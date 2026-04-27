@@ -446,6 +446,7 @@ def render_metro_focus(config: dict) -> None:
         "Geography", [GEO_DISTRICT, GEO_MUKIM, grid_geo_key], index=2,
     )
     on_grid = (geography == grid_geo_key)
+    st.sidebar.caption(f"DEBUG · geography={geography!r} · grid_geo_key={grid_geo_key!r} · on_grid={on_grid}")
     if on_grid:
         # On the grid view the 5 km neighborhood metrics are the headline
         # signal — promote them above the per-cell variants and drop the
