@@ -647,23 +647,29 @@ def render_metro_focus(config: dict) -> None:
             control=False,
         ).add_to(m)
 
-    # Tooltip fields dynamic per geography. Order is: location info →
-    # neighborhood (5 km) block on grid view → own-cell block. Putting 5 km
-    # ahead of the cell totals keeps the headline access metric front-and-
-    # centre when hovering.
+    # Tooltip fields dynamic per geography. On the grid view we drop state
+    # (implied by the page focus) and the cell-level pharmacy metrics
+    # (redundant with the 5 km block); only the cell `population` stays so
+    # the user can sanity-check the 5 km neighborhood signal.
     candidates = [label_key]
     if "district" in geo_ctx["join_keys"] and "district" not in candidates:
         candidates.append("district")
-    if "state" in geo_ctx["join_keys"] and "state" not in candidates:
+    if not on_grid and "state" in geo_ctx["join_keys"] and "state" not in candidates:
         candidates.append("state")
     if geography == grid_geo_key:
-        candidates += ["parent_mukim", "district", "state"]
+        candidates.append("parent_mukim")
+        candidates.append("district")
     if on_grid:
         candidates += [
             "population_5km", "pharmacies_5km",
             "pop_per_pharmacy_5km", "pharmacies_per_1000_5km",
+            "population",
         ]
-    candidates += ["population", "pharmacy_count", "pop_per_pharmacy", "pharmacies_per_1000"]
+    else:
+        candidates += [
+            "population", "pharmacy_count",
+            "pop_per_pharmacy", "pharmacies_per_1000",
+        ]
     aliases = {
         "cell_id": "Grid Cell:", "parent_mukim": "Mukim:",
         "mukim": "Mukim:", "district": "District:", "state": "State:",
