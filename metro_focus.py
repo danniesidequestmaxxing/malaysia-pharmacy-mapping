@@ -1081,6 +1081,38 @@ def render_metro_focus(config: dict) -> None:
     # Stack under the zoom buttons (top-left) so it doesn't collide with the
     # choropleth legend, which Folium pins to the top-right corner.
     folium.LayerControl(collapsed=False, position="topleft").add_to(m)
+
+    # Hide the first and last numeric tick labels on every choropleth legend
+    # in the map. They sit at the extremes of the gradient bar and tend to
+    # crowd against (or overflow past) the bar's edges, especially when the
+    # cap value rounds up to a 5-digit number. The middle bins still carry
+    # all the threshold information.
+    m.get_root().html.add_child(folium.Element("""
+    <script>
+    (function(){
+      function trimLegendExtremes(){
+        document.querySelectorAll('.leaflet-control svg').forEach(function(svg){
+          var ticks = Array.prototype.filter.call(
+            svg.querySelectorAll('text'),
+            function(t){ return /^[\\d,.\\-+\\s]+$/.test((t.textContent||'').trim()); }
+          );
+          if (ticks.length >= 3) {
+            ticks[0].style.visibility = 'hidden';
+            ticks[ticks.length - 1].style.visibility = 'hidden';
+          }
+        });
+      }
+      if (document.readyState === 'complete') {
+        setTimeout(trimLegendExtremes, 200);
+      } else {
+        window.addEventListener('load', function(){
+          setTimeout(trimLegendExtremes, 200);
+        });
+      }
+    })();
+    </script>
+    """))
+
     st_folium(m, height=640, use_container_width=True, returned_objects=[])
 
     # ---- Table + chart ----
