@@ -35,7 +35,8 @@ from shapely.strtree import STRtree
 from dashboard_core import (
     MAP_TILE_PROVIDERS, DATA_SOURCE_LOCAL, GEO_DISTRICT, GEO_MUKIM,
     LOCAL_WORLDPOP_RAW_CSV,
-    load_pharmacies, load_geography, build_metrics, choropleth_bins,
+    load_pharmacies, load_geography, build_metrics,
+    rebuild_metrics_from_joined_pharmacies, choropleth_bins,
     make_pharmacy_marker,
 )
 from data_pipeline import (
@@ -313,7 +314,7 @@ def render_metro_focus(config: dict) -> None:
             geo_ctx["population"]["state"].isin(state_filter)
         ].copy()
 
-    pharmacies_joined, metrics, enriched_geojson = build_metrics(pharmacies_all, geo_ctx)
+    pharmacies_joined, _, _ = build_metrics(pharmacies_all, geo_ctx)
     pharmacies_joined = pharmacies_joined[
         pharmacies_joined["state"].isin(state_filter)
     ].copy()
@@ -324,6 +325,9 @@ def render_metro_focus(config: dict) -> None:
         "Brand / Chain", brand_options, default=brand_options,
     )
     pharmacies_f = pharmacies_joined[pharmacies_joined["brand"].isin(selected_brands)].copy()
+    metrics, enriched_geojson = rebuild_metrics_from_joined_pharmacies(
+        pharmacies_f, geo_ctx
+    )
 
     # ---- Header + KPIs ----
     st.title(f"{config.get('icon','🗺️')} {config['name']} Pharmacy Access")

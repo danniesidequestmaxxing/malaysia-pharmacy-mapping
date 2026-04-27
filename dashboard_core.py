@@ -345,6 +345,35 @@ def build_metrics(pharmacies: pd.DataFrame, geo_ctx: dict):
     return with_all, metrics, enriched
 
 
+@st.cache_data(show_spinner=False)
+def rebuild_metrics_from_joined_pharmacies(
+    pharmacies_with_keys: pd.DataFrame,
+    geo_ctx: dict,
+):
+    """Recompute metrics from an already-joined pharmacy frame.
+
+    Use this after UI filters (for example brand/chain filters) so the
+    choropleth, tooltips, and KPIs stay aligned with the visible markers
+    without repeating the spatial joins from `build_metrics`.
+    """
+    from data_pipeline import (
+        compute_polygon_metrics,
+        enrich_geojson_with_polygon_metrics,
+    )
+
+    metrics = compute_polygon_metrics(
+        pharmacies_with_keys,
+        geo_ctx["population"],
+        on=geo_ctx["join_keys"],
+    )
+    enriched = enrich_geojson_with_polygon_metrics(
+        geo_ctx["geojson"],
+        metrics,
+        on=geo_ctx["join_keys"],
+    )
+    return metrics, enriched
+
+
 # --------------------------------------------------------------------------------------
 # Pharmacy markers — classic Leaflet/Google-Maps-style pin (teardrop)
 # --------------------------------------------------------------------------------------

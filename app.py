@@ -25,7 +25,8 @@ from dashboard_core import (
     MALAYSIA_CENTER, DEFAULT_ZOOM, MAP_TILE_PROVIDERS, BRAND_COLORS,
     DATA_SOURCE_LOCAL, DATA_SOURCE_LIVE, DATA_SOURCE_MOCK, DATA_SOURCE_CUSTOM,
     GEO_DISTRICT, GEO_MUKIM, GEO_ZONE, GEO_CATCHMENT,
-    load_pharmacies, load_geography, build_metrics, choropleth_bins,
+    load_pharmacies, load_geography, build_metrics,
+    rebuild_metrics_from_joined_pharmacies, choropleth_bins,
     make_pharmacy_marker,
 )
 
@@ -92,7 +93,7 @@ geo_ctx = load_geography(
     pharmacies_for_catchment=pharmacies if geography == GEO_CATCHMENT else None,
     custom_geojson_path=geojson_path,
 )
-pharmacies_joined, metrics, enriched_geojson = build_metrics(pharmacies, geo_ctx)
+pharmacies_joined, metrics_all, _ = build_metrics(pharmacies, geo_ctx)
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("🔎 Filters")
@@ -116,7 +117,10 @@ selected_districts = st.sidebar.multiselect(
 )
 
 # Strata filter
-strata_options = sorted(metrics["strata"].dropna().unique()) if "strata" in metrics.columns else []
+strata_options = (
+    sorted(metrics_all["strata"].dropna().unique())
+    if "strata" in metrics_all.columns else []
+)
 selected_strata = st.sidebar.multiselect(
     "Strata (Urban/Rural)", strata_options, default=strata_options
 ) if strata_options else None
@@ -159,18 +163,6 @@ basemap_name = st.sidebar.selectbox(
 # --------------------------------------------------------------------------------------
 # Apply filters
 # --------------------------------------------------------------------------------------
-# State / district filters apply to pharmacies in every geography (both
-# columns are always stamped). For the choropleth metrics, only apply those
-# columns if the current geography actually exposes them.
-metric_mask = pd.Series(True, index=metrics.index)
-if "state" in metrics.columns:
-    metric_mask &= metrics["state"].isin(selected_states)
-if "district" in metrics.columns:
-    metric_mask &= metrics["district"].isin(selected_districts)
-if selected_strata and "strata" in metrics.columns:
-    metric_mask &= metrics["strata"].isin(selected_strata)
-metrics_f = metrics[metric_mask].copy()
-
 p_mask = pharmacies_joined["state"].isin(selected_states) & \
          pharmacies_joined["district"].isin(selected_districts)
 if selected_strata and "strata" in pharmacies_joined.columns:
@@ -178,6 +170,20 @@ if selected_strata and "strata" in pharmacies_joined.columns:
 if selected_brands and "brand" in pharmacies_joined.columns:
     p_mask &= pharmacies_joined["brand"].isin(selected_brands)
 pharmacies_f = pharmacies_joined[p_mask].copy()
+# Recompute polygon totals from the visible pharmacy set so KPIs and map
+# layers stay in sync with the brand filter.
+filtered_metrics, filtered_enriched_geojson = rebuild_metrics_from_joined_pharmacies(
+    pharmacies_f, geo_ctx
+)
+
+metric_mask = pd.Series(True, index=filtered_metrics.index)
+if "state" in filtered_metrics.columns:
+    metric_mask &= filtered_metrics["state"].isin(selected_states)
+if "district" in filtered_metrics.columns:
+    metric_mask &= filtered_metrics["district"].isin(selected_districts)
+if selected_strata and "strata" in filtered_metrics.columns:
+    metric_mask &= filtered_metrics["strata"].isin(selected_strata)
+metrics_f = filtered_metrics[metric_mask].copy()
 
 # Filter the GeoJSON features using whichever key identifies the current
 # geography (district / mukim / zone / catchment_id).
@@ -186,7 +192,7 @@ allowed_districts = set(metrics_f[label_key].dropna()) if label_key in metrics_f
 filtered_geojson = {
     "type": "FeatureCollection",
     "features": [
-        f for f in enriched_geojson["features"]
+        f for f in filtered_enriched_geojson["features"]
         if f["properties"].get(label_key) in allowed_districts
     ],
 }
