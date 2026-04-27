@@ -590,13 +590,21 @@ def render_metro_focus(config: dict) -> None:
 
     bins = choropleth_bins(metric_choice, metrics[metric_choice])
     kw = {"threshold_scale": bins} if bins and len(bins) >= 3 else {}
-    # "Population per Pharmacy" (own-cell or 5 km) is a higher-is-worse ratio
-    # → red ramp; everything else is higher-is-better → green ramp.
-    fill_color = (
-        "YlOrRd"
-        if metric_choice in ("pop_per_pharmacy", "pop_per_pharmacy_5km")
-        else "YlGnBu"
-    )
+    # Diverging green↔red so "good" reads green and "bad" reads red regardless
+    # of which direction the metric runs. `RdYlGn_r` reverses the palette so
+    # low values → green for lower-is-better ratios. `population` is a
+    # magnitude (not access quality) so it stays on a neutral sequential ramp.
+    lower_is_better = metric_choice in ("pop_per_pharmacy", "pop_per_pharmacy_5km")
+    if metric_choice == "population":
+        fill_color = "YlGnBu"
+    elif lower_is_better:
+        fill_color = "RdYlGn_r"
+    else:
+        fill_color = "RdYlGn"
+    # Cells with no pharmacy inside the 5 km radius are NaN on
+    # `pop_per_pharmacy_5km` — they're the *worst* access, not missing data, so
+    # render them in deep red rather than neutral gray.
+    nan_fill_color = "#67001f" if lower_is_better else "lightgray"
     # Reuse the metric-radio labels for the choropleth legend so the two
     # always agree (and inherit the on-grid "inside the cell" qualifiers).
     legend_names = {
@@ -608,7 +616,7 @@ def render_metro_focus(config: dict) -> None:
         columns=[label_key, metric_choice],
         key_on=f"feature.properties.{label_key}",
         fill_color=fill_color,
-        fill_opacity=0.65, line_opacity=0.4, nan_fill_color="lightgray",
+        fill_opacity=0.65, line_opacity=0.4, nan_fill_color=nan_fill_color,
         legend_name=legend_names[metric_choice],
         name="Choropleth", **kw,
     ).add_to(m)
@@ -665,7 +673,9 @@ def render_metro_focus(config: dict) -> None:
     for _, row in pharmacies_f.iterrows():
         make_pharmacy_marker(row).add_to(cluster)
 
-    folium.LayerControl(collapsed=False).add_to(m)
+    # Stack under the zoom buttons (top-left) so it doesn't collide with the
+    # choropleth legend, which Folium pins to the top-right corner.
+    folium.LayerControl(collapsed=False, position="topleft").add_to(m)
     st_folium(m, height=640, use_container_width=True, returned_objects=[])
 
     # ---- Table + chart ----
