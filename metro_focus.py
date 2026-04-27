@@ -641,8 +641,8 @@ def render_metro_focus(config: dict) -> None:
             {"type": "FeatureCollection", "features": low_pop_features},
             name="Low-population cells (masked)",
             style_function=lambda _: {
-                "fillColor": "#bdbdbd", "fillOpacity": 0.65,
-                "color": "#888", "weight": 0.4,
+                "fillColor": "#b0b0b0", "fillOpacity": 1.0,
+                "color": "#7a7a7a", "weight": 0.4,
             },
             control=False,
         ).add_to(m)
