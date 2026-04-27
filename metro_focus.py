@@ -500,23 +500,42 @@ def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict,
     direction = ctrl2.radio(
         "Show", ["Most", "Least"], horizontal=True, key="grid_direction",
     )
-    top_n = ctrl3.select_slider(
-        "Top N", options=[10, 20, 50, 100, 200], value=20, key="grid_top_n",
-    )
+    with ctrl3:
+        rng1, rng2 = st.columns(2)
+        rank_min = int(rng1.number_input(
+            "From rank #", min_value=1, value=1, step=1, key="grid_rank_min",
+        ))
+        rank_max = int(rng2.number_input(
+            "To rank #", min_value=1, value=20, step=1, key="grid_rank_max",
+        ))
+    if rank_max < rank_min:
+        rank_max = rank_min
 
     excluded_low_pop = int((metrics["population"] < _RANKER_MIN_CELL_POP).sum())
     eligible = metrics[metrics["population"] >= _RANKER_MIN_CELL_POP].copy()
-    ranked = eligible.dropna(subset=[rank_by]).sort_values(
+    sorted_eligible = eligible.dropna(subset=[rank_by]).sort_values(
         rank_by, ascending=(direction == "Least")
-    ).head(top_n).reset_index(drop=True)
+    ).reset_index(drop=True)
+    ranked = sorted_eligible.iloc[rank_min - 1: rank_max].reset_index(drop=True)
 
+    eligible_total = len(sorted_eligible)
+    caption_bits = []
     if excluded_low_pop:
-        st.caption(
+        caption_bits.append(
             f"Excluding {excluded_low_pop:,} cells with population < "
-            f"{_RANKER_MIN_CELL_POP} from the ranking."
+            f"{_RANKER_MIN_CELL_POP}."
         )
+    caption_bits.append(
+        f"{eligible_total:,} eligible cells in the ranking; "
+        f"showing ranks {rank_min:,}–{min(rank_max, eligible_total):,}."
+    )
+    st.caption(" ".join(caption_bits))
     if ranked.empty:
-        st.info("No eligible cells for the current filters.")
+        st.info(
+            f"No cells in this rank range. The eligible pool has "
+            f"{eligible_total:,} rows — adjust **From rank** / **To rank** "
+            "to land within it."
+        )
         return
 
     label, tickfmt, _ = _RANKER_METRICS[rank_by]
@@ -544,7 +563,7 @@ def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict,
         fig.update_xaxes(tickformat=tickfmt)
         st.plotly_chart(fig, use_container_width=True)
         st.caption(
-            f"Top {len(ranked)} cells by **{label}** "
+            f"Ranks {rank_min:,}–{rank_min + len(ranked) - 1:,} by **{label}** "
             f"({'highest' if direction == 'Most' else 'lowest'} first)."
         )
 
@@ -561,7 +580,10 @@ def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict,
         }
         # Reset row selection when the ranker params change — otherwise stale
         # row indices point at different cells under the new ranking.
-        table_key = f"grid_ranker_table__{rank_by}__{direction}__{top_n}"
+        table_key = (
+            f"grid_ranker_table__{rank_by}__{direction}"
+            f"__{rank_min}__{rank_max}"
+        )
         try:
             event = st.dataframe(
                 ranked[cols].style.format(fmt, na_rep="—"),
@@ -618,7 +640,7 @@ def _render_grid_ranker(metrics: pd.DataFrame, label_key: str, config: dict,
         data=export_df[cols].to_csv(index=False).encode("utf-8"),
         file_name=(
             f"{config['cache_key']}_{rank_by}_{direction.lower()}"
-            f"_top{top_n}.csv"
+            f"_rank{rank_min}-{rank_max}.csv"
         ),
         mime="text/csv",
         key="grid_ranker_csv",
