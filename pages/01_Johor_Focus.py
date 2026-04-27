@@ -11,22 +11,28 @@ CONFIG = {
     "icon": "🔍",
     "center": [2.0, 103.3],
     "zoom": 9,
-    "sub_center": [1.55, 103.7],   # JB Bahru city centre
-    "sub_zoom": 11,
+    # State-level zoom on the grid view too — the grid now covers every
+    # Johor mukim, not just the JB urban belt.
+    "sub_center": [2.0, 103.3],
+    "sub_zoom": 8,
     "state_filter": ["Johor"],
-    "strategy": "mukim_names",
-    "target_names": (
-        "Mukim Tebrau", "Mukim Plentong", "Mukim Pulai",
-        "Mukim Kota Tinggi", "Mukim Senai", "Mukim Kulai",
-        "Bandar Johor Bahru", "Bandar Kulai",
+    # If the committed grid file is missing, the runtime falls back to
+    # rebuilding from these districts so the rebuild still produces a
+    # state-wide grid.
+    "strategy": "mukim_districts",
+    "target_districts": (
+        "Batu Pahat", "Johor Bahru", "Kluang", "Kota Tinggi",
+        "Kulaijaya", "Ledang", "Mersing", "Muar", "Pontian", "Segamat",
     ),
-    "cache_key": "v3_8mukim_1km",
-    "grid_path": "data/submukim_grid_johor.geojson",
-    "pop_path": "data/worldpop_per_submukim_v3_8mukim_1km.csv",
+    "cache_key": "johor_full_1km",
+    "grid_path": "data/submukim_grid_johor_full.geojson",
+    "pop_path": "data/worldpop_per_submukim_johor_full_1km.csv",
     "intro": (
-        "All metrics filtered to Johor state. Switch to **Sub-Mukim Grid** "
-        "for 1 km resolution across the Bandar JB / Tebrau / Plentong / "
-        "Pulai / Kota Tinggi / Senai / Kulai belt."
+        "Sub-Mukim Grid now covers **every district in Johor** at 1 km "
+        "resolution. The JB urban belt (Bandar JB / Tebrau / Plentong / "
+        "Pulai / Kota Tinggi / Senai / Kulai) keeps its high-resolution "
+        "1 km WorldPop population; the rest of the state distributes the "
+        "per-mukim WorldPop total uniformly across cells."
     ),
 }
 
