@@ -103,6 +103,18 @@ CHAIN_QUERIES = [
 ]
 
 OUTPUT_CSV = Path("data/pharmacies_google_johor.csv")
+EXCLUDE_FILE = Path("data/pharmacies_google_johor_excluded.txt")
+
+
+def _load_excludes(path: Path = EXCLUDE_FILE) -> set[str]:
+    if not path.exists():
+        return set()
+    out: set[str] = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        stripped = line.split("#", 1)[0].strip()
+        if stripped:
+            out.add(stripped)
+    return out
 
 
 def _infer_brand(name: str) -> str:
@@ -245,6 +257,10 @@ def main() -> None:
     minx, miny, maxx, maxy = land.bounds
     region_bias = (miny, minx, maxy, maxx)
 
+    excludes = _load_excludes()
+    if excludes:
+        print(f"Loaded {len(excludes)} exclude IDs from {EXCLUDE_FILE}")
+
     by_id: dict[str, dict] = {}
 
     if not args.skip_nearby:
@@ -256,7 +272,8 @@ def main() -> None:
             new = 0
             for p in results:
                 rec = _normalize_place(p)
-                if rec and rec["pharmacy_id"] not in by_id:
+                if rec and rec["pharmacy_id"] not in by_id \
+                        and rec["pharmacy_id"] not in excludes:
                     by_id[rec["pharmacy_id"]] = rec
                     new += 1
             if i % 25 == 0 or i == len(points):
@@ -271,7 +288,8 @@ def main() -> None:
             new = 0
             for p in results:
                 rec = _normalize_place(p)
-                if rec and rec["pharmacy_id"] not in by_id:
+                if rec and rec["pharmacy_id"] not in by_id \
+                        and rec["pharmacy_id"] not in excludes:
                     by_id[rec["pharmacy_id"]] = rec
                     new += 1
             print(f"  '{q}': {len(results)} results, +{new} new")

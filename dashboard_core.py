@@ -155,6 +155,22 @@ LOCAL_PMG_GEOCODED_CSV = "data/pharmacies_pmg_geocoded.csv"
 LOCAL_WATSONS_CSV = "data/pharmacies_watsons.csv"
 LOCAL_GUARDIAN_CSV = "data/pharmacies_guardian.csv"
 LOCAL_GOOGLE_PLACES_JOHOR_CSV = "data/pharmacies_google_johor.csv"
+LOCAL_GOOGLE_PLACES_JOHOR_EXCLUDE = "data/pharmacies_google_johor_excluded.txt"
+
+
+def _load_pharmacy_id_excludes(path: str) -> set[str]:
+    """Read a one-id-per-line excludes file. Comments after `#` are
+    stripped; blank lines and full-comment lines are ignored. Returns
+    an empty set if the file's missing."""
+    p = Path(path)
+    if not p.exists():
+        return set()
+    out: set[str] = set()
+    for line in p.read_text(encoding="utf-8").splitlines():
+        stripped = line.split("#", 1)[0].strip()
+        if stripped:
+            out.add(stripped)
+    return out
 LOCAL_WORLDPOP_PER_DISTRICT = "data/worldpop_per_district.csv"
 LOCAL_WORLDPOP_PER_MUKIM = "data/worldpop_per_mukim.csv"
 LOCAL_WORLDPOP_PER_ZONE = "data/worldpop_per_zone.csv"
@@ -198,6 +214,10 @@ def load_pharmacies(data_source: str,
             ))
         if Path(LOCAL_GOOGLE_PLACES_JOHOR_CSV).exists():
             gpl = pd.read_csv(LOCAL_GOOGLE_PLACES_JOHOR_CSV)
+            # Drop rows manually qualified as not-actually-pharmacies.
+            excludes = _load_pharmacy_id_excludes(LOCAL_GOOGLE_PLACES_JOHOR_EXCLUDE)
+            if excludes and "pharmacy_id" in gpl.columns:
+                gpl = gpl[~gpl["pharmacy_id"].isin(excludes)].copy()
             # The CSV is already in our standard schema (see
             # `scripts/fetch_google_places_johor.py`); no parsing needed.
             # Brand defaults to "Other" so unmatched names land as

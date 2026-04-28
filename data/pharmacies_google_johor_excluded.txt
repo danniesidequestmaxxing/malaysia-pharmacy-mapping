@@ -1,0 +1,20 @@
+# Google Places `pharmacy_id`s that we've manually qualified as
+# NOT-actually-pharmacies. Honored by:
+#   * scripts/fetch_google_places_johor.py — drops these from new sweeps
+#   * dashboard_core.load_pharmacies         — drops these at app load
+#
+# Format: one entry per line. Comments start with `#` or follow ` # ` on
+# a value line. Blank lines OK.
+#
+# Add new exclusions by appending to this file. To get the pharmacy_id of
+# a row in `data/pharmacies_google_johor_audit_other.csv`, just copy the
+# leftmost column.
+
+ChIJXc6QJehv2jERZomVwrYcR88  # Baterikereta.com - Taman Adda Heights
+ChIJq1p6GQNa0DERIGodHPnYKRM  # Best Can Marketing SDN BHD
+ChIJR1i0xxrb0TERZybCD7vT4So  # Bird Nest
+ChIJO_-ra7122jERTCNEPNUfXL0  # Blitz Environment Services Sdn Bhd
+ChIJ_Y4SuD_TzzERfw6wZIby_no  # Bodybuilding Enterprise
+ChIJXfW4xshz2jERC_NDilHdfKg  # Da Tong Healthcare Centre
+ChIJJ66jZwAL2jERyHFH1hURv44  # EYS STORE
+ChIJg7T_An952jERyuiaLWiV-Ko  # Farhanie Healthcare Enterprise

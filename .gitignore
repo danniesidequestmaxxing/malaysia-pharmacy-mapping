@@ -69,3 +69,4 @@ Thumbs.db
 !data/worldpop_per_submukim_johor_full_1km.csv
 !data/pharmacies_google_johor.csv
 !data/pharmacies_google_johor_audit_other.csv
+!data/pharmacies_google_johor_excluded.txt
