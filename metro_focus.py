@@ -1091,6 +1091,7 @@ def render_metro_focus(config: dict) -> None:
     <script>
     (function(){
       function trimLegendExtremes(){
+        var hidAny = false;
         document.querySelectorAll('.leaflet-control svg').forEach(function(svg){
           var ticks = Array.prototype.filter.call(
             svg.querySelectorAll('text'),
@@ -1099,16 +1100,29 @@ def render_metro_focus(config: dict) -> None:
           if (ticks.length >= 3) {
             ticks[0].style.visibility = 'hidden';
             ticks[ticks.length - 1].style.visibility = 'hidden';
+            hidAny = true;
           }
         });
+        return hidAny;
       }
-      if (document.readyState === 'complete') {
-        setTimeout(trimLegendExtremes, 200);
-      } else {
-        window.addEventListener('load', function(){
-          setTimeout(trimLegendExtremes, 200);
-        });
-      }
+      // Folium's choropleth legend renders asynchronously after the map
+      // loads — sometimes well after `load`. Poll every 100ms for up to
+      // 10s, and keep going for a few extra ticks after the first hit so
+      // late-arriving legends also get trimmed.
+      var attempts = 0;
+      var hits = 0;
+      var interval = setInterval(function(){
+        attempts++;
+        if (trimLegendExtremes()) hits++;
+        if ((hits >= 3 && attempts > 5) || attempts > 100) {
+          clearInterval(interval);
+        }
+      }, 100);
+      // Also catch any later DOM mutations (e.g. when Streamlit re-runs
+      // the map iframe but legend SVG re-renders inside it).
+      var obs = new MutationObserver(function(){ trimLegendExtremes(); });
+      obs.observe(document.body, {childList: true, subtree: true});
+      setTimeout(function(){ obs.disconnect(); }, 15000);
     })();
     </script>
     """))
