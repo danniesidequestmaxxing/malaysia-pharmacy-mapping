@@ -84,7 +84,7 @@ BRAND_RULES = [
     (r"\baa\s*pharmacy\b",       "AA Pharmacy"),
     (r"\bam\s*pm\b",              "AM PM"),
     (r"\balpro\b",                "Alpro"),
-    (r"\bhealthlane\b",           "Healthlane"),
+    (r"\bhealth\s*lane\b",        "Healthlane"),
     (r"\bpmg\b",                  "PMG"),
     (r"\bsunway\s*multicare\b",  "Sunway Multicare"),
 ]
