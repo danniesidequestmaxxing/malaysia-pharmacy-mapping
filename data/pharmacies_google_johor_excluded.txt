@@ -18,3 +18,114 @@ ChIJ_Y4SuD_TzzERfw6wZIby_no  # Bodybuilding Enterprise
 ChIJXfW4xshz2jERC_NDilHdfKg  # Da Tong Healthcare Centre
 ChIJJ66jZwAL2jERyHFH1hURv44  # EYS STORE
 ChIJg7T_An952jERyuiaLWiV-Ko  # Farhanie Healthcare Enterprise
+ChIJ44XdHrdt0DERV305zC2sJ3k  # Pathology & Clinical Laboratory (M) Sdn. Bhd. (Pathlab)
+ChIJg5nHDgBj0DERX0sFnSGuiec  # Penatian setia
+ChIJ2aVCuOMbxTER-d2jmo_l3q0  # Penawar Pharmacy Tioman
+ChIJd_ST9qFq2jERRbhoKpRP-s8  # Penawar Resdung
+ChIJc4YQ7ol72jER72QUu7QfOLo  # Pengedar Shaklee Bandar Putra Fatimah
+ChIJlZgqKr5R0DERYGpiTpdbJkg  # Pengedar Shaklee Tongkang Pechah
+ChIJTWVQH_IV2jERfnstYUEvP9U  # Perniagaan Ban Heo
+ChIJOX6TpKJ22jERL7nCLLFpFNc  # Perniagaan Kang Yuen
+ChIJIauQx0QV2jERQscPMuPIkJk  # Perniagaan Pt Tunas Budi
+ChIJLZEvkxwL2jERn9l1AWhmd7E  # Perniagaan Ubat Heng Long
+ChIJeZzUDy9s0DERXNAMhcHZkAE  # Perniagaan Yuh Feng
+ChIJ80V7Ogl02jERGcQ0ZzQ-F5o  # Perubatan Cina Lim Han Lin
+ChIJEWlaANVu2jERU4MlQ_5Zbhk  # Pesaka
+ChIJKTlRR75y2jER8TRPnLFjVkg  # Pet Paradise Clinic
+ChIJ5QrFtovJ0TERF7UxlR7vQyg  # 万春济药行
+ChIJz0EBIaNw2jERMHACqacEuKQ  # 中和堂
+ChIJBRVToalj0DERaADVeM0prYw  # 仁生堂
+ChIJQw-KK8lt0DERQTdstCEgi74  # 保康参茸药行
+ChIJbf5bKQDTzzERuhcRA55Hz80  # 元和堂药材贸易
+ChIJnbNH5tKf0DERbjfntTxwQN4  # 北乾那那药店
+ChIJKZpytDhz2jEROUDV6Lthy60  # 双许诊所
+ChIJaffZsES50TERgsFTewqAiLA  # 吉打中药店
+ChIJv3n4_6QX0DERNRPWwHS016k  # 同和参茸药行 Thong Hoe Medical Store
+ChIJ6VTiVgBB2jER3vcfZ4nBaQU  # 天益壽中医药行
+ChIJ-d3UsiK70TERP-6RvqHNR5o  # 廖艾琦中医诊所
+ChIJw78CzENu2jERyDbqmOvlpRA  # 慧德安参茸药行(分行)
+ChIJF6K6GYqx0TER7gnRiN0o8Lk  # 我
+ChIJ2_71Dy9s0DERE25uX_YaEmo  # 新裕丰蔘茸海味药行
+ChIJj4DDOFVj0DERbvvUKYM3WwE  # 新邦慈慧精舍
+ChIJ_aVKNNpX0DERbX3DLzAH1lc  # 杏福堂中医诊所 HAPPINESS TRADITIONAL CHINESE MEDICINE CENTRE
+ChIJycx_bjBt2jERk55lV4zms7o  # 栢龄药材店凉茶铺 Kedai Ubat Berin - Taman Pelangi
+ChIJ44rsO3iY0DERmDHAjkb4iN8  # 祖传白鹤拳术医药所
+ChIJc-9njkhy2jERQL3iv_AiXMY  # 罗伟忠推拿中医医务所 TABIB URUT DAN UBAT TRADISI CINA
+ChIJRenpDSZQ0DER9GfisZK14q8  # 育虹草药园
+ChIJGTQRodWf0DERaxxOkqay3Ew  # 达安参茸药行
+ChIJ_15r9rif0DERVNPQe7AlEz4  # 颜朝基传统医药中心
+ChIJnQntPUhQ0DERD2HRoBsVbeA  # 龙山中西药行 （kedai ubat long shan）
+ChIJrwBBYZhj0DERUxq7u9CTKXQ  # Fo Heng Enterprise Sdn Bhd
+ChIJYW90KdEk0DERRLu7opGA2kk  # Foo Sang Trading
+ChIJ4RoNXg8G2jERUxuZGwKA9KA  # Formula Pte Ltd
+ChIJQ5dN5N0K2jERgWvmGZ9KS70  # Fu Sin Nourishing House
+ChIJMZRlOd5q2jERR39Ez06TEx8  # GNA
+ChIJzQKgAABw0DERqF6t0EmNF88  # Ginseng Biotech Sdn Bhd
+ChIJ874mVeaZ0DERS5Q-D1w82DI  # HAIDAH BEAUTY SHOP
+ChIJrwLuAdQM2jER4Bzoh8RuanI  # Iwaki
+ChIJM45SWQApzjERK0kAj0rU8ek  # Jementah Healthcare
+ChIJNz2BHmJ22jERItlysd2SsA4  # Jim Fong
+ChIJ9QqtCXiY0DERGg4NSK6gLco  # KEDAI UBAT CHAY SENG 济星参茸药行
+ChIJuYSfFmBN0DERcPRCXvhQn_Y  # KHAI ZAM BURGER
+ChIJjywNg4lB2jERLh1OGTNjcqg  # KLINIK DR HUDA
+ChIJCT3T8kUz2jERDm_6KTIiTaE  # KPH Care
+ChIJCarLddxR0DERgPAvErYmVUo  # Kedai Shaklee Batu Pahat - Ainun
+ChIJC7ZTYAa50TERHyXOjZnjy0o  # Klinik Haiwan Alby
+ChIJKTxVyi9p0DERZvKfpeTemxQ  # Klinik Rawatan Islam Nur Isyraq
+ChIJ9a23jy5A2jERci5-QvUqPOk  # Klinik Scientex Dr Salmah
+ChIJZVlZOIun0DERddxicXM9Thw  # Klinik desa
+ChIJYVc95cxt0DERRMb0yfQ4De8  # Koh Xing Trading 辜氏祖传跌打骨伤中医 TABIB CINA TRADITIONAL KOH
+ChIJAyiRz9hq2jER79jkpxO-9Uc  # Kumpulan Perubatan Penawar
+ChIJPWQTuUVz2jERZqcOgrcc2_c  # LAM FONG ENTERPRISE SDN. BHD. 南方补品药行
+ChIJwSxGTgpt0DERfOKopbbXbJs  # LIT GEAP TRADING
+ChIJX4OzQQDB2jERgX33zWBrF_8  # Letak dan Ambil Klinik Kesihatan Tenggaroh 02
+ChIJ7f1zLADJ2jERn5avq1EayMQ  # Letak dan Ambil Klinik Kesihatan Tenggaroh 02
+ChIJ5b4Vat952jER44Z7h-W52Uc  # Lian Heng
+ChIJP4DrUSlR0DERLakZNoPyETg  # Long Zhen Enterprise Sdn Bhd
+ChIJw0CyWkAN2jER3Z_VvHRmfkY  # Lotus herb center 로터스한의원
+ChIJoec2KRvTzzERFdjZRkaO7OY  # Lovy Dispensaries Segamat
+ChIJmWVYOhxa0DERHGpszNDLkZk  # Low Scinentific Sdn. Bhd.
+ChIJ8aSH3oJr2jERZmNZGFbdLzg  # Luen Fook Medicine Sdn. Bhd.
+ChIJf5KDBF1H0DER1ItQ3x2mhNc  # MEIMEI 88 ENTERPRISE
+ChIJf9xhdARc0DERk9nbRhkjqE0  # Makmal Loji Pandu Biodiesel, UTHM
+ChIJNT4kNABB2jERan2EFDuDNg4  # Malaysia
+ChIJAzouewBLxTERekbSvGV4-iA  # Mersing
+ChIJY__Ejmdh2jERgKPiOVXvIwM  # Minyak lintah
+ChIJ93AvCABF2jERLdhVvLmvhzc  # Muzalia enterprise
+ChIJnzswKDRf2jERx6DzKb1QNHc  # Nani
+ChIJW60VBABr2jERxnRMymepI1A  # Nurha Eskayvie
+ChIJgYpRvChs0DERro6L8DC2M_8  # Poh Ming Tong Medical Store
+ChIJg_ate3iY0DEROp2IboRy-Es  # Procuci Pontian
+ChIJ-9MkW1Zf0DERfb02LxqQtLA  # Pusat Rawatan Homeopathy Homeomed - Parit Raja
+ChIJzdYVH9Zw2jERjeb3CEmfCvo  # Pusat Rawatan Seisi Alam
+ChIJ_dN5btdw2jEREDNec6doHWY  # Pusat Tabib Ubat Cina Gau Tiow Kee
+ChIJ91ivXqp52jERuc7OCL3vbTU  # Rawatan Tabib Tian Chin
+ChIJdQNnfwBx2jERtxlbsMXoilk  # Reban bintak kempas
+ChIJX3wkQ59e2jERu_GNNyCwYuc  # Rokenrol Airbrush Studio. Gondrong Keren
+ChIJQ5YP4sZ32jERqYn63B5P2iA  # SIFU URUT
+ChIJGafapem30TER06WqTUrb35k  # SIN CHEAP HONG TRADING 肥料&农药用品
+ChIJ6fYN7aC52jERShhMHTDPCBs  # SNT Agro Farm
+ChIJn7CW8ZtLxTERvV2XZrSevLE  # STF Medic Enterprise
+ChIJ3z3-b-Tb0TERXMJJankhx9A  # STOKIS C2JOY BATU PAHAT
+ChIJLVhhYdVs2jERGxGX5821yfE  # Seng Seng tranditional medicine
+ChIJNSDtUy1v2jERjwZ9_I5_FRA  # Sengse Pohkian
+ChIJATtNWS110DERD6hOXXXi1VM  # Shaklee Kahang Timur
+ChIJKbkGLwBZ2jERWxzblCL4uz4  # Simpang masuk pot dadah
+ChIJAQAAAMCO0DERN6rmmJGcE8Y  # Sinar Permata Pontian
+ChIJPZ8LApZ22jERYyxsRE0vbZ4  # Sri Tanjung
+ChIJuaWN_jGB2jERgjOCH4JFFEs  # Sri Tanjung Anggerik
+ChIJqzyb4U8V2jERssxl7WuJq38  # Tegal Trading
+ChIJNffDbwB70DERBJQiNfIaBCM  # Tol tiram
+ChIJqWViT-l52jERse3kFHSimgk  # Tong Huat
+ChIJR1UFhTNz2jER0-xKv-x6S_k  # Traditional Massage Center Top One Massage
+ChIJP6Rzy7Zt0DERaOgHStI8L78  # WENG HENG GINSENG MEDICAL STORE S/B
+ChIJJ2XB9e5P0DERnBsQ47eZdDw  # Wansern Biotechnology
+ChIJ3VcREhty2jERUZKnF6eWdLk  # Yong Lian Medical Hall
+ChIJr81bX5xLxTERJMd7ZUv0f-8  # Yuen Sen For Medicine Shop
+ChIJMYbtu7YM2jERTAxe46ZJnSQ  # Zhang Choon
+ChIJFT4OUABr2jERNK3W7Kb6x0A  # home rahul
+ChIJDyc-cwDz0DERqhHYiVgCoyQ  # kampung sungai punggur laut timur
+ChIJ-3I6IhYzzjERppUSvNAiqnM  # kedai ubat ksm ho(富和药行)
+ChIJ7yHtqn9p0DERa02wp-tGuq0  # sheng heng
+ChIJ_XOgegBX0DER0yTNVFWxwTM  # taman soga
+ChIJYXaJKzyZ0DERpAQXcRSxcgM  # 永和棧百货药行
