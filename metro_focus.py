@@ -1092,37 +1092,33 @@ def render_metro_focus(config: dict) -> None:
     (function(){
       function trimLegendExtremes(){
         var hidAny = false;
-        document.querySelectorAll('.leaflet-control svg').forEach(function(svg){
-          var ticks = Array.prototype.filter.call(
-            svg.querySelectorAll('text'),
-            function(t){ return /^[\\d,.\\-+\\s]+$/.test((t.textContent||'').trim()); }
-          );
-          if (ticks.length >= 3) {
-            ticks[0].style.visibility = 'hidden';
-            ticks[ticks.length - 1].style.visibility = 'hidden';
-            hidAny = true;
-          }
+        document.querySelectorAll('svg').forEach(function(svg){
+          try {
+            var ticks = Array.prototype.filter.call(
+              svg.querySelectorAll('text'),
+              function(t){ return /^[\\d,.\\-+\\s]+$/.test((t.textContent||'').trim()); }
+            );
+            // Choropleth legends have 4+ numeric labels (one per bin break).
+            // 3+ keeps a small safety margin without matching unrelated SVGs.
+            if (ticks.length >= 3) {
+              ticks[0].style.visibility = 'hidden';
+              ticks[ticks.length - 1].style.visibility = 'hidden';
+              hidAny = true;
+            }
+          } catch (e) {}
         });
         return hidAny;
       }
-      // Folium's choropleth legend renders asynchronously after the map
-      // loads — sometimes well after `load`. Poll every 100ms for up to
-      // 10s, and keep going for a few extra ticks after the first hit so
-      // late-arriving legends also get trimmed.
+      // Folium's choropleth legend renders asynchronously and can be re-
+      // injected when Streamlit re-runs the iframe. Hammer every 100ms for
+      // 30s — cheap, reliable, and makes the legend trim resilient to
+      // late renders and re-renders alike.
       var attempts = 0;
-      var hits = 0;
       var interval = setInterval(function(){
         attempts++;
-        if (trimLegendExtremes()) hits++;
-        if ((hits >= 3 && attempts > 5) || attempts > 100) {
-          clearInterval(interval);
-        }
+        trimLegendExtremes();
+        if (attempts > 300) clearInterval(interval);
       }, 100);
-      // Also catch any later DOM mutations (e.g. when Streamlit re-runs
-      // the map iframe but legend SVG re-renders inside it).
-      var obs = new MutationObserver(function(){ trimLegendExtremes(); });
-      obs.observe(document.body, {childList: true, subtree: true});
-      setTimeout(function(){ obs.disconnect(); }, 15000);
     })();
     </script>
     """))
